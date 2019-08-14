@@ -1,0 +1,92 @@
+.kanban-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.kanban-column {
+    width: 200px;
+    min-height: 50vh;
+    background-color: #F0F0F0;
+    list-style: none;
+    position: relative;
+}
+
+.kanban-column-title {
+    text-align: center;
+    margin: 8px 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.kanban-column-list {
+    list-style: none;
+    margin: 5px;
+    padding: 0px;
+}
+
+.kanban-card {
+    box-sizing: border-box;
+    display: block;
+    height: 150px;
+    margin-bottom: 5px;
+    padding: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.kanban-card-orange {
+    background-color: #ffcc99;
+    color: #000;
+}
+
+.kanban-card-green {
+    background-color: #66cccc;
+    color: #000;
+}
+
+.kanban-card-deepPurple {
+    background-color: #9999ff;
+    color: #000
+}
+
+.kanban-card-purple {
+    background-color: #ccccff;
+    color: #000
+}
+
+.kanban-card-red {
+    background-color: #ff6666;
+    color: #000
+}
+
+.kanban-card-description {
+    margin: 2px 0;
+    font-weight: bolder;
+    font-size: 14px;
+    color: #000;
+    cursor: pointer;
+    /*显示两行，超出用省略号代替*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.kanban-card-image {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background-color: transparent;
+    color: white;
+}
+
+.kanban-card-date {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}

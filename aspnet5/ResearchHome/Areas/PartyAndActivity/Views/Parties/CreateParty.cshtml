@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ResearchHome.Areas.PartyAndActivity.Models.PartyModel
+@addTagHelper *, ResearchHome
+<style>
+    .layui-inline {
+        margin: 0px;
+    }
+
+    .layui-form-label {
+        width: auto;
+    }
+
+    .layui-form-item .layui-input-inline {
+        float: left;
+        width: 150px;
+    }
+
+    #container {
+        width: 700px;
+        height: 290px;
+    }
+</style>
+
+<div class="layui-row" style="margin-top:30px;margin-left:25px;">
+    <div class="layui-col-xs12">
+        <form class="layui-form" action="/PartyAndActivity/Parties/CreateParty" method="post" asp-antiforgery="true" autocomplete="off">
+            <div class="layui-form-item">
+                <div class="layui-inline" style="float:left;">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-inline" style="width:367px;margin-right:0px;">
+                        <input type="text" name="Id" value="@Html.Raw(Model.Id)" style="display:none;">
+                        <input type="text" name="partyName" placeholder="请输入活动名称" value="@Html.Raw(Model.PartyName)" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-inline" style="float:left;margin-left:5px;">
+                    <label class="layui-form-label">花费</label>
+                    @if (Model.Money > 0)
+                    {
+                        <input type="text" name="money" value="@Html.Raw(Model.Money)" class="layui-input" style="width:60px;" disabled>
+                    }
+                    else
+                    {
+                        <input type="text" name="money" value="@Html.Raw(Model.Money)" class="layui-input" style="width:60px;" lay-verify="required|number">
+                    }
+
+                    <span style="float:left;position:absolute;top:10px;left:125px;">元</span>
+                </div>
+                <div class="layui-inline" style="float:left;margin-left:5px;">
+                    <label class="layui-form-label">人数</label>
+                    <input type="text" name="number" class="layui-input" value="@Html.Raw(Model.Number)" style="width:45px;" lay-verify="required|number">
+                </div>
+            </div>
+            <div class="layui-form-item" style="float:left;">
+                <label class="layui-form-label">时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="startTime" name="startTime" style="width:158px;" placeholder="开始时间" value="@if (Model.StartTime != null) { @Model.StartTime.Value.ToString("yyyy-MM-dd HH:mm:ss")}" class="layui-input" lay-verify="required|datetime">
+                </div>
+
+                <label class="layui-form-label">~&nbsp;&nbsp;</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="endTime" name="endTime" style="width:160px;" placeholder="结束时间" value="@if (Model.EndTime != null) { @Model.EndTime.Value.ToString("yyyy-MM-dd HH:mm:ss")}" class="layui-input" lay-verify="required|datetime">
+                </div>
+                <div class="layui-inline" style="float:left;margin-left:15px;">
+                    <label class="layui-form-label">来源</label>
+                    <div class="layui-input-inline" style="width:180px;margin-right:0px;">
+                        <select name="MoneyResource" id="priority" lay-search>
+                            <option selected value="1">团队经费</option>
+                            <option value="2">捐赠</option>
+                            <option value="3">其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline" style="float:left;">
+                    <label class="layui-form-label">场所</label>
+                    <div class="layui-input-inline" style="width:368px;margin-right:0px;">
+                        <input type="text" id="partyPlace" name="partyPlace" value="@Html.Raw(Model.PartyPlace)" placeholder="活动场所" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-inline" style="float:left;margin-left:5px;">
+                    <label class="layui-form-label">电话</label>
+                    <input type="text" id="tel" name="tel" class="layui-input" value="@Html.Raw(Model.Tel)" style="width:180px;" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <div class="layui-inline" style="float:left;margin-left:0px;">
+                    <label class="layui-form-label">地址</label>
+                    <input type="text" id="address" name="address" class="layui-input" value="@Html.Raw(Model.Address)" style="width:620px;" lay-verify="required">
+                    <input type="text" id="longitude" name="longitude" style="display:none;" value="@Html.Raw(Model.Longitude)">
+                    <input type="text" id="latitude" name="latitude" style="display:none;" value="@Html.Raw(Model.Latitude)">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <div id="container"></div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="float:right;margin-right:30px;margin-top:-10px;">
+                    <button class="layui-btn" lay-filter="ok" lay-submit>确定</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=36aadd39b435e4309ecfe81cb1ee867b&plugin=AMap.Geocoder,AMap.Autocomplete,AMap.PlaceSearch"></script>
+<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+<script type="text/javascript" src="~/js/PartyAndActivity/creatParty.js"></script>

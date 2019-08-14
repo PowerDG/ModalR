@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "编辑贡献点";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="layui-form">
+    <div style="margin-top: 30px;">
+        <div class="layui-form-item layui-form-text">
+            <input type="hidden" id="contributionStandardId" name="contributionStandardId" value="@ViewBag.ContributionStandardId">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">贡献点</label>
+            <div class="layui-input-block" style="margin-right:30px;">
+                <textarea id="txtName" onchange="onchangeEvent(this)" required lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入贡献点名称" style="height:100px;">@ViewBag.ContributionStandardName</textarea>
+                <div id="error_name" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入贡献点名称</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-content-btn">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="save()">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/global.js"></script>
+@section Scripts{
+    <script>
+        layui.use(['layer', 'form'], function () {
+            var form = layui.form;
+            var layer = layui.layer;
+        });
+
+        $(document).keypress(function (event) {
+            if (event.which === 13) {
+                save();
+            }
+        })
+
+        function save() {
+            var contributionStandardId = $('#contributionStandardId').val();
+            var name = $("#txtName").val();
+            var contributionStandard = {
+                id: contributionStandardId,
+                name: name
+            };
+            if (checkDataVaild(contributionStandard)) {
+                $.post("/TaskScheduleBoard/ContributionStandard/EditContributionStandard", contributionStandard, function (data) {
+                    parent.layer.msg(data.message, {
+                        icon: 6,
+                        shift: -1,
+                        time: 500,
+                        shade: 0.3
+                    }, function () {
+                        if (data.success) parent.layer.closeAll();
+                    });
+                });
+            }
+        }
+
+        function checkDataVaild(contributionStandard) {
+            if (contributionStandard.name == "") {
+                $("#error_name").css("display", "block");
+                return false;
+            }
+            return true;
+        }
+
+        function onchangeEvent(e) {
+            $(e).next().css("display", "none");
+        }
+    </script>
+}

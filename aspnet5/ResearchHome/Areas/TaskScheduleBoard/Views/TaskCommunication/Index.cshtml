@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" asp-append-version="true" />
+    <link href="/css/TaskScheduleBoard/TaskCommunication/index.css" rel="stylesheet" />
+    <style>
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+<div style="height:100%;overflow:auto;">
+    <div style="width:80%;margin:auto;padding-top:5px;">
+        <div style="display: grid;background-color:#F2F2F2">
+            <div style="padding-top:10px;">
+                <label class="taskInfoLable taskLab">&nbsp;&nbsp;&nbsp;&nbsp;任务名:</label>
+                <label class="taskInfoLable" id="taskName">SSSSSSSSSSSS</label>
+                <label class="taskInfoLable" style="padding-left:5px;padding-top: 4px;width: auto;cursor:pointer;font-size: 10px;"
+                       onclick="showTaskDetail(GetQueryString('taskId'), unescape(GetQueryString('taskStatus')), parent.layer);">
+                    <img src="/images/PromptImg/ShowDetail.png" style="width:16px;height:16px;" />详情
+                </label>
+            </div>
+            <div style="padding-top:10px;">
+                <label class="taskInfoLable taskLab">&nbsp;&nbsp;&nbsp;&nbsp;总分值:</label>
+                <label class="taskInfoLable taskInfo" id="taskScore">SSS</label>
+            </div>
+            <div style="padding-top:10px;">
+                <label class="taskInfoLable taskLab">&nbsp;&nbsp;&nbsp;&nbsp;执行人:</label>
+                <label class="taskInfoLable" id="memberName">SSS</label>
+            </div>
+            <div style="padding-bottom:10px;padding-top:10px;">
+                <label class="taskInfoLable taskLab">执行时间:</label>
+                <label class="taskInfoLable" id="startTime">SSS</label>
+            </div>
+        </div>
+        <div id="communicationPanel">
+            <div class="layui-inline" style="padding-top: 5px;width:100%;">
+                <textarea id="communicationDescription" placeholder="评论" class="layui-textarea"
+                          style="min-height:80px;"></textarea>
+            </div>
+            <div style="width: 100%;height:45px;">
+                <div style="float: right;">
+                    <div style="margin-top: 5px;">
+                        <button type="button" onclick="submitCommunication();" class="layui-btn" data-ripple="">发表</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="communicationReplay" id="communicationInfoPanel">
+        </div>
+    </div>
+</div>
+<script id="CommunicationsInfoMaster" type="text/html">
+    <ul>
+        {{# layui.each(d, function(index, item){   }}
+        <li>
+            <div id="communicationItem_{{item.Id}}">
+                <div onmouseover="$('#communicationReplyBtn_'+'{{item.Id}}').css('display','block');"
+                     onmouseout="$('#communicationReplyBtn_'+'{{item.Id}}').css('display','none');">
+                    <label class="taskInfoLable taskLab">{{ item.MemberName }}:&nbsp;{{ item.Content }}</label>
+                    <div class="divAutoHeight"> </div>
+                    <div class="taskReplyTimeRow">
+                        <label class="taskInfoLable">{{ toDateString(item.CreatedTime) }}</label>
+                        <label id="communicationReplyBtn_{{item.Id}}" class="taskInfoLable taskReplyBtn"
+                               onclick="showRelayPanel('communicationItem_{{item.Id}}','{{ item.MemberName }}','{{item.MemberId}}','{{item.Id}}');">
+                            <i class="layui-icon layui-icon-reply-fill"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="taskReplyRow">
+                    <ul>
+                        {{# item.TaskCommunicationReplysList.forEach(function(replyItem){ }}
+                        <li>
+                            <div id="reply_{{replyItem.Id}}" onmouseover="$('#replyReplyBtn_'+'{{replyItem.Id}}').css('display','block');"
+                                 onmouseout="$('#replyReplyBtn_'+'{{replyItem.Id}}').css('display','none');">
+                                <label class="taskInfoLable">{{replyItem.MemberName}}&nbsp;回复:&nbsp;{{replyItem.ReplyMemberName}}:&nbsp;{{replyItem.Content}}</label>
+                                <div class="divAutoHeight"> </div>
+                                <div class="taskReplyTimeRow">
+                                    <label class="taskInfoLable">{{ toDateString(replyItem.CreatedTime) }}</label>
+                                    <label id="replyReplyBtn_{{replyItem.Id}}" class="taskInfoLable taskReplyBtn"
+                                           onclick="showRelayPanel('reply_{{replyItem.Id}}','{{replyItem.MemberName}}','{{replyItem.MemberId}}','{{item.Id}}');">
+                                        <i class="layui-icon layui-icon-reply-fill"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                        {{# }); }}
+                    </ul>
+                </div>
+            </div>
+        </li>
+        {{#  }); }}
+    </ul>
+</script>
+<script id="replyPanelMaster" type="text/html">
+    <div id="replyPanelMasterDiv" class="replyClass" style="display:none;">
+        <input type="hidden" id="replyCommounicationId" />
+        <input type="hidden" id="replyMemberId" />
+        <div class="layui-inline" style="padding-top: 5px;width:100%;">
+            <label style="position:absolute;z-index:1;padding:6px 10px;" id="replyMasterMsg">adsfdsa</label>
+            <textarea id="replyDescriptionMaster" placeholder="评论" class="layui-textarea"
+                      style="min-height:80px;"></textarea>
+        </div>
+        <div style="width: 100%;height:45px;" id="replyMasterBtnDiv">
+            <div style="float: right;">
+                <div style="margin-top: 5px;">
+                    <button type="button" id="replyMasterBtn" onclick="submitReplyCommunication();" class="layui-btn" data-ripple="">发表</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+@section Scripts{
+    <script src="/js/TaskScheduleBoard/global.js"></script>
+    <script src="/js/TaskScheduleBoard/TaskCommunication/Index.js"></script>
+    <script type="text/javascript">
+    </script>
+}

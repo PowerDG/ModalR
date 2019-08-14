@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+<style>
+    .layui-inline{
+        margin:0px;
+    }
+</style>
+
+<div class="layui-row" style="margin-top:30px;margin-right:30px;">
+    <div class="layui-col-xs12">
+        <form class="layui-form" action="/TaskScheduleBoard/Tasks/CreateTask" method="post" asp-antiforgery="true" autocomplete="off">
+            <input type="hidden" name="planId" value="@ViewBag.PlanId">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">任务名</label>
+                <div class="layui-input-block">
+                    <textarea name="taskName" placeholder="请输入任务名" class="layui-textarea" lay-verify="required" style="height:100px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline" style="margin:0px;">
+                    <label class="layui-form-label">负责人</label>
+                    <div class="layui-input-inline" style="width:160px;margin-right:0px;">
+                        <select name="principal" id="principal" lay-search>
+                            <option value=""> 请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline" style="float:right;margin-right:0px;">
+                    <label class="layui-form-label">优先级</label>
+                    <div class="layui-input-inline" style="width:160px;margin-right:0px;">
+                        <select name="priority" id="priority" lay-search>
+                            <option value=""> 请选择</option>
+                            <option value="1">十万火急</option>
+                            <option value="2">快马加鞭</option>
+                            <option value="3">按部就班</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">截止时间</label>
+                <div class="layui-input-block">
+                    <input type="text" id="deadLineTime" name="deadLineTime" placeholder="请选择截止时间" class="layui-input" lay-verify="required|date">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="description" placeholder="请输入备注" class="layui-textarea" style="height:130px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="float:right;">
+                    <button class="layui-btn" lay-submit>立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['element', 'form', 'laydate'], function () {
+        var form = layui.form
+            , element = layui.element
+            , laydate = layui.laydate;
+
+        SelectBind("GetMembersList", "principal", "Id", "Name", '@ViewBag.CurrentUserId', "150px", form);
+
+        laydate.render({
+            elem: '#deadLineTime'
+        });
+    });
+</script>

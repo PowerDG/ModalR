@@ -1,0 +1,96 @@
+{
+  "result": {
+    "totalCount": 6,
+    "items": [
+      {
+        "userName": "admin",
+        "name": "admin",
+        "surname": "admin",
+        "emailAddress": "admin@aspnetboilerplate.com",
+        "isActive": true,
+        "fullName": "admin admin",
+        "lastLoginTime": null,
+        "creationTime": "2019-06-26T18:33:25.262463",
+        "roleNames": [
+          "ADMIN"
+        ],
+        "id": 1
+      },
+      {
+        "userName": "Guest001",
+        "name": "Guest001",
+        "surname": "wsx",
+        "emailAddress": "Guest001@qq.com",
+        "isActive": true,
+        "fullName": "Guest001 wsx",
+        "lastLoginTime": null,
+        "creationTime": "2019-06-27T15:35:07.985272",
+        "roleNames": [
+          "GUEST"
+        ],
+        "id": 7
+      },
+      {
+        "userName": "Guest002",
+        "name": "Guest002",
+        "surname": "wsx",
+        "emailAddress": "Guest002@qq.com",
+        "isActive": true,
+        "fullName": "Guest002 wsx",
+        "lastLoginTime": null,
+        "creationTime": "2019-06-27T15:32:38.802447",
+        "roleNames": [
+          "GUEST"
+        ],
+        "id": 6
+      },
+      {
+        "userName": "Test001",
+        "name": "Test001",
+        "surname": "wsx",
+        "emailAddress": "Test001@qq.com",
+        "isActive": true,
+        "fullName": "Test001 wsx",
+        "lastLoginTime": null,
+        "creationTime": "2019-06-27T15:31:29.116599",
+        "roleNames": [
+          "STAFF"
+        ],
+        "id": 4
+      },
+      {
+        "userName": "Test002",
+        "name": "Test002",
+        "surname": "wsx",
+        "emailAddress": "Test002@qq.com",
+        "isActive": true,
+        "fullName": "Test002 wsx",
+        "lastLoginTime": null,
+        "creationTime": "2019-06-27T15:31:56.015001",
+        "roleNames": [
+          "STAFF"
+        ],
+        "id": 5
+      },
+      {
+        "userName": "wsx2019",
+        "name": "wangshuxin",
+        "surname": "wsx",
+        "emailAddress": "wsx2019@qq.com",
+        "isActive": true,
+        "fullName": "wangshuxin wsx",
+        "lastLoginTime": null,
+        "creationTime": "2019-06-27T15:29:58.980196",
+        "roleNames": [
+          "STAFF"
+        ],
+        "id": 3
+      }
+    ]
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
+}

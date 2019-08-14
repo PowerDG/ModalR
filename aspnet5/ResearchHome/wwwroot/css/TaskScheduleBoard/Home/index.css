@@ -1,0 +1,20 @@
+﻿.layui-table, .layui-table-view {
+    margin: 0;
+}
+
+.tableClick {
+    background-color: lightgreen;
+}
+
+.layuiIcon {
+    font-size: 20px;
+    position: relative;
+    top: 3px;
+}
+
+.toolPanl {
+    float: right;
+    text-align: right;
+    width: 120px;
+    display: block;
+}

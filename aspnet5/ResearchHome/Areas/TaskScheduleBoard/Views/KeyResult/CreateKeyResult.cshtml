@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<style>
+    .layui-form-label {
+        padding-left: 0px;
+        width: 60px;
+    }
+
+    .layui-row {
+        margin-top: 20px;
+        margin-right: 30px;
+    }
+
+    .layui-input-block {
+        margin-left: 80px;
+    }
+</style>
+<div class="layui-row">
+    <div class="layui-col-xs12">
+        <form class="layui-form" action="/TaskScheduleBoard/KeyResult/CreateKeyResult" method="post" asp-antiforgery="true" autocomplete="off">
+            <input type="hidden" name="taskId" value="@ViewBag.TaskId" />
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <textarea name="description" placeholder="请输入关键结果描述" class="layui-textarea" lay-verify="required" style="height:150px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" placeholder="请输入备注" class="layui-textarea" style="height:150px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="float:right;">
+                    <button class="layui-btn" lay-submit>保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['element', 'form'], function () {
+        var form = layui.form, element = layui.element;
+    });
+</script>

@@ -1,0 +1,145 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Appraisals
+@{
+    ViewData["Title"] = "EditAppraisals";
+    Layout = "/Views/Shared/_Master.cshtml";
+    int type = Model != null ? Model.AppraisalType : 0;
+    int level = Model != null ? Model.AppraisalLevel : 0;
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+<link href="/css/layerMaster.css" rel="stylesheet" />
+    <style>
+            .layui-form-item .layui-inline {
+                height: 60px;
+                margin-bottom: 0;
+            }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+    </style>
+}
+
+<div class="layui-form" style="margin-top: 20px;">
+    <div class="layui-inline" style="margin-top: 0px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;margin-right:20px;margin-left:0px;margin-right:20px;">年度</label>
+            <div class="layui-input-inline">
+                <input type="hidden" id="txtAppraisalId" asp-for="Id" />
+                <input type="hidden" id="txtMemberId" value="@ViewBag.MemberId" />
+                <input type="text" id="txtYear" asp-for="Year" placeholder="请选择年份" onblur="onchangeEvent(this)" required lay-verify="required" autocomplete="off" class="layui-input">
+                <div id="error_year" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请选择年份</span></div>
+                </div>
+            </div>
+
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;margin-left:0px;margin-right:36px;">类型</label>
+            <div class="layui-input-inline">
+                <select id="type" lay-filter="type" lay-verify="required">
+                    <option value="" selected></option>
+                    <option value="1">年中</option>
+                    <option value="2">年末</option>
+                    <option value="3">转正</option>
+                </select>
+                <div id="error_type" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请选择类型</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;margin-right:20px;">价值观</label>
+            <div class="layui-input-inline">
+                <input type="text" id="txtValueScore" required onchange="onchangeEvent(this)" onblur="onInputBlur(@ViewBag.MemberId)" asp-for="ValueScore" lay-verify="required" placeholder="请输入价值观分数(仅数字)" autocomplete="off"
+                       class="layui-input" onkeyup="value=value.replace(/[^\d|.]/g,'')">
+                <span style="color:gray;font-size:medium;position:absolute;right:-35px;top:12px;">/&nbsp;30</span>
+                <div id="error_valueScore" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入正确的价值观分数</span></div>
+                </div>
+            </div>
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;margin-right:20px;margin-left:0px;margin-right:36px;">绩效</label>
+            <div class="layui-input-inline">
+                <input type="text" id="txtPerformanceScore" onchange="onchangeEvent(this)" onblur="onInputBlur(@ViewBag.MemberId)" asp-for="PerformanceScore" required lay-verify="required" placeholder="请输入绩效分数(仅数字)" autocomplete="off"
+                       class="layui-input" onkeyup="value = value.replace(/[^\d|.]/g, '')">
+                <span style="color:gray;font-size:medium;position:absolute;right:-45px;top:12px;">/&nbsp;100</span>
+                <div id="error_performanceScore" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入正确的绩效分数</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;margin-right:50px;margin-right:20px;">总分</label>
+            <div class="layui-input-inline"><input type="hidden"class="layui-input" />
+            <span id="TotalScore"style="font-size:medium;position:absolute;left:5px;top:12px;">0</span>
+            <span style="color:gray;font-size:medium;position:relative;right:-200px;top:12px;">/&nbsp;100</span></div>
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;margin-left:24px;margin-right:12px;">考评结果</label>
+            <div class="layui-input-inline">
+                <select id="level" lay-filter="level" lay-verify="required">
+                    <option value=""></option>
+                    <option value="1">低于预期</option>
+                    <option value="2">达到预期</option>
+                    <option value="3">超出预期</option>
+                    <option value="4">表现杰出</option>
+                </select>
+                <div id="error_level" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请选择考评结果</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-content-btn" style="margin-bottom: 12px;"> 
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="save()">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll()">取消</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/global.js"></script>
+<script src="/js/introduction/MemberOperating/EditAppraisal.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function () { 
+            layui.use(['laydate', 'form'], function () {
+                var laydate = layui.laydate;
+                var form = layui.form;
+
+                form.on('select(type)', function (data) {
+                    if (parseInt(data.value) > 0) {
+                        $("#type").removeClass('input-verify-null');
+                        $("#error_type").text("");
+                    }
+                });
+                form.on('select(level)', function (data) {
+                    if (parseInt(data.value) > 0) {
+                        $("#level").removeClass('input-verify-null');
+                        $("#error_level").text("");
+                    }
+                });
+
+                laydate.render({
+                    elem: '#txtYear'
+                    , type: 'year'
+                });
+
+                if ('@level' > 0) {
+                    $('#level').val('@level');
+                }
+                if ('@type' > 0) {
+                    $('#type').val('@type');
+                }
+                form.render('select');
+            });
+        });
+    </script>
+}
+
+

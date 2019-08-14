@@ -1,0 +1,81 @@
+﻿@using ResearchHome.Areas.Introduction.Models
+@model Integrals
+@{
+    ViewData["Title"] = "EditGift";
+    Layout = "/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <style>
+        .layui-input-block {
+            margin-left: 90px;
+            min-height: 36px;
+        }
+
+        .layui-form-label {
+            float: left;
+            display: block;
+            width: 80px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: right;
+        }
+
+        .layui-form-item .layui-inline {
+            height: 60px;
+            margin-bottom: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+    </style>
+}
+
+        <div class="layui-form" style="margin-top: 20px;">
+            <div class="layui-inline" style="margin-top: 10px;width: 100%;">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:80px;padding: 9px 0px;">分值</label>
+                    <div class="layui-input-block">
+                        <input type="hidden" id="txtIntegralId" asp-for="Id" />
+                        <input type="hidden" id="txtOldScore" asp-for="Integral" />
+                        <input type="hidden" id="txtMemberId" value="@ViewBag.MemberId" />
+                        <input type="hidden" id="txtCreatedTime" asp-for="CreatedTime" />
+                        <input type="text" id="txtScore" required style="width: 80%" lay-verify="required" onchange="onchangeEvent(this)" asp-for="Integral" 
+                               placeholder="请输入分值(仅限数字)" autocomplete="off" class="layui-input" onkeyup="value=value.replace(/[^\d]/g,'')" />
+                        <div id="error_score" style="display: none">
+                            <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入分值</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:80px;padding: 9px 0px;">说明</label>
+                    <div class="layui-input-block">
+                        <textarea id="txtDescription" rows="7" style="width: 80%" required lay-verify="required" onchange="onchangeEvent(this)" asp-for="Description" placeholder="请输入说明" class="layui-textarea"></textarea>
+                        <div id="error_desc" style="display: none">
+                            <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入说明</span></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="layui-form-item layui-content-btn" style="margin-bottom: 12px;">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="save()">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll()">取消</button>
+                </div>
+            </div>
+        </div>
+
+@section Scripts{
+        <script src="~/js/global.js"></script>
+        <script src="~/js/introduction/MemberOperating/EditIntegral.js"></script>
+}

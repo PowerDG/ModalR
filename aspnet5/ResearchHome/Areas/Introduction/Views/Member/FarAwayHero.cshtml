@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/introduce/index.css" rel="stylesheet" />
+    <style>
+        .pictureTool {
+            position: absolute;
+            color: rgb(211, 211, 211);
+            text-align: right;
+            right: 7px;
+            top: 7px;
+            display: none;
+        }
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ResearchHome.Areas.Introduction.Models.Members
+@addTagHelper *, ResearchHome
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="layui-contentall" style="width: 100%;" id="memberdiv"></div>
+
+<script type="text/html" id="memberList">
+    {{# layui.each(d, function(index, item){ }}
+    <div class="layui-col-staff" style="width:200px;"
+         onmouseover="$('#memberdiv_' + {{ item.Id }}).css('display', 'block');" 
+         onmouseout="$('#memberdiv_'+{{ item.Id }}).css('display', 'none');">
+        <div id="memberdiv_{{ item.Id }}" class="pictureTool">
+            {{# var isAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")'; }}
+            {{# if(isAdmin === 'True'){ }}
+            <div>
+                <a style="cursor:pointer;" onclick="reenterMember({{ item.Id }})" title="回归">
+                    <img src="/images/PromptImg/ComeBack.png" style="width:16px;height:16px;" />
+                </a>
+            </div>
+            {{# } }}
+        </div>
+        <img id="Img_{{item.Id}}" src="{{ item.Photo }}" style="margin-top: 2px;width: 150px;height:150px;cursor:pointer;"
+             onerror="javascript: this.src = '/images/public/NonePicture.png';"
+             onclick="pageToUrl({{ item.Id }})" />
+        <div class="pictureDescription">
+            <p>姓名：{{ item.Name }}</p>
+            <p>职位：{{ item.Title }}</p>
+        </div>
+
+    </div>
+    {{# }); }}
+</script>
+@section Scripts{
+<script src="/js/introduction/Home/FarAwayHero.js"></script>
+}

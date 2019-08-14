@@ -1,0 +1,323 @@
+﻿@model ResearchHome.Areas.TaskScheduleBoard.Models.TaskDetailModel
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+@{
+    var participants = "[" + Model.Participants + "]";
+    var isReview = Model.IsReview == 1 ? "是" : "否";
+    var createTime = Model.CreatedTime == null ? "--" : Model.CreatedTime.Value.ToString("yyyy-MM-dd");
+    var deadLineTime = Model.DeadLineTime == null ? "--" : Model.DeadLineTime.Value.ToString("yyyy-MM-dd");
+    var startTime = Model.StartTime == null ? "--" : Model.StartTime.Value.ToString("yyyy-MM-dd");
+    var endTime = Model.EndTime == null ? "--" : Model.EndTime.Value.ToString("yyyy-MM-dd");
+    var lastTrackingTime = Model.FollowTime == null ? "--" : Model.FollowTime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+
+    var isAdmin = viewInjectHelper.CurrentUserInfo("IsAdmin") == "True" ? 1 : 0;
+}
+<style type="text/css">
+    .cardBox {
+        width: 370px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-sizing: border-box;
+        color: #333333;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 20px;
+        padding-top: 15px;
+    }
+
+    .layui-form-label {
+        width: auto;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .layui-input-block {
+        margin-left: 56px;
+        min-height: 36px;
+    }
+
+    .layui-form-item {
+        margin-bottom: 5px;
+    }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: 99px;
+            margin-right: 5px;
+        }
+
+    .layui-form-checkbox[lay-skin=primary] span {
+        white-space: normal;
+    }
+    .todo-keyresult-title {
+        display: inline-block;
+        vertical-align: bottom;
+        cursor: pointer;
+        width: 280px;
+        float: right;
+        margin-top: 8px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+</style>
+
+<div class="layui-container">
+    <div class="layui-row" style="margin-top:5px;">
+        <div class="layui-col-md4">
+            <div class="cardBox layui-form" style="background-color: #ffcc99">
+                <div id="taskId" data-taskid="@Model.Id" style="display:none;"></div>
+                <div id="status" data-status="@Model.Status" style="display:none;"></div>
+                <div id="principalId" data-principalid="@Model.PrincipalId" style="display:none;"></div>
+                <div id="priority" data-priority="@Model.Priority" style="display:none;"></div>
+                <div id="canEdit" data-canedit="@Model.CanEdit" style="display:none;"></div>
+                <div id="isReview" data-isreview="@Model.IsReview" style="display:none;"></div>
+                <div id="isAdmin" data-isadmin="@isAdmin" style="display:none;"></div>
+                <div id="participantArry" data-participantarry="@Model.Participants" style="display:none;"></div>
+                <div id="deadline" data-deadline="@deadLineTime" style="display:none;"></div>
+                <div class="layui-form-item">
+                    <h3><b>任务详情</b></h3>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">编号：@Model.Id</label>
+                    <label class="layui-form-label" style="float:right;">分数：@Model.Score</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称是：</label>
+                    <div class="layui-input-block">
+                        <textarea id="taskName" name="taskName" placeholder="请输入内容" class="layui-textarea">@Model.Name</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">状态是：</label>
+                        <div class="layui-input-inline">
+                            <select id="taskStatus" name="taskStatus" lay-verify="required" lay-search="">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="float:right;margin-right:0px;">
+                        <label class="layui-form-label">负责人：</label>
+                        <div class="layui-input-inline" style="margin-right:0px;">
+                            <select id="principal" name="principal" lay-verify="required" lay-search="">
+                                <option value="">请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">截止于：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="deadLineTime" name="deadLineTime" placeholder="请选择截止时间" class="layui-input" lay-verify="required|date">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="float:right;margin-right:0px;">
+                        <label class="layui-form-label">优先级：</label>
+                        <div class="layui-input-inline" style="margin-right:0px;">
+                            <select name="taskPriority" id="taskPriority" lay-search>
+                                <option value=""> 请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">参与人：</label>
+                    <div class="layui-input-block" id="participants"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">创建人：@Model.CreatedMemberName</label>
+                    <label class="layui-form-label" style="width:155px;float:right;text-align:left;">创建于：@createTime</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开始于：@startTime</label>
+                    <label class="layui-form-label" style="width:155px;float:right;text-align:left;">完成于：@endTime</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">最后跟进时间：@lastTrackingTime</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否点评完：@isReview</label>
+                    <label class="layui-form-label" style="cursor:pointer;float:right;display:none;"><a id="reviewTask" style="color:#1E9FFF;">点评结果</a></label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                        <textarea id="taskRemark" name="taskRemark" placeholder="请输入内容" class="layui-textarea" style="min-height:200px;">@Model.Description</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button id="saveTask" class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="saveTask" style="float:right;">保存修改</button>
+                </div>
+            </div>
+            <div class="cardBox layui-form" style="margin-top: 10px;background-color: #f5d0d6">
+                <div class="layui-form-item">
+                    <h3 style="display:inline;"><b>关键结果&nbsp;&nbsp;</b></h3>
+                    <i id="keyResultsSummary"></i>
+                    <button id="addKeyResult" class="layui-btn layui-btn-sm" style="float:right;"><i class="layui-icon">&#xe654;</i></button>
+                </div>
+                <div style="padding: 10px;background-color:white">
+                    <ul id="taskKeyResults"></ul>
+                    <div id="keyResultPaging" style="margin:auto"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="cardBox layui-form" style="background-color:#66cccc;">
+                <div class="layui-form-item">
+                    <h3 style="display:inline;"><b>跟进</b></h3>
+                    <button id="addTaskTrack" class="layui-btn layui-btn-sm" style="float:right;"><i class="layui-icon">&#xe654;</i></button>
+                </div>
+                <div class="layui-form-item">
+                    <input type="checkbox" id="switchTrackings" lay-skin="switch" lay-filter="switchTrackings" lay-text="我的|我的">
+                </div>
+                <div style="background-color:white">
+                    <ul id="taskProcess" class="layui-timeline"></ul>
+                    <div id="trackPaging" style="margin:auto"></div>
+                </div>
+            </div>
+
+            <div class="cardBox layui-form" style="background-color:#BDB76B;">
+                <div class="layui-form-item">
+                    <h3 style="display:inline;"><b>任务反馈</b></h3>
+                    <button id="addFeedback" class="layui-btn layui-btn-sm" style="float:right;"><i class="layui-icon">&#xe654;</i></button>
+                </div>
+                <div style="background-color:white">
+                    <ul id="taskProcessFeedback" class="layui-timeline"></ul>
+                    <div id="feedBackPaging" style="margin:auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md4">
+            <div class="cardBox layui-form" style="background-color:#ccccff;">
+                <div class="layui-form-item">
+                    <h3 style="display:inline;"><b>TODOs&nbsp;&nbsp;</b></h3>
+                    <i id="todosSummary"></i>
+                    <button id="addTodo" class="layui-btn layui-btn-sm" style="float:right;"><i class="layui-icon">&#xe654;</i></button>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <input type="checkbox" id="switchMyTodos" lay-skin="switch" lay-filter="switchMyTodos" lay-text="我的|我的">
+                    </div>
+                    <div class="layui-inline" style="float:right;">
+                        <input type="checkbox" id="switchEffectiveTodos" lay-skin="switch" lay-filter="switchEffectiveTodos" lay-text="有效|有效">
+                    </div>
+                </div>
+                <div style="padding: 10px;background-color:white">
+                    <ul id="taskTodos"></ul>
+                    <div id="todoPaging" style="margin:auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="taskFeedbackData" type="text/html">
+    {{# layui.each(d, function(index, item){   }}
+    <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+        <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">{{ toDateString(item.create_time) }}</h3>
+            <h3>
+                {{ item.Name }}&nbsp;&nbsp;&nbsp;
+                <span style="font-size:14px;">
+                    {{# if(item.type==1){ }}
+                    亮点功能
+                    {{# } }}
+                    {{# if(item.type==2){ }}
+                    窝心功能
+                    {{# } }}
+                    {{# if(item.type==3){ }}
+                    点赞方面
+                    {{# } }}
+                    {{# if(item.type==4){ }}
+                    加油方面
+                    {{# } }}
+                </span>
+            </h3>
+            {{# if(item.description !== null){ }}
+            <pre style="font-size:14px;padding-top:5px;">{{ item.description }}</pre>
+            {{# } }}
+        </div>
+    </li>
+    {{#  }); }}
+</script>
+
+<script id="taskProcessData" type="text/html">
+    {{# layui.each(d, function(index, item){   }}
+    <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+        <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">{{ toDateString(item.FollowTime) }}</h3>
+            <h3>
+                {{ item.Follower }}&nbsp;&nbsp;&nbsp;<span style="font-size:14px;">{{ item.FollowType }}</span>
+            </h3>
+            {{# if(item.FollowDescription !== null){ }}
+            <pre style="font-size:14px;padding-top:5px;">{{ item.FollowDescription }}</pre>
+            {{# } }}
+        </div>
+    </li>
+    {{#  }); }}
+</script>
+
+<script id="taskTodoList" type="text/html">
+    {{# layui.each(d, function(index, item){   }}
+    {{#  if(item.Status === '执行中'){ }}
+    <li class="layui-bg-orange">
+        {{# }else { }}
+    <li>
+        {{# } }}
+        <div class="layui-form-item">
+            {{#  if(item.Status === '完成'){ }}
+            <input type="checkbox" lay-skin="primary" checked disabled>
+            <div class="todo-keyresult-title" onclick="viewTodo(this);" data-todoid="{{ item.Id }}" style="color:#c2c2c2;">
+                {{ item.Description }}
+            </div>
+            {{#  }else { }}
+            <input type="checkbox" lay-skin="primary" data-todoid="{{ item.Id }}" lay-filter="completeTodo">
+            {{#  if(@Model.CanEdit === 1){ }}
+            <div class="layui-btn-group" style="float:right;margin-top: 8px;height: 22px;">
+                <button class="layui-btn layui-btn-sm" onclick="deleteTodo(this);" data-todoid="{{ item.Id }}"><i class="layui-icon">&#xe640;</i></button>
+            </div>
+            {{# } }}
+            <div class="todo-keyresult-title" onclick="editTodo(this);" data-todoid="{{ item.Id }}" style="width:240px;">
+                {{ item.Description }}
+            </div>
+            {{# } }}
+        </div>
+        <i style="display:block;margin-left: 25px;margin-bottom: 10px;font-size:12px;">
+            {{ item.Creator }}&nbsp;最后更新于&nbsp;{{ toDateString(item.LastUpdateTime) }}
+        </i>
+    </li>
+    {{#  }); }}
+</script>
+
+<script id="taskKeyResultsList" type="text/html">
+    {{# layui.each(d, function(index, item){   }}
+    <li>
+        <div class="layui-form-item">
+            {{#  if(item.Status === '关闭'){ }}
+            <input type="checkbox" lay-skin="primary" checked disabled>
+            <div class="todo-keyresult-title" onclick="viewKeyResult(this);" data-keyresultid="{{ item.Id }}" style="color:#c2c2c2;">
+                {{ item.Description }}
+            </div>
+            {{#  }else { }}
+            <input type="checkbox" lay-skin="primary" data-keyresultid="{{ item.Id }}" lay-filter="closeKeyResult">
+            {{#  if(@Model.CanEdit === 1){ }}
+            <div class="layui-btn-group" style="float:right;margin-top: 8px;height: 22px;">
+                <button class="layui-btn layui-btn-sm" onclick="deleteKeyResult(this);" data-keyresultid="{{ item.Id }}"><i class="layui-icon">&#xe640;</i></button>
+            </div>
+            {{# } }}
+            <div class="todo-keyresult-title" onclick="editKeyResult(this);" data-keyresultid="{{ item.Id }}" style="width:240px;">
+                {{ item.Description }}
+            </div>
+            {{# } }}
+        </div>
+        <i style="display:block;margin-left: 25px;margin-bottom: 10px;font-size:12px;">
+            {{ item.LastUpdateMemberName }}&nbsp;最后更新于&nbsp;{{ toDateString(item.LastUpdateTime) }}
+        </i>
+    </li>
+    {{#  }); }}
+</script>
+
+<script src="~/js/TaskScheduleBoard/Tasks/getTaskDetail.js"></script>

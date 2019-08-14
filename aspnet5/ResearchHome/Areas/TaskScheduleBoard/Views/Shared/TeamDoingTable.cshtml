@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+<style>
+</style>
+<div id="teamDoingContent" style="width:100%;margin:auto;">
+    <table class="layui-table" id="teamDoingTable" lay-data="{id:'teamDoingTable'}" lay-filter="teamDoingTableFilter"></table>
+</div>
+<script type="text/html" id="teamDoingTableLastUpdateTime">
+    <div style="float:left;">{{toDateString(d.LastUpdateTime)}}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolPanl">
+        <a lay-event="showDetail" style="cursor:pointer;" title="详情">
+            <img src="/images/PromptImg/ShowDetail.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="showTaskPartner" style="cursor:pointer;" title="查看参与者">
+            <img src="~/images/Task/showTaskPartner.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="communicationTask" style="cursor:pointer;" title="评论">
+            <img src="/images/PromptImg/messageCommunication.png" style="width:16px;height:16px;" />
+        </a>
+        {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+        {{# if(viewUserIsAdmin === 'True'){ }}
+        <a lay-event="changeTask" style="cursor:pointer;" title="修改">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="removeTask" style="cursor:pointer;" title="作废">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+<script src="/js/TaskScheduleBoard/Shared/TeamDoingTable.js"></script>
+<script>
+
+</script>

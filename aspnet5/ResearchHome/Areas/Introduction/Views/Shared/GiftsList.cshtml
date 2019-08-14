@@ -1,0 +1,41 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="div-table-record">
+    <div class="partItem">
+        <span>生日礼品</span>
+        @if (!Model.IsLeave && viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+        {
+            <div onclick="editGift(@Model.Id, 0, '添加礼品')">
+                <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">添加礼品</span>
+            </div>
+        }
+    </div>
+    <div id="giftsContent" style="width:100%;">
+        <table id="table_gifts" lay-filter="gifts"></table>
+    </div>
+</div>
+
+<script type="text/html" id="giftsTable">
+    <div style="float:left;margin-right: 5px;">{{ d.CreatedMemberName }}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId === 'True'  && '@Model.IsLeave' != 'True'){ }}
+    <div class="toolPanl" style="float:right;">
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="editGift('@Model.Id', {{ d.Id }}, '编辑礼品' )" title="编辑">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="deleteGift({{ d.Id }})" title="删除">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="link">
+    {{# if(d.Hyperlink !== "" && d.Hyperlink !== null){ }}
+    <div><a href="{{ d.Hyperlink }}" target="_blank" class="layui-table-link">{{d.Name}}</a></div>
+    {{# }else{ }}
+    <div><a href="javascript:void(0)" class="layui-table-link">{{d.Name}}</a></div>
+    {{# } }}
+</script>

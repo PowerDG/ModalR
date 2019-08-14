@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet"/>
+    <link href="/css/TaskScheduleBoard/TaskPartner/TaskPartner.css" rel="stylesheet" />
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+
+<div style="width:100%;height:25px;">
+    <div id="optionMenu">
+
+    </div>
+</div>
+<div style="width:100%;margin:auto;">
+    <table class="layui-table" id="taskPartnerTable" lay-data="{id:'taskPartnerTable'}" lay-filter="taskPartnerTableFilter"></table>
+</div>
+<script type="text/html" id="optionMenuMaster">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    <span style="cursor:pointer;float:left;padding:7px 0px 0px 15px;">
+        负责人:<span>{{d.MemberName === null ? "暂无负责人" : d.MemberName}}</span>
+    </span>
+    {{# if(d.MemberId !== 0 && (d.MemberId === parseInt(viewUserId) || viewUserIsAdmin === 'True') && d.Status !== '完成' && d.Status !== '作废'){ }}
+    <a id="removePartner" onclick="removePartner(choosedpartnerId);" style="cursor:pointer;float:right;padding:7px 7px 0px 0px;">
+        <img id="removePartnerImg" src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />移出参与人
+    </a>
+    <a id="addPartner" onclick="addPartner();" style="cursor:pointer;float:right;padding:7px 7px 0px 0px;">
+        <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" />添加参与人
+    </a>
+    {{# } }}
+</script>
+<script type="text/html" id="createdTime">
+    <div>{{toDateString(d.CreatedTime)}}</div>
+</script>
+<script type="text/html" id="decription">
+    <div><span title="{{d.Description === null ? "" : d.Description}}">{{d.Description === null ? "" : d.Description}}</span></div>
+</script>
+@section Scripts{
+    <script src="/js/TaskScheduleBoard/TaskPartner/TaskPartner.js"></script>
+}

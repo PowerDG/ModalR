@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "授予勋章";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <style>
+        .layui-col-medal {
+            position: relative;
+            width: 22%;
+            margin: 1% 1.5%;
+            height: 180px;
+            text-align: center;
+            float: left;
+            cursor: pointer;
+        }
+
+            .layui-col-medal:hover {
+                background-color: #f2f2f2;
+            }
+
+        .main_div {
+            overflow: auto;
+            overflow-x: hidden;
+            max-height: 506px;
+        }
+
+        .select-medal {
+            background-color: #56B4D9;
+        }
+
+        .medal-tip-description {
+            position: absolute;
+            display: none;
+            border-style: solid;
+            z-index: 9999999;
+            transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1), top 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background-color: rgba(50, 50, 50, 0.7);
+            border-width: 0px;
+            border-color: rgb(51, 51, 51);
+            border-radius: 4px;
+            color: rgb(255, 255, 255);
+            font: 14px/21px "Microsoft YaHei";
+            padding: 5px;
+            width: 300px;
+        }
+    </style>
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+}
+
+<div class="layui-form main_div" id="medaldiv">
+
+    <script id="medalList" type="text/html">
+        {{# layui.each(d, function(index, item){ }}
+        <div class="layui-col-medal" onclick="selectDiv(this)" data-id="{{ item.Id }}">
+            @*<img width="150" class="medal-img" data-desc="{{ item.Description }}" onmouseover="showTip(this)" onmouseout="hideTip()" onerror="javascript: this.src = '/images/public/NonePicture.png'" height="150" src="{{ item.Icon }}" />*@
+            <img width="150" class="medal-img" title="{{item.Description}}" onerror="javascript: this.src = '/images/public/NonePicture.png'" height="150" src="{{ item.Icon }}" />
+            <p>{{ item.Name }}</p>
+        </div>
+        {{# }) }}
+    </script>
+
+</div>
+<input type="hidden" name="selectMedal" />
+<div class="layui-content-btn">
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit onclick="save()">授予</button>
+        <button type="button" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="/js/global.js"></script>
+    <script src="/js/introduction/MemberOperating/AddMedal.js"></script>
+    <script>
+        var memberPageId;
+        $(document).ready(function () {
+            memberPageId = '@ViewBag.MemberId';
+            loadMedals();
+        });
+    </script>
+}

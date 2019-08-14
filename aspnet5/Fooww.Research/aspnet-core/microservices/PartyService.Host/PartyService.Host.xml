@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PartyService.Host</name>
+    </assembly>
+    <members>
+        <member name="M:PartyService.Host.Controllers.PartyController.#ctor(Abp.Domain.Uow.IUnitOfWorkManager,Microsoft.AspNetCore.Http.IHttpContextAccessor,Abp.Domain.Repositories.IRepository{PartyService.Host.Models.Party,System.Int64},Abp.Domain.Repositories.IRepository{PartyService.Host.Models.PartyPhoto,System.Int64},Abp.Domain.Repositories.IRepository{PartyService.Host.Models.PartyComment,System.Int64},Abp.Domain.Repositories.IRepository{PartyService.Host.Models.FundModel,System.Int64})">
+             <summary>
+             构造函数
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Controllers.PartyController.GetPaged(PartyService.Host.Models.PageDto.PartyPagedInput)">
+             <summary>
+             获取FundModel的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:PartyService.Host.Controllers.PartyController.GetById(Abp.Application.Services.Dto.EntityDto{System.Int64})">
+            <summary>
+            通过指定id获取PartyListDto信息
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Controllers.PartyController.CreateOrUpdate(PartyService.Host.Models.Dtos.PartyCreateDto)">
+            <summary>
+            添加或者修改Party的公共方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PartyService.Host.Controllers.PartyController.Create(PartyService.Host.Models.Dtos.PartyCreateDto)">
+            <summary>
+            新增Party
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Controllers.PartyController.Update(PartyService.Host.Models.Dtos.PartyEditDto)">
+            <summary>
+            编辑Party
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundCreateDto.InsertTime">
+            <summary>
+            入账日期
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundCreateDto.ItemName">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundCreateDto.OperateMoney">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundCreateDto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundCreateDto.MemberId">
+            <summary>
+            操作人
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundEditDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundEditDto.ItemName">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundEditDto.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.FundEditDto.MemberId">
+            <summary>
+            操作人
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.MemberId">
+            <summary>
+            操作人
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Tel">
+            <summary>
+            电话
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Place">
+            <summary>
+            场所
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Cost">
+            <summary>
+            花费
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Number">
+            <summary>
+            人数
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.LikeLevel">
+            <summary>
+            评分
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.LikeCount">
+            <summary>
+            评分数
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Longitude">
+            <summary>
+            经度
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Latitude">
+            <summary>
+            纬度
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.CreationTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyCreateDto.LastModificationTime">
+            <summary>
+            修改时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.MemberId">
+            <summary>
+            操作人
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Tel">
+            <summary>
+            电话
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Place">
+            <summary>
+            场所
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Number">
+            <summary>
+            人数
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Longitude">
+            <summary>
+            经度
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Latitude">
+            <summary>
+            纬度
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyEditDto.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.MemberId">
+            <summary>
+            操作人
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Tel">
+            <summary>
+            电话
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Place">
+            <summary>
+            场所
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Number">
+            <summary>
+            人数
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Longitude">
+            <summary>
+            经度
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Latitude">
+            <summary>
+            纬度
+            </summary>
+        </member>
+        <member name="P:PartyService.Host.Models.Dtos.PartyListDto.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Models.PageDto.FundPagedInput.Normalize">
+            <summary>
+            正常化排序使用
+            </summary>
+        </member>
+        <member name="T:PartyService.Host.Repository.PartyRepositoryBase`2">
+            <summary>
+            Base class for custom repositories of the application.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+            <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
+        </member>
+        <member name="T:PartyService.Host.Repository.PartyRepositoryBase`1">
+            <summary>
+            Base class for custom repositories of the application.
+            This is a shortcut of <see cref="T:PartyService.Host.Repository.PartyRepositoryBase`2"/> for <see cref="T:System.Int32"/> primary key.
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="T:PartyService.Host.Services.PartyTestAppService">
+             <summary>
+             Party应用层服务的接口实现方法
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.#ctor(Abp.Domain.Repositories.IRepository{PartyService.Host.Models.Party,System.Int64})">
+             <summary>
+             构造函数
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.GetPaged(PartyService.Host.Models.PageDto.FundPagedInput)">
+             <summary>
+             获取FundModel的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.GetById(Abp.Application.Services.Dto.EntityDto{System.Int64})">
+            <summary>
+            通过指定id获取PartyListDto信息
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.CreateOrUpdate(PartyService.Host.Models.Dtos.PartyCreateDto)">
+            <summary>
+            添加或者修改Party的公共方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.Create(PartyService.Host.Models.Dtos.PartyCreateDto)">
+            <summary>
+            新增Party
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.Update(PartyService.Host.Models.Dtos.PartyEditDto)">
+            <summary>
+            编辑Party
+            </summary>
+        </member>
+        <member name="M:PartyService.Host.Services.PartyTestAppService.Delete(Abp.Application.Services.Dto.EntityDto{System.Int32})">
+            <summary>
+            删除FundModel信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.ResultGet(System.String,System.Object)">
+            <summary>
+            通过地址和参数取得返回OutPut数据
+            </summary>
+            <param name="url"></param>
+            <param name="input">请求参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.ResultPost(System.String,System.Object)">
+            <summary>
+            通过地址和参数取得返回OutPut数据
+            </summary>
+            <param name="url"></param>
+            <param name="input">请求参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.Get(System.String,System.Object)">
+             <summary>
+            通过地址和我反序列后的JSON取得返回GeneralOutPut数据
+             </summary>
+             <param name="url">请求地址</param>
+             <param name="input">请求参数</param>
+             <returns>请求返回的结果</returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.Post(System.String,System.Object)">
+             <summary>
+             指定Post地址使用Get 方式获取全部字符串
+             </summary>
+             <param name="url">请求后台地址</param>
+             <returns></returns>
+            
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.HttpRequest(System.Net.HttpWebRequest)">
+            <summary>
+            请求的主体部分（由此完成请求并返回请求结果）
+            </summary>
+            <param name="request">请求的对象</param>
+            <returns>请求返回结果</returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.UrlCheck(System.String)">
+            <summary>
+            URL拼写完整性检查
+            </summary>
+            <param name="url">待检查的URL</param>
+        </member>
+        <member name="M:ResearchService.Host.Web.HttpHelper.Get(System.String,System.String)">
+            <summary>
+            http://192.168.1.136:5001/api/services/app/User/GetAllUserName
+            </summary>
+            <param name="serviceName"></param>
+            <param name="apiPath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ResearchService.Host.Web.WebContentDirectoryFinder">
+            <summary>
+            This class is used to find root path of the web project in;
+            unit tests (to find views) and entity framework core command line commands (to find conn string).
+            </summary>
+        </member>
+    </members>
+</doc>

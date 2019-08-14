@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <link href="/css/TaskScheduleBoard/TaskDeal/DealTask.css" rel="stylesheet" />
+    <style>
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+<div class="layui-contentall" style="width: 100%;">
+    <form id="addLabelForm" class="layui-form layui-form-small" style="text-align:center;" asp-antiforgery="true" autocomplete="off">
+        <div class="layui-form-item" style="height:280px;">
+            <div class="layui-inline">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-inline" style="width:250px;">
+                    <input id="memberId" type="hidden" value="@ViewBag.MemberId"/>
+                    <textarea id="labels" name="Description" placeholder="请输入标签，多个标签用逗号分开" class="layui-textarea" style="min-height:250px;"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-content-btn">
+            <div class="layui-input-block">
+                <button type="button" onclick="saveLabels();" class="layui-btn" data-ripple>确认</button>
+                <button type="button" onclick="parent.layer.closeAll();" class="layui-btn layui-btn-primary" data-ripple>关闭</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script src="/js/introduction/Member/MemberLabel.js"></script>
+    <script type="text/javascript">
+    </script>
+}

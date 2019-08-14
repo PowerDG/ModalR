@@ -1,0 +1,159 @@
+﻿@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<style>
+    #fundTable-tab .layui-table-cell {
+        height: auto;
+    }
+
+    .layui-table-tool-temp {
+        padding-right: 0px;
+    }
+
+    .partyNameColumn, .fundNameColumn {
+        font-size: 14px;
+        color: #000;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    #partyTable-tab .layui-form {
+        border: none;
+    }
+
+    layui-form layui-border-box layui-table-view {
+        border-style: solid;
+    }
+
+    .layui-table-cell {
+        height: 250px;
+        text-overflow: inherit;
+        overflow: hidden;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .layui-table img {
+        max-width: 400px;
+    }
+
+    .layui-table-header {
+        display: none;
+    }
+
+    #fundTable-tab .layui-table-header {
+        display: block;
+    }
+
+    .layui-table-tool {
+        background-color: white;
+        border: none;
+    }
+
+    #fundTable-tab .layui-table-box {
+        border: inherit;
+    }
+
+    div p {
+        margin-top: 5px;
+    }
+
+        div p img {
+            width: 16px;
+            height: 16px;
+            float: left;
+            margin-top: 6px;
+            margin-right: 10px;
+        }
+
+    img {
+        cursor: pointer;
+    }
+</style>
+<div class="layui-container" style="width:1280px;padding:0px;min-height:800px;">
+    <div class="layui-col-lg12">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li id="partyView" style="font-size:18px;font-weight: bold;">
+                    <img src="~/images/Home/partys.png">
+                    &nbsp团队活动
+                </li>
+                <li id="fundView" style="font-size:18px;font-weight: bold;">
+                    <img src="~/images/Home/fund.png">
+                    &nbsp团队经费
+                </li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 10px 0px;">
+                <div id="partyTable-tab" class="layui-tab-item">
+                    <table id="partyTable" lay-filter="partyTable"></table>
+                    <div id="div_search" style="position:absolute;top:80px;left:260px;z-index:1000;">
+                        <div class="layui-inline" style="margin-left:5px;margin-bottom:10px;">
+                            <input type="text" name="search" id="search" class="layui-input" placeholder="活动名称或场所关键字" style="width:205px;height:30px; border-radius:15px;">
+                        </div>
+                        <button class="layui-btn layui-btn-sm" id="searchBtn" style="margin-left:5px;margin-bottom:10px;border-radius:15px;" data-type="reload">搜索</button>
+                    </div>
+                </div>
+                <div id="fundTable-tab" class="layui-tab-item">
+                    <table id="fundTable" lay-filter="fundTable"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+<script type="text/html" id="partyTableToolbar">
+    <div id="partyTable-btn" class="layui-btn-container" style="display:inline-block;">
+        <button class="layui-btn layui-btn-sm" style="border-radius:10px;" lay-event="allparty">所有活动</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" style="border-radius:10px;" lay-event="HighPraiseParties">评价最高</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm " style="border-radius:10px;" lay-event="MostTime">去的最多</button>
+    </div>
+
+    {{# var viewUser = '@(!string.IsNullOrEmpty(viewInjectHelper.CurrentUserInfo("Id")))';}}
+    {{# if(viewUser === 'True'){ }}
+    <div style="display:inline-block;float:right">
+        <button class="layui-btn layui-btn-sm" lay-event="createparty" style="border-radius:10px;">新增团建</button>
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="fundTableToolbar">
+    <div id="fundTable-btn" class="layui-btn-container" style="display:inline-block;">
+        <button class="layui-btn layui-btn-sm" lay-event="allfunds">所有数据</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="thisYearFunds">今年数据</button>
+    </div>
+    <div style=" display:inline-block;position:relative;left:700px;">
+        <span>当前可用经费：</span>
+        <span id="remainMoney"> </span>
+        <spqn>元</spqn>
+    </div>
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';}}
+    {{# if(viewUserIsAdmin === 'True'){ }}
+    <div style="display:inline-block;float:right;">
+        <button class="layui-btn layui-btn-sm" lay-event="createfund">新增事项</button>
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="fundToolUnitTemplet">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolUnit">
+        {{# if(d.canOperat === true){ }}
+        <a lay-event="deletefund" style="cursor:pointer;" title="删除">
+            <img src="~/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="editfund" style="cursor:pointer;" title="编辑">
+            <img src="~/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+<script src="~/js/PartyAndActivity/index.js"></script>
+
+
+

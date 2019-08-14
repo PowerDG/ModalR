@@ -1,0 +1,195 @@
+﻿
+@{
+    Layout = null;
+}
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+<link href="/css/Integral/Home/index.css" rel="stylesheet" />
+
+<style type="text/css">
+    .cardBox {
+        width: 370px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-sizing: border-box;
+        color: #333333;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 20px;
+        padding-top: 15px;
+        border-radius: 15px;
+        margin-top: 15px;
+        min-height:800px;
+        background-color:white;
+    }
+
+    .layui-form-label {
+        width: auto;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .layui-input-block {
+        margin-left: 56px;
+        min-height: 36px;
+    }
+
+    .layui-form-item {
+        margin-bottom: 5px;
+    }
+    .layui-form-item .layui-input-inline {
+            float: left;
+            width: 99px;
+            margin-right: 5px;
+     }
+    #order .title {
+        font-size: 20px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom:10px;
+    }
+    #order .topThree {
+        width: 163px;
+        height: 95px;
+        border: 1px solid black;
+    }
+    #order .top {
+        background-color: goldenrod;
+        margin-left: 78px;
+    }
+    #order .left {
+        background-color: silver;
+        display: inline-block;
+       
+    }
+    #order .right {
+        background-color: chocolate;
+        display: inline-block;
+        margin-left: -4px;
+        border-left:none;
+    }
+    #order td, #order th{
+        text-align: center;
+    }
+    #order .information {
+        display: inline-block;
+        width: 60px;
+        text-align: center;
+        overflow: hidden;
+        float: right;
+        margin-right: 10px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .memberName {
+        font-size: 16px;
+        font-weight: 800;
+    }
+    #order img {
+        width: 81px;
+        height: 91px;
+        margin-left: 2px;
+        margin-top: 2px;
+    }
+
+    #order .bottom {
+        margin-top: 20px;
+    }
+   
+</style>
+
+<div id="order" class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md4">
+            <div id="score" class="cardBox layui-form" >
+                <div>
+                    <div class="title">总积分榜</div>
+                    <div class="top topThree" style="border-bottom:none;">
+                        <img src="" />
+                        <div class="information"></div>
+                    </div>
+                    <div>
+                        <div class="left topThree">
+                            <img src="" />
+                            <div class="information"></div>
+                        </div>
+                        <div class="right topThree">
+                            <img src="" />
+                            <div class="information"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <table id="scoreTable"></table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div id="medal" class="cardBox layui-form" >
+                <div>
+                    <div class="title">总勋章榜</div>
+                    <div class="top topThree"style="border-bottom:none;">
+                        <img src="" />
+                        <div class="information"></div>
+                    </div>
+                    <div>
+                        <div class="left topThree">
+                            <img src="" />
+                            <div class="information"></div>
+                        </div>
+                        <div class="right topThree">
+                            <img src="" />
+                            <div class="information"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <table id="medalTable"></table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div id="yearReview" class="cardBox layui-form" >
+                <div>
+                    <div class="title"><span id="reviewYear"></span><span id="reviewType"></span>考评榜</div>
+                    <div class="top topThree"style="border-bottom:none;">
+                        <img src="" />
+                        <div class="information"></div>
+                    </div>
+                    <div>
+                        <div class="left topThree">
+                            <img src="" />
+                            <div class="information"></div>
+                        </div>
+                        <div class="right topThree">
+                            <img src="" />
+                            <div class="information"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <table id="yearReviewTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/Integral/Home/index.js"></script>
+<script>
+    var nowDate = new Date();
+    var year = nowDate.getFullYear();
+    var lastYear = new Date(nowDate);
+    lastYear.setMonth(nowDate.getMonth() - 12); 
+    var type = "年中";
+    if (parseInt(nowDate.getMonth()) < 7) {
+        type = "年末";
+        year = lastYear.getFullYear();
+    }
+    $('#reviewYear').text(year);
+    $('#reviewType').text(type);
+
+</script>

@@ -1,0 +1,143 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <link href="/css/TaskScheduleBoard/TaskPartner/TaskScoreApportione.css" rel="stylesheet" />
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+<div class="layui-contentall" style="width: 100%;">
+    <form id="addTaskParnerForm" class="layui-form layui-form-small" style="text-align:center;" asp-antiforgery="true" autocomplete="off">
+        <div id="taskScoreApportione" style="width:100%;">
+        </div>
+        <div class="taskDetailPart">
+            <div style="position:relative;">
+                <div style="position:absolute;right: 15px;top:10px;">
+                    <div style="cursor:pointer;float:left;padding-left:15px;" onclick="setPanelHeight('showTaskDetail','taskDetailPartImg');">
+                        <a><img id="taskDetailPartImg" src="/images/PromptImg/ContentShrink.png" style="width:16px;height:16px;" /></a>
+                    </div>
+                </div>
+                <div style="font-size:20px;color:white;padding-left:10px;padding-top:5px;">任务简介</div>
+            </div>
+        </div>
+        <div id="showTaskDetail" style="width:600px;margin: auto;display:none;">
+            <div style="display: grid;">
+                <div style="padding-top:10px;">
+                    <label class="taskInfoLable taskLab">&nbsp;&nbsp;&nbsp;&nbsp;任务名:</label>
+                    <label class="taskInfoLable" id="taskName">SSSSSSSSSSSS</label>
+                    <label class="taskInfoLable" style="padding-left:5px;padding-top: 4px;width: auto;cursor:pointer;font-size: 10px;"
+                           onclick="showTaskDetail(GetQueryString('taskId'), unescape(GetQueryString('taskStatus')), parent.layer);">
+                        <img src="/images/PromptImg/ShowDetail.png" style="width:16px;height:16px;" />详情
+                    </label>
+                </div>
+                <div style="padding-top:10px;">
+                    <label class="taskInfoLable taskLab">&nbsp;&nbsp;&nbsp;&nbsp;总分值:</label>
+                    <label class="taskInfoLable" id="taskScore">SSS</label>
+                </div>
+                <div style="padding-top:10px;">
+                    <label class="taskInfoLable taskLab">&nbsp;&nbsp;&nbsp;&nbsp;执行人:</label>
+                    <label class="taskInfoLable" id="memberName">SSS</label>
+                </div>
+                <div style="padding-bottom:10px;padding-top:10px;">
+                    <label class="taskInfoLable taskLab">执行时间:</label>
+                    <label class="taskInfoLable" id="startTime">SSS</label>
+                </div>
+            </div>
+        </div>
+        <div class="taskDetailPart">
+            <div style="position:relative;">
+                <div style="position:absolute;right: 15px;top:10px;">
+                    <div style="cursor:pointer;float:left;padding-left:15px;" onclick="setPanelHeight('communicationReplay','taskCommunicationPartImg');">
+                        <a><img id="taskCommunicationPartImg" src="/images/PromptImg/ContentShrink.png" style="width:16px;height:16px;" /></a>
+                    </div>
+                </div>
+                <div style="font-size:20px;color:white;padding-left:10px;padding-top:5px;">任务评论</div>
+            </div>
+        </div>
+        <div id="communicationReplay" style="width:600px;margin: auto;display:none;">
+
+        </div>
+    </form>
+</div>
+<script type="text/html" id="taskScoreApportioneMaster">
+    {{# var hasApporttioned = false; }}
+    {{# layui.each(d, function(index, item){   }}
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">{{item.MemberName}}</label>
+            <div class="layui-input-inline" style="width:70px;">
+                {{# var taskScore = GetQueryString("taskScore") === "" ? 0 : parseInt(GetQueryString("taskScore"));}}
+                {{# if(GetQueryString("scoreStatus") === 'true' || item.Integral !== 0){ }}
+                {{# hasApporttioned = true; }}
+                <input type="text" id="{{item.MemberId}}" value="{{item.Integral}}" disabled="disabled"
+                       onblur="isNullOrNumber($(this).val(),'{{item.MemberId}}Error');" placeholder="请输入分数" class="layui-input">
+                {{# } else { }}
+                <input type="text"
+                       value="{{ taskScore === 0 ? 0 : item.IsManager ? taskScore - parseInt(taskScore / d.length) * (d.length - 1) : parseInt(taskScore / d.length) }}"
+                       id="{{item.MemberId}}"
+                       onblur="isNullOrNumber($(this).val(),'{{item.MemberId}}Error');" placeholder="请输入分数" class="layui-input">
+                {{# } }}
+                <div id="{{item.MemberId}}Error" class="errorMsgHide">
+                    <div class="valid-tips">
+                        <span class="valid-tips-span field-validation-error">
+                            <span></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="scoreDescription">
+                <input type="text" id="{{item.MemberId}}_Description" value="{{GetQueryString("scoreStatus") === 'true' || item.Integral !== 0 ? item.Description : "完成任务【"+unescape(GetQueryString("taskName"))+"】所分配分值"}}"
+                       {{GetQueryString("scoreStatus") === 'true' || item.Integral !== 0 ? "disabled":""}} class="layui-input">
+            </div>
+        </div>
+    </div>
+    {{#  }); }}
+    <div class="layui-form-item layui-content-btn">
+        <div class="layui-input-block">
+            {{# if(!hasApporttioned){ }}
+            <button type="button" onclick="btnSubmit();" class="layui-btn" data-ripple>确认</button>
+            {{# } }}
+            <button type="button" onclick="parent.layer.closeAll();" class="layui-btn layui-btn-primary" data-ripple>关闭</button>
+        </div>
+    </div>
+</script>
+<script id="CommunicationsInfoMaster" type="text/html">
+    <ul style="padding-left:30px;">
+        {{# layui.each(d, function(index, item){   }}
+        <li>
+            <div id="communicationItem_{{item.Id}}">
+                <div>
+                    <label class="taskInfoLable" style="font-weight:bolder;">{{ item.MemberName }}:&nbsp;{{ item.Content }}</label>
+                    <div class="divAutoHeight"> </div>
+                    <div class="taskReplyTimeRow">
+                        <label class="taskInfoLable">{{ toDateString(item.CreatedTime) }}</label>
+                    </div>
+                </div>
+                <div class="taskReplyRow">
+                    <ul>
+                        {{# item.TaskCommunicationReplysList.forEach(function(replyItem){ }}
+                        <li>
+                            <div id="reply_{{replyItem.Id}}">
+                                <label class="taskInfoLable">{{replyItem.MemberName}}&nbsp;回复:&nbsp;{{replyItem.ReplyMemberName}}:&nbsp;{{replyItem.Content}}</label>
+                                <div class="divAutoHeight"> </div>
+                                <div class="taskReplyTimeRow">
+                                    <label class="taskInfoLable">{{ toDateString(replyItem.CreatedTime) }}</label>
+                                </div>
+                            </div>
+                        </li>
+                        {{# }); }}
+                    </ul>
+                </div>
+            </div>
+        </li>
+        {{#  }); }}
+    </ul>
+</script>
+@section Scripts{
+    <script src="/js/TaskScheduleBoard/global.js"></script>
+    <script src="/js/TaskScheduleBoard/TaskPartner/TaskScoreApportione.js"></script>
+}

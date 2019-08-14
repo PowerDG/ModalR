@@ -1,0 +1,150 @@
+﻿@using ResearchHome.Areas.Introduction.Models
+@model Feedbacks
+@{
+    ViewData["Title"] = "EditFeedback";
+    Layout = "/Views/Shared/_Master.cshtml";
+    int actionType = Model != null && Model.Id > 0 ? 0 : 1; //0 编辑  1 添加
+    int providerId = Model != null ? Model.ProviderId : 0;
+    string providerName = Model != null ? Model.ProviderName : "";
+    int.TryParse(viewInjectHtlper.CurrentUserInfo("Id"), out int currentUserId);
+    string isAdmin = viewInjectHtlper.CurrentUserInfo("IsAdmin");
+    string currentUserName = viewInjectHtlper.CurrentUserInfo("Name");
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <style>
+        .layui-form-item {
+            margin-bottom: 10px;
+            clear: both;
+            height: 57px;
+        }
+    </style>
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHtlper
+
+<div class="layui-form" style="margin-top: 10px;">
+    <div class="layui-inline" style="margin-top: 10px;width: 100%;">
+
+        @if (viewInjectHtlper.CurrentUserInfo("Id") != "")
+        {
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;padding: 9px 0px;">反馈者</label>
+                <div class="layui-input-inline" style="max-height:150px;width: 430px;margin-left: 10px;">
+                    <select name="modules" lay-filter="provider" id="provider" lay-verify="required" lay-search="">
+                        <option value="">请输入或选择反馈者</option>
+                    </select>
+                    <div id="error_providerSelect" style="display: none;">
+                        <div class="valid-tips">
+                            <span class="valid-tips-span field-validation-error">
+                                <span>请选择反馈者</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width:100px;padding: 9px 0px;">反馈者</label>
+                <div class="layui-input-block" style="max-height:150px;width: 430px;">
+                    <input type="text" onchange="onchangeEvent(this,'error_providerText')" id="txtName" asp-for="ProviderName"
+                           required lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入您的名称" />
+                    <div id="error_providerText" style="display: none;">
+                        <div class="valid-tips">
+                            <span class="valid-tips-span field-validation-error">
+                                <span>请留下你的大名</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="layui-form-item" style="height: 270px;">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">反馈内容</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="txtFeedbackId" asp-for="Id" />
+                <input type="hidden" id="txtMemberId" value="@ViewBag.MemberId" />
+                <textarea id="txtContent" onchange="onchangeEvent(this,'error_content')" style="width: 430px;" rows="12" required lay-verify="required" asp-for="Content" placeholder="请输入反馈内容" class="layui-textarea"></textarea>
+                <div id="error_content" style="display: none;">
+                    <div class="valid-tips">
+                        <span class="valid-tips-span field-validation-error">
+                            <span>请输入反馈内容</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" id="verificationDiv" style="display: none;">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">验证码</label>
+            <div class="layui-input-inline" style="padding-left: 14px;width: 250px;">
+                <img id="codeImg" title="点击更换验证码" style="width: 80px;height: 38px;float: left;" />
+                <div style="width: 50px;float: left;padding-left: 5px;">
+                    <input type="hidden" id="isCheck" value="false">
+                    <input type="text" style="margin-left: 10px;" id="VerificationCode" onchange="onchangeEvent(this,'error_code')" placeholder="结果" class="layui-input">
+                </div>
+                <div style="margin-top: 15px;padding-left: 150px;">
+                    <a onclick="showImage()" style="cursor:pointer;color: blue;">换一道</a>
+                </div>
+                <div id="error_code" style="display: none;">
+                    <div class="valid-tips">
+                        <span class="valid-tips-span field-validation-error">
+                            <span>请输入计算结果</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-form-item layui-content-btn" style="margin-bottom: 0px;">
+    <div class="layui-input-block">
+        <button class="layui-btn" onclick="save();">保存</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="/js/global.js"></script>
+    <script src="/js/tools/foowwLocalStorage.js"></script>
+    <script src="/js/introduction/MemberOperating/EditFeedback.js"></script>
+    <script>
+    var currentUserId = '@currentUserId';
+    var currentUserName = '@currentUserName';
+    var isAdmin = '@isAdmin';
+    var actionType = '@actionType';
+    var providerId = '@providerId';
+    var providerName = '@providerName';
+    var _form;
+
+    $(document).ready(function () {
+        layui.use(['layer', 'form'], function () {
+            _form = layui.form;
+            var layer = layui.layer;
+            loadSelectData();
+
+            _form.on('select(provider)', function (data) {
+                $(".layui-select-title input").removeClass('input-verify-null');
+                $("#error_providerSelect").css("display", "none");
+            });
+
+            $('.layui-select-title input').on("onchange", function () {
+                $(".layui-select-title input").removeClass('input-verify-null');
+                $("#error_providerSelect").css("display", "none");
+            });
+
+            var repeatedlySumbit = foowwLocalStorage.get("UID" + currentUserId + "-repeatedlySumbit");
+            if (repeatedlySumbit == true && currentUserId=='0') {
+                $("#verificationDiv").css("display", "block");
+                $("#verificationImgDiv").css("display", "block");
+                $("#isCheck").val("true");
+                showImage();
+            }
+        });
+    });
+    </script>
+}

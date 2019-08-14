@@ -1,0 +1,37 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+
+<div class="div-table-record">
+    <div class="partItem">
+        <span>反馈记录</span>
+        @if (!Model.IsLeave)
+        {
+            <div onclick="editFeedback(@Model.Id, 0, '添加反馈')">
+                <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">添加反馈</span>
+            </div>
+        }
+    </div>
+    <div id="feedbacksContent" style="width:100%;">
+        <table id="table_feedbacks" lay-filter="feedbacks"></table>
+    </div>
+</div>
+
+<script type="text/html" id="feedbackTable">
+    @*<div style="float:left;margin-right: 5px;width: 274px;overflow: auto;overflow-x: scroll;" onmouseover="divTipOver(this)" onmouseout="divTipOut()"
+        data-desc="{{ d.Content }}">{{ d.Content }}</div>*@
+    <div style="float:left;margin-right: 5px;width: 274px;overflow: auto;overflow-x: hidden;" title="{{ d.Content }}"
+         data-desc="{{ d.Content }}">{{ d.Content }}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId === 'True'  && '@Model.IsLeave' != 'True'){ }}
+    <div class="toolPanl" style="float:right;">
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="editFeedback('@Model.Id', {{ d.Id }}, '编辑反馈' )" title="编辑">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="deleteFeedback({{ d.Id }})" title="删除">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+    </div>
+    {{# } }}
+</script>

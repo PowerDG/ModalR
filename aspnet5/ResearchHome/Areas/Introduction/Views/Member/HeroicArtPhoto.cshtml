@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@section Heads{
+    <link href="~/css/form.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/layerMaster.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+<div class="layui-contentall" style="width: 100%;">
+    <form id="editHeroicStyle" class="layui-form layui-form-small" asp-antiforgery="true" autocomplete="off">
+        <div class="layui-form-item" style="padding-top:5px;">
+            <label class="layui-form-label" style="padding-top:100px;">图片</label>
+            <div class="layui-input-inline" style="height:200px;width:220px;">
+                <div style="height:180px;">
+                    <img id="uploadImg" src="" onerror="javascript:this.src = '/images/public/NonePicture.png';"
+                         style="width: 100%;height: 100%;cursor: pointer;border: solid 1px #E6E6E6;"
+                         onclick="previewPic(model.Url !== ''? model.Url : this.src, parent.layer);" />
+                </div>
+                <div id="uploadImgError" style="display:none;">
+                    <div class="valid-tips">
+                        <span class="valid-tips-span field-validation-error">
+                            <span>图片不能为空</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="height:200px;">
+                <button type="button" class="layui-btn" id="uploadImgBtn" onclick="$('#uploadImgHideBtn').click();" style="width:120px;height:40px;margin-top:142px;">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <input type="file" id="uploadImgHideBtn" style="display:none;" name="uploadImgHideBtn" onchange="preImg();" accept="image/jpeg,image/png,image/gif,application/msword" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">说明</label>
+                <div class="layui-input-inline" style="width:350px; margin-top:35px;">
+                    图片大小：不小于760*300像素<br>
+                    昵称：第一个字中心距离左边30像素，距离上边35像素
+                </div>
+            </div>
+        </div>
+        <div class="layui-content-btn">
+            <div class="layui-input-block">
+                <button type="button" id="btnSubmit" class="layui-btn" onclick="layerSubmit()" data-ripple>确认</button>
+                <button type="button" onclick="layerExit()" class="layui-btn layui-btn-primary" data-ripple>取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var memberImg = {};
+         $('#uploadImg').attr('src', "/images/public/NonePicture.png");
+        
+        function preImg() {
+            uploadOrgImg("uploadImgHideBtn", function () {
+                $("#uploadImg").attr({ src: compressedImg });
+                memberImg.imgPath = compressedImg;
+                $('#uploadImgError').css("display", "none");
+            });
+        }
+        function layerSubmit() {
+            $('#uploadImgError').css("display", $('#uploadImg').attr("src") !== ''
+                && $('#uploadImg').attr("src") !== '/images/public/NonePicture.png'
+                ? "none" : "block");
+           
+            if ($('#uploadImg').attr("src") === ''|| $('#uploadImg').attr("src") === '/images/public/NonePicture.png' ) {
+                return;
+            }
+            var url = "/Introduction/member/InsertArtPhoto";
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: url,
+                data: {
+                    imgPath: memberImg.imgPath
+                },
+                success: function (data) {
+                    if (data.result) parent.layer.msg('操作成功!', { icon: 6, shift: -1, time: 500, shade: 0.3 }, function () { parent.layer.closeAll(); });
+                    else {
+                        parent.layer.msg(data.msg !== '' ? data.msg : '操作失败,请重试！！', { icon: 5, shift: -1, time: 500, shade: 0.3 });
+                    }
+                }
+            });
+        }
+
+        function layerExit() {
+            parent.layer.closeAll();
+        }
+    </script>
+}

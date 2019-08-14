@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@section Heads{
+    <link href="~/css/form.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/layerMaster.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ResearchHome.Areas.PartyAndActivity.Models.PartyImgModel
+@addTagHelper *, ResearchHome
+<div class="layui-contentall" style="width: 100%;">
+    <form id="editHeroicStyle" class="layui-form layui-form-small" asp-antiforgery="true" autocomplete="off">
+        <div class="layui-form-item" style="padding-top:5px;">
+            <label class="layui-form-label" style="padding-top:100px;">图片</label>
+            <div class="layui-input-inline" style="height:200px;width:220px;">
+                <div style="height:180px;">
+                    <img id="uploadImg" src="" onerror="javascript:this.src = '/images/public/NonePicture.png';"
+                         style="width: 100%;height: 100%;cursor: pointer;border: solid 1px #E6E6E6;"
+                         onclick="previewPic(model.Url !== ''? model.Url : this.src, parent.layer);" />
+                </div>
+                <div id="uploadImgError" style="display:none;">
+                    <div class="valid-tips">
+                        <span class="valid-tips-span field-validation-error">
+                            <span>图片不能为空</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="height:200px;">
+                <button type="button" class="layui-btn" id="uploadImgBtn" onclick="$('#uploadImgHideBtn').click();" style="width:120px;height:40px;margin-top:142px;">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <input type="file" id="uploadImgHideBtn" style="display:none;" name="uploadImgHideBtn" onchange="preImg();" accept="image/jpeg,image/png,image/gif,application/msword" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">说明</label>
+                <div class="layui-input-inline" style="width:350px;">
+                    <textarea id="Description" name="Description" style="min-height:0;"
+                              onblur="descriptionOnblur();" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    <div id="DescriptionError" style="display:none;">
+                        <div class="valid-tips">
+                            <span class="valid-tips-span field-validation-error">
+                                <span id="DescriptionErrorSpan"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-content-btn">
+            <div class="layui-input-block">
+                <button type="button" id="btnSubmit" class="layui-btn" onclick="layerSubmit()" data-ripple>确认</button>
+                <button type="button" onclick="layerExit()" class="layui-btn layui-btn-primary" data-ripple>取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script src="~/js/PartyAndActivity/OptionPartyImg.js"></script>
+    <script type="text/javascript">
+       var model;
+        window.onload = function () {
+            var uploadImgSrc = "@Html.Raw(Model.ImgUrl)" === "" ? "/images/public/NonePicture.png" : "@Html.Raw(Model.ImgUrl)";
+            var description ="@Html.Raw(string.IsNullOrEmpty(Model.ImgDescription) ? "" : Model.ImgDescription.Replace("\"", "\\\""))";
+            $('#Description').val(description);
+            $('#uploadImg').attr('src', uploadImgSrc);
+            model = {
+                PartyId: "@Html.Raw(Model.PartyId)"
+            };
+        };
+    </script>
+}

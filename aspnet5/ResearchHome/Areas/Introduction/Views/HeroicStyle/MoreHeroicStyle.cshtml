@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/introduce/index.css" rel="stylesheet" />
+    <style>
+        .pictureDescription {
+            font-size: 14px;
+            padding: 5px;
+            height: 50px;
+            vertical-align: middle;
+            text-align: center;
+            display: table-cell;
+            width: 1%;
+        }
+
+        .pictureTool {
+            position: absolute;
+            color: rgb(211, 211, 211);
+            text-align: right;
+            right: 7px;
+            top: 7px;
+            display: none;
+        }
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ResearchHome.Areas.Introduction.Models.PicturesModel
+@addTagHelper *, ResearchHome
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="layui-contentall" style="width: 100%;">
+    <div id="moreHeroicStylePart" style="padding-top: 5px;">
+        <div id="moreHeroicStylePartContent" class="layui-row-staff">
+        </div>
+        <div id="picturesPaging" style="justify-content: center;display: flex;"></div>
+    </div>
+</div>
+
+<script id="moreHeroicStyleMaster" type="text/html">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# layui.each(d, function(index, item){   }}
+    <div class="layui-col-staff" style="position:relative;" id="heroicStylePhotos"
+         onmouseover="$('#heroicStyleEiteDiv_'+'{{item.Id}}').css('display', 'block');"
+         onmouseout="$('#heroicStyleEiteDiv_'+'{{item.Id}}').css('display', 'none');">
+        <div id="heroicStyleEiteDiv_{{item.Id}}" class="pictureTool">
+            {{# if(parseInt(viewUserId) === parseInt(item.MemberId) || viewUserIsAdmin === 'True'){ }}
+            <div>
+                <a style="cursor:pointer;" onclick="editHeroicStyle('{{item.Id}}');" title="编辑">
+                    <img src="/images/PromptImg/Edit.png" />
+                </a>
+            </div>
+            <div style="padding-top:7px;">
+                <a style="cursor:pointer;" onclick="deleteHeroicStyle('{{item.Id}}');" title="删除">
+                    <img src="/images/PromptImg/Obsolete.png" />
+                </a>
+            </div>
+            {{# } }}
+            <div style="padding-top:{{parseInt(viewUserId) === parseInt(item.MemberId) || viewUserIsAdmin === 'True' ? "7px":"0"}};">
+                <a style="cursor:pointer;" onclick="fileDownLoad('Img_{{item.Id}}','{{ item.Url }}');" title="下载">
+                    <img src="/images/PromptImg/FileDownLoad.png" />
+                </a>
+            </div>
+        </div>
+        <img id="Img_{{item.Id}}" src="{{ item.PartialPictureUrl }}" style="margin-top: 2px;width: 150px;height:150px;cursor:pointer;"
+             onerror="javascript: this.src = '/images/public/NonePicture.png';"
+             onclick="previewPic($('#Img_{{item.Id}}').attr('src') === '{{ item.PartialPictureUrl }}' ? '{{ item.Url }}': $('#Img_{{item.Id}}').attr('src')
+                        ,parent.layer);" />
+        <div class="pictureDescription">
+            <span>{{ item.Description }}</span>
+        </div>
+    </div>
+    {{#  }); }}
+</script>
+
+<script src="/js/introduction/HeroicStyle/MoreHeroicStyle.js"></script>
+<script type="text/javascript">
+</script>

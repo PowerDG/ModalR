@@ -1,0 +1,198 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<link href="~/css/skillmedal/index.css" rel="stylesheet" />
+<style>
+    .tip img {
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+    .tip {
+        display: block;
+        left: 426px;
+        top: 272px;
+        width: 100px;
+        height: 100px;
+        background-color: transparent;
+    }
+
+        .tip div {
+            margin-top: 20px;
+            margin-left: 20px;
+            width: 50px;
+            background-color: #c7c6c6;
+            padding: 5px;
+        }
+</style>
+
+<div style="background-color:#fff;">
+    <div style="position:relative;width: 900px;height:750px;overflow: -webkit-paged-y;margin:auto;" id="div_skill"></div>
+</div>
+
+<div class="tip" onmousemove="$(this).css('display', 'block');" onmouseout="$(this).css('display', 'none');" style="position:absolute;display: none">
+    <div>
+        <a id="addskill" onclick="addContributionStandard()" style="cursor:pointer;display:inline" title="添加">
+            <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>&nbsp;添加</span><br />
+        </a>
+        <a id="editskill" onclick="editContributionStandard()" style="cursor:pointer" title="编辑">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" /><span>&nbsp;编辑</span><br />
+        </a>
+        <a id="deleteskill" onclick="deleteContributionStandard()" style="cursor:pointer" title="删除">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" /><span>&nbsp;删除</span><br />
+        </a>
+        <input type="hidden" id="noteId" />
+        <input type="hidden" id="noteName" />
+    </div>
+</div>
+
+<script src="~/js/global.js"></script>
+<script src="~/js/echarts.min.js"></script>
+
+<script>
+
+    var myChart = echarts.init(document.getElementById('div_skill'));
+    initChart();
+    loadChart();
+
+    function initChart() {
+        myChart.on('mouseover', function (params) {
+            console.log(params.event.event.clientX + 'X' + params.event.event.clientY);
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            $('.tip').removeClass("layui-anim-fadeout");
+            $('.tip').addClass("layui-anim-up");
+            $('.tip').show().css({
+                "left": params.event.event.clientX - 10,
+                "top": params.event.event.clientY - 20
+            })
+            $("#noteId").val(params.data.id);
+            $("#noteName").val(params.data.name);
+
+            $('#deleteskill').show();
+            $('#addskill').show();
+            $('#editskill').show();
+
+            //var level = params.data.level;
+            //switch (level) {
+            //    case 1:
+            //        $('#deleteskill').hide();
+            //        $('#addskill').show();
+            //        $('#editskill').show();
+            //        break;
+            //    case 2:
+            //        $('#deleteskill').show();
+            //        $('#addskill').show();
+            //        $('#editskill').show();
+            //        break;
+            //    case 3:
+            //        $('#addskill').hide();
+            //        $('#deleteskill').show();
+            //        $('#editskill').show();
+            //        break;
+            //}
+        });
+    }
+
+    function loadChart() {
+        $.get("/TaskScheduleBoard/ContributionStandard/GetContributionStandardData", function (data) {
+            console.log(data);
+            myChart.setOption(option = {
+                series: [
+                    {
+                        type: 'tree',
+                        data: [data],
+                        top: '1%',
+                        left: '6%',
+                        bottom: '1%',
+                        right: '23%',
+                        symbolSize: 7,
+                        label: {
+                            normal: {
+                                position: 'left',
+                                verticalAlign: 'middle',
+                                align: 'right',
+                                fontSize: 12
+                            }
+                        },
+
+                        leaves: {
+                            label: {
+                                normal: {
+                                    position: 'right',
+                                    verticalAlign: 'middle',
+                                    align: 'left'
+                                }
+                            }
+                        },
+
+                        expandAndCollapse: false,
+                        animationDuration: 550,
+                        animationDurationUpdate: 750
+                    }
+                ]
+            });
+            //ResizeChart(myChart);
+        });
+    }
+
+    function ResizeChart(myChart) {
+        var container = document.getElementById('div_skill');
+        var allNode = 0;
+        var nodes = myChart._chartsViews[0]._data._graphicEls;
+        for (var i = 0, count = nodes.length; i < count; i++) {
+            var node = nodes[i];
+            if (node === undefined)
+                continue;
+            allNode++;
+        }
+        var currentHeight = 18 * allNode;
+        container.style.height = currentHeight + 'px';
+        myChart.resize();
+    }
+
+    function addContributionStandard() {
+        var id = $('#noteId').val();
+        layer.open({
+            resize: false,
+            title: '添加贡献点',
+            type: 2,
+            scrollbar: false,
+            area: ['347px', '246px'],//宽高
+            content: "/TaskScheduleBoard/ContributionStandard/AddContributionStandard?id=" + id,
+            end: function () {
+                loadChart();
+            }
+        });
+    }
+
+    function deleteContributionStandard() {
+        var id = $('#noteId').val();
+        var name = $('#noteName').val();
+        layer.confirm('确定要删除 [' + name + '] 吗？', {
+            btn: ['确认', '取消'], icon: 3
+        }, function () {
+            $.get("/TaskScheduleBoard/ContributionStandard/DeleteContributionStandard?contributionStandardId=" + id,
+                function (data) {
+                    layer.msg(data.message);
+                    if (data.success) loadChart();
+                });
+        }, function () { });
+    }
+
+    function editContributionStandard() {
+        var id = $('#noteId').val();
+        layer.open({
+            resize: true,
+            title: '添加贡献点',
+            type: 2,
+            scrollbar: false,
+            area: ['396px', '236px'],//宽高
+            content: "/TaskScheduleBoard/ContributionStandard/EditContributionStandard?id=" + id,
+            end: function () {
+                loadChart();
+            }
+        });
+    }
+
+
+</script>

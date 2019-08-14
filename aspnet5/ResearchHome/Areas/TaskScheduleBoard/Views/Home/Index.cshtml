@@ -1,0 +1,55 @@
+﻿@using ResearchHome.Areas.Introduction.Models
+@{
+    Layout = null;
+}
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+<link href="/css/TaskScheduleBoard/Home/index.css" rel="stylesheet" />
+<div class="partMarginTopFrist">
+    <div class="partItem">
+        <span>团队正在执行的任务(<span id="teamDoingTaskContentCount"></span>)</span>
+    </div>
+    <div>
+        @Html.Partial("TeamDoingTable")
+    </div>
+</div>
+<div class="partMarginTop">
+    <div class="partItem">
+        <span>我的任务(<span id="myTaskContentCount"></span>)</span>
+    </div>
+    <div>
+        @Html.Partial("MyTaskTable")
+    </div>
+</div>
+<div class="partMarginTop">
+    <div class="partItem" style="position:relative;">
+        <span>
+            任务池(<span id="taskPoolContentCount"></span>)
+        </span>
+        @if (viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+        {
+            <span class="partItemTool" onclick="addTask();">
+                <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>发布任务</span>
+            </span>
+        }
+    </div>
+    <div>
+        @Html.Partial("TaskPool")
+    </div>
+</div>
+<div class="partMarginTop">
+    <div class="partItem">
+        <span>已完成任务(<span id="finishTaskContentCount"></span>)</span>
+    </div>
+    <div>
+        @Html.Partial("FinishTaskTable")
+    </div>
+</div>
+<script type="text/html" id="nameTips">
+    <div><a title="{{d.Name}}">{{d.Name}}</a></div>
+</script>
+<script src="/js/TaskScheduleBoard/global.js"></script>
+<script src="/js/TaskScheduleBoard/Home/index.js"></script>
+<script type="text/javascript">
+</script>

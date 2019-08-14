@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="~/css/layerMaster.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        .layui-table, .layui-table-view {
+            margin-top: 0px;
+        }
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+
+<div id="medaledMemberTableContent" style="width:100%;margin:auto;">
+    <table class="layui-table" id="medaledMemberTable" lay-data="{id:'medaledMemberTable'}" lay-filter="medaledMemberTableFilter"></table>
+</div>
+<div class="layui-content-btn">
+    <div class="layui-input-block">
+        <button type="button" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">关闭</button>
+    </div>
+</div>
+<script type="text/html" id="GainDate">
+    <div>{{toDateString(d.GainDate)}}</div>
+</script>
+<script type="text/html" id="Reason">
+    <div><span title="{{d.Reason === null ? "" : d.Reason}}">{{d.Reason === null ? "" : d.Reason}}</span></div>
+</script>
+@section Scripts{
+    <script type="text/javascript">
+        var medaledMemberTableSortData = { field: "GainDate", type: "DESC" };
+
+        var medaledMemberTableCols = [
+            { field: 'Index', width: 70, title: '序号' }
+            //,{ field: 'Id', width: 80, title: '排名', sort: "ture" }
+            , { field: 'Name', width: 200, title: '姓名', sort: "ture" }
+            , { field: 'GainDate', width: 160, title: '授予时间', templet: '#GainDate', sort: "ture" }
+            , { field: 'Reason', minwidth: 170, title: '授予原因', toolbar: '#Reason', sort: "ture" }
+        ];
+
+        window.onload = function () {
+            loadMedaledMemberTableData();
+        }
+
+        function loadMedaledMemberTableData() {
+            layui.use('table', function () {
+                var table = layui.table;
+                table.render({
+                    elem: '#medaledMemberTable'
+                    , url: '/SkillsAndMedals/Home/GetMedaledMemberTableData'
+                    , height: 'true'
+                    , method: 'post'
+                    , limit: 100
+                    , limits: [10, 20, 30, 100, 200, 500]
+                    , page: true
+                    , async: false
+                    , cols: [medaledMemberTableCols]
+                    , where: {
+                        medalId: GetQueryString("medalId"),
+                        sortField: medaledMemberTableSortData.field,
+                        sortType: medaledMemberTableSortData.type
+                    }
+                    , done: function (res) {
+                        $('.layui-layout-admin').css("overflow", "auto");
+                        setPageTableIndex("medaledMemberTableContent");
+                        setSortStyle("medaledMemberTable", medaledMemberTableSortData);
+                    }
+                });
+
+                //排序事件
+                table.on('sort(medaledMemberTableFilter)', function (data) {
+                    medaledMemberTableSortData = data;
+                    loadMedaledMemberTableData();
+                });
+            });
+        }
+
+        var limitPage;
+        $('#medaledMemberTableContent').change(function (e) {
+            limitPage = $(e.target).find('option:selected').attr('value');
+        });
+    </script>
+}

@@ -1,0 +1,312 @@
+﻿@model ResearchHome.Areas.TaskScheduleBoard.Models.TaskReviewModel
+@{
+    var deadLineTime = Model.DeadLineTime == null ? "--" : Model.DeadLineTime.Value.ToString("yyyy-MM-dd");
+    var startTime = Model.StartTime == null ? "--" : Model.StartTime.Value.ToString("yyyy-MM-dd");
+    var endTime = Model.EndTime == null ? "--" : Model.EndTime.Value.ToString("yyyy-MM-dd");
+    var toNumber = "toCount";
+    var autoId = 0;
+    var todoPagingId = "todoPaging";
+    var taskTodosId = "taskTodos";
+    var curName = "curName";
+}
+<style>
+    .layui-form-label {
+        width: auto;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .layui-input-block {
+        margin-left: 70px;
+    }
+
+    .cardBox {
+        /*height: 500px;*/
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-sizing: border-box;
+        color: #333333;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 20px;
+        padding-top: 15px;
+    }
+
+    .layui-row-staff {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .layui-col-staff {
+        margin: 1% 1.4%;
+        float: left;
+    }
+</style>
+
+<div class="layui-container layui-form">
+    <div class="layui-row">
+        <div id="medalContent" class="layui-col-md6">
+            <div class="cardBox" style="background-color: #ffcc99;margin-top: 15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 -6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div id="isReview" data-isreview="@Model.IsReview" style="display:none;"></div>
+                <div class="layui-row">
+                    <label class="layui-form-label">任务名称：</label>
+                    <label class="layui-form-label" style="text-align:left;width:450px;">@Model.TaskName</label>
+                    <input type="hidden" name="taskId" value="@Model.TaskId" />
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md6">
+                        <label class="layui-form-label">负责人：@Model.Leader</label>
+                    </div>
+                    <div class="layui-col-md6">
+                        <label class="layui-form-label">开始时间：@startTime</label>
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md6">
+                        <label class="layui-form-label">截止时间：@deadLineTime</label>
+                    </div>
+                    <div class="layui-col-md6">
+                        <label class="layui-form-label">结束时间：@endTime</label>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-row">
+                    <label class="layui-form-label">关键结果：</label>
+                    <div style="margin-left:70px;padding-top:9px;">
+                        @foreach (var keyResult in Model.KeyResults)
+                        {
+                            <p>@keyResult</p>
+                        }
+                    </div>
+                </div>
+                <div class="layui-form-item layui-row">
+                    <label class="layui-form-label">亮点功能：</label>
+                    <div class="layui-input-block">
+                        @*@if (Model.IsReview == 1)
+                        {*@
+                            <textarea id="perfectFunction" name="perfectFunction" placeholder="请输入内容" class="layui-textarea" >@Model.PerfectFunction</textarea>
+                        @*}
+                        else
+                        {
+                            <textarea id="perfectFunction" name="perfectFunction" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        }*@
+                    </div>
+                </div>
+                <div class="layui-form-item layui-row">
+                    <label class="layui-form-label">窝心功能：</label>
+                    <div class="layui-input-block">
+                        @*@if (Model.IsReview == 1)
+                        {*@
+                            <textarea id="troubleFunction" name="troubleFunction" placeholder="请输入内容" class="layui-textarea" >@Model.TroubleFunction</textarea>
+                        @*}
+                        else
+                        {
+                            <textarea id="troubleFunction" name="troubleFunction" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        }*@
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-row">
+                    <label class="layui-form-label">点赞方面：</label>
+                    <div class="layui-input-block">
+                        @*@if (Model.IsReview == 1)
+                        {*@
+                            <textarea id="strongAspect" name="strongAspect" placeholder="请输入内容" class="layui-textarea" >@Model.StrongAspect</textarea>
+                        @*}
+                        else
+                        {
+                            <textarea id="strongAspect" name="strongAspect" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        }*@
+                    </div>
+                </div>
+                <div class="layui-form-item layui-row">
+                    <label class="layui-form-label">加油方面：</label>
+                    <div class="layui-input-block">
+                        @*@if (Model.IsReview == 1)
+                        {*@
+                            <textarea id="weaknessAspect" name="weaknessAspect" placeholder="请输入内容" class="layui-textarea">@Model.WeaknessAspect</textarea>
+                            @*<button id="update" class="layui-btn" style="height:33px;position:absolute;bottom:-33px;right:-15px;">保存</button>*@
+                        @*}
+                        else
+                        {
+                            <textarea id="weaknessAspect" name="weaknessAspect" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        }*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="cardBox layui-form layui-row" style="background-color:#d47575;min-height: 500px;">
+                <div>
+                    <label class="layui-form-label" style="font-weight: bold;font-size: 16.38px;">授予勋章：</label>
+                    <button id="grantMedal" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe67a;</i></button>
+                </div>
+                <div id="memberPartContent" class="layui-row-staff" style="min-height:161px;">
+                </div>
+
+                <div>
+                    <label class="layui-form-label" style="font-weight: bold;font-size: 16.38px;">最佳外援：</label>
+                    <button id="foreignGrant" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe6c9;</i></button>
+                </div>
+                <div id="foreignPartContent" class="layui-row-staff">
+                </div>
+                <div>
+                    <button id="reset" class="layui-btn" style="position:absolute;bottom:20px;right:20px;">清空</button>
+                </div>
+            </div>
+        </div>
+        <div id="personalContribute" class="layui-col-md6">
+            <div class="cardBox layui-form layui-row" style="background-color:#ccccff;min-height: 500px;margin-top: 15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 -6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <div class="layui-row">
+                    <div class="layui-col-md6">
+                        <h3 style="padding: 5px 0px;font-weight: bold;">个人贡献</h3>
+                    </div>
+                    <div class="layui-col-md6">
+                        <h3 style="display:inline;">总分：</h3>
+                        <div class="layui-input-inline">
+                            @if (Model.IsReview == 1)
+                            {
+                                <input id="totalScore" type="text" name="totalScore" placeholder="请输入总分值" lay-verify="required|number" autocomplete="off" class="layui-input" value="@Model.Score" disabled>
+                            }
+                            else
+                            {
+                                <input type="text" name="totalScore" placeholder="请输入总分值" lay-verify="required|number" autocomplete="off" class="layui-input">
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var personalContribution in Model.PersonalContributions)
+                {
+                    <div class="layui-row" style="background-color:#9999ff;margin-top:30px;word-wrap:break-word;">
+                        <div class="layui-col-md6" style="padding:10px;">
+                            @{
+                                autoId = autoId + 1;
+                                todoPagingId = "todoPaging";
+                                taskTodosId = "taskTodos";
+                                toNumber = "toCount";
+                                curName = "curName";
+                                todoPagingId += autoId;
+                                taskTodosId += autoId;
+                                toNumber += autoId;
+                                curName += autoId;
+                            }
+                            <h4><strong id="@curName">@personalContribution.ExecutorName</strong> - 完成 <span id="@toNumber">@personalContribution.FinishTodoCount</span> 个TODO</h4>
+                            @if (personalContribution.FinishTodoCount > 0)
+                            {
+                                <div style="padding: 10px;background-color:#9999ff">
+                                    <ul id="@taskTodosId" style="cursor:pointer;"></ul>
+                                    <div id="@todoPagingId" style="margin-bottom:8px;"></div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="layui-col-md6" style="padding:10px;">
+                            <div>
+                                <h3>点评：</h3>
+                                @if (Model.IsReview == 1)
+                                {
+                                    <textarea name="reviewComment-@personalContribution.ExecutorId" placeholder="请输入内容" class="layui-textarea" disabled>@personalContribution.ReviewComment</textarea>
+                                }
+                                else
+                                {
+                                    <textarea name="reviewComment-@personalContribution.ExecutorId" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                }
+                                <h3>分值：</h3>
+                                @if (Model.IsReview == 1)
+                                {
+                                    <input type="text" name="reviewScore-@personalContribution.ExecutorId" lay-verify="required" placeholder="请输入分值" autocomplete="off" class="layui-input" value="@personalContribution.ReviewScore" disabled>
+                                }
+                                else
+                                {
+                                    <input type="text" name="reviewScore-@personalContribution.ExecutorId" lay-verify="required|number" placeholder="请输入分值" autocomplete="off" class="layui-input">
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="display:none;">
+        <div class="layui-col-md12">
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin:auto;width:150px;">
+                    @*<button id="goBack" class="layui-btn layui-btn-sm">返回</button>*@
+                    <button class="layui-btn" lay-submit lay-filter="saveReview">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.config({
+        base: '/lib/layui/lay/extends/'
+    });
+    layui.use(['form', 'selectM', 'layer', 'laypage', 'laytpl', 'util', 'laydate'], function () {
+        var form = layui.form,
+            laypage = layui.laypage,
+            laytpl = layui.laytpl;
+        for (var i = 1; i <= @autoId; i++) {
+            todoList(i);
+        }
+        function todoList(idIndex) {
+            var coun = document.getElementById('toCount' + idIndex).innerHTML;
+            var name = document.getElementById('curName' + idIndex).innerHTML;
+            laypage.render({
+                elem: 'todoPaging' + idIndex
+                , count: coun
+                , limit: 15
+                , groups: 2
+                , theme: '#939' 
+                , layout: ['prev', 'page', 'next']
+                , prev: '<i class="layui-icon layui-icon-left"></i>'
+                , next: '<i class="layui-icon layui-icon-right"></i>'
+                , jump: function (obj) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "/TaskScheduleBoard/Tasks/GetReviewTaskTodos?taskId=" +@Model.TaskId+"&executorName=" + name,
+                        data: {
+                            taskId: $('#taskId').attr('data-taskid'),
+                            page: obj.curr, limit: obj.limit
+                        },
+                        success: function (data) {
+                                var taskTodoList = document.getElementById('taskTodoList');
+                                var getTpl = taskTodoList.innerHTML;
+                            var taskTodos = document.getElementById('taskTodos' + idIndex);
+                            if (taskTodos == null) {
+                                return;
+                            }
+                                laytpl(getTpl).render(data, function (html) {
+                                    taskTodos.innerHTML = html;
+                                 });
+                                form.render();
+                            
+                        },
+                        error: function (data) {
+                            alert("数据异常");
+                        }
+                    });
+                }
+            });
+        }
+    })
+
+</script>
+
+<script id="taskTodoList" type="text/html">
+    {{# layui.each(d, function(index, item){   }}
+    <div class="layui-form-item">
+        {{#  if(item.Status === '完成'&&item.Description!=null){ }}
+        <input type="checkbox" lay-skin="primary" checked disabled>
+        <div class="todo-keyresult-title" onclick="viewTodo(this);" data-todoid="{{ item.Id }}" style="color:#c2c2c2;">
+            {{ item.Description }}
+        </div>
+        {{#  }else if(item.Description!=null){ }}
+        <div class="todo-keyresult-title" onclick="viewTodo(this);" data-todoid="{{ item.Id }}" style="width:240px;">
+            {{ item.Description }}
+        </div>
+        {{# } }}
+    </div>
+   
+    {{#  }); }}
+</script>
+<script src="~/js/TaskScheduleBoard/Tasks/reviewTask.js"></script>

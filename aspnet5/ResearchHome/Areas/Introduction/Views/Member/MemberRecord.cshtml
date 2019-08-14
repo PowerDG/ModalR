@@ -1,0 +1,238 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+@{
+    string photoUrl = string.IsNullOrEmpty(Model.Photo) ? "/images/public/NonePicture.png" : Model.Photo;
+    string photoHD = string.IsNullOrEmpty(Model.PhotoHD) ? photoUrl : Model.PhotoHD;
+    Boolean.TryParse(viewInjectHelper.CurrentUserInfo("IsAdmin"), out bool IsAdmin);
+    Int32.TryParse(viewInjectHelper.CurrentUserInfo("Id"), out int LoginId);
+    string likeType = ViewBag.LikeType;
+}
+
+@addTagHelper *, ResearchHome
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+<link href="/css/introduce/memberpage.css" rel="stylesheet" />
+
+<style>
+    .memberinfo-medal-div {
+        display: inline-table;
+    }
+
+    .memberinfo-medal-img {
+        width: 50px;
+        float: left;
+        margin-left: 20px;
+        margin-right: 5px;
+    }
+
+    .memberinfo-medal-p {
+        float: left;
+        display: inline-flex;
+        margin-top: 15px;
+    }
+
+    .div_tip {
+        position: absolute;
+        display: none;
+        border-style: solid;
+        z-index: 9999999;
+        transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1), top 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        background-color: rgba(50, 50, 50, 0.7);
+        border-width: 0px;
+        border-color: rgb(51, 51, 51);
+        border-radius: 4px;
+        color: rgb(255, 255, 255);
+        font: 14px/21px "Microsoft YaHei";
+        padding: 5px;
+        width: 300px;
+    }
+
+    .toolPanl {
+        display: none;
+    }
+
+    .layui-table-view {
+        width: 720px;
+    }
+
+    .partItem {
+        height: 40px;
+        text-align: left;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .layui-table-cell {
+        height: 100%;
+    }
+    #ContentCenter{
+        width:1280px;
+        margin:auto;
+        height:auto;
+    }
+</style>
+
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+        .container::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+</style>
+
+<div class="layui-row layui-row-memberpage">
+    <!--左侧个人信息-->
+    <div class="layui-col-md3">
+        <input type="hidden" value="@Model.Id" id="memberPageId" />
+        <div class="layui-col-div-img">
+            <img src="@photoUrl" title="点击预览高清图" id="headImg" onclick="previewPic('@photoHD', parent.layer)" onerror="javascript: this.src = '/images/public/NonePicture.png'" />
+        </div>
+        <div class="layui-row">
+            <div class="layui-col-md6 layui-memberpage-icon" style="text-align:right;padding-right:20px;">
+                <img src="/images/PromptImg/LikeMember.png" id="like" data-clicktag="0" width="24" height="24" style="cursor: pointer;" />
+                <p>点赞(<span class="likecount">@Model.LikeCount</span>)</p>
+            </div>
+            <div class="layui-col-md6 layui-memberpage-icon" style="padding-left:20px;">
+                <img src="/images/PromptImg/fighting.png" id="fight" data-clicktag="0" width="24" height="24" style="cursor: pointer;" />
+                <p>加油(<span class="dislikecount">@Model.DislikeCount</span>)</p>
+            </div>
+        </div>
+        <div class="layui-memberpage-medal">
+            @await Html.PartialAsync("MedalList", Model)
+        </div>
+    </div>
+
+
+    <!--右侧其他信息-->
+    <div class="layui-col-md9">
+        <!--个人资料-->
+        @await Html.PartialAsync("MemberProfile", Model)
+
+        <!--个人标签-->
+        @await Html.PartialAsync("MemberLabel", Model)
+        <!--读书记录-->
+        @await Html.PartialAsync("ReadBookList", Model)
+
+        <!--技能树-->
+        @await Html.PartialAsync("SkillList", Model)
+
+        <!--反馈-->
+        @await Html.PartialAsync("FeedbackList", Model)
+
+        @if (IsAdmin || LoginId == Model.Id)
+        {
+            <!--积分占位-->
+            @await Html.PartialAsync("IntegralsList", Model)
+
+            <!--考评记录-->
+            @await Html.PartialAsync("AppraisalList", Model)
+
+            <!--生日礼品-->
+            @await Html.PartialAsync("GiftsList", Model)
+
+        }
+        else if (LoginId > 0)
+        {
+            <!--积分占位-->
+            @await Html.PartialAsync("IntegralsList", Model)
+        }
+        @if (IsAdmin)
+        {
+            <!--职位变更记录-->
+            @await Html.PartialAsync("TitleChangeList", Model)
+        }
+    </div>
+</div>
+
+<div class="div_tip"></div>
+
+<script src="/js/echarts.min.js"></script>
+<script src="~/js/introduction/Member/ReadBookList.js"></script>
+<script src="~/js/introduction/Member/AppraisalList.js"></script>
+<script src="~/js/introduction/Member/FeedbackList.js"></script>
+<script src="~/js/introduction/Member/SkillList.js"></script>
+<script src="~/js/introduction/Member/TitleChangeList.js"></script>
+<script src="~/js/introduction/Member/IntegralsList.js"></script>
+<script src="~/js/introduction/Member/GiftsList.js"></script>
+<script src="~/js/introduction/Member/MemberLabel.js"></script>
+<script src="~/js/echarts-wordcloud.js"></script>
+<script src="~/js/introduction/Member/MemberRecord.js"></script>
+
+<script>
+
+    var memberPageId;
+    $(document).ready(function () {
+        memberPageId = '@Model.Id';
+        loadLikeCount('@likeType');
+        loadMedal();
+
+        loadLabelChart();
+        loadBooksTable();
+
+        var num = $("div .div-table-record").length;
+        var img = $("div .div-table-record");
+        lazyload();
+        window.onscroll = lazyload;
+        //window.addEventListener('scroll', lazyload());
+        var n=3;
+        function lazyload() {
+            var seeHeight = document.documentElement.clientHeight; //可见区域高度
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条距离顶部高度
+                        
+            for (var i = n; i < num; i++) {
+                if ( n==3 && img[n].offsetTop < seeHeight + scrollTop) {
+                    loadChart();
+                    n++;
+                    continue;
+                }
+                if (n == 4 && img[n].offsetTop < seeHeight + scrollTop) {
+                    loadFeedbacksTable();
+                    n++;
+                    continue;
+                }
+                if (n == 5 && img[n].offsetTop < seeHeight + scrollTop) {
+                    loadIntegralsTable();
+                    n++;
+                    continue;
+                }
+                if (n == 6 && img[n].offsetTop < seeHeight + scrollTop) {
+                    loadAppraisalsTable();
+                    n++; 
+                    continue;
+                    
+                }
+                if (n == 7 && img[n].offsetTop < seeHeight + scrollTop) {
+                    loadGiftsTable();
+                    n++;
+                    continue;
+                }
+                if (n == 8 && img[n].offsetTop < seeHeight + scrollTop) {
+                    loadTitlechangesTable();
+                    n++;
+                    //window.removeEventListener('scroll', lazyload());
+                    window.onscroll = null;
+                }
+            }
+        }
+        $("#integralsTitle").text("总积分:@Model.TotalIntegral    今年积分:@Model.AnnualIntegral");
+
+        if ('@Model.IsLeave' !== 'True') {
+            $("#like").on("click", function () {
+                clickLike1('@LoginId');
+            });
+            $("#fight").on("click", function () {
+                clickFight1('@LoginId');
+            });
+        }
+    });
+</script>

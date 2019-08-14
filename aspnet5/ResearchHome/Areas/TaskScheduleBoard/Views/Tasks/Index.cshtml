@@ -1,0 +1,237 @@
+﻿@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<style>
+    #planTable-tab .layui-table-cell {
+        height: auto;
+    }
+
+    .layui-table-tool-temp {
+        padding-right: 0px;
+    }
+
+    .taskNameColumn, .planNameColumn {
+        font-size: 14px;
+        color: #000;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .taskScheduleColumn{
+        font-size: 14px;
+        color: #000;
+        text-align:center;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .layui-table td, .layui-table th {
+        
+        padding: 0px 150px; 
+    }
+    #memberTable-tab .layui-form {
+        border: none;
+        height:100%;
+    }
+    #memberTable-tab .layui-table-main {
+        border: none;
+        height: 100%;
+    }
+    
+    #memberTable-tab .layui-table-header {
+        border-width: 0;
+        margin-bottom: -10px;
+    }
+   
+    .layui-table img {
+        max-width: 150px;
+    }
+    #memberTable-tab td {
+        vertical-align: top;
+    }
+    #memberTable-tab a {
+        text-decoration: none;
+    }
+    /*#memberTable-tab .layui-table tbody tr:hover {
+        background-color: rgba(128, 128, 128,0.3);
+    }*/
+    #memberTable-tab {
+        margin-top:20px;
+    }
+    #memberTable-tab .layui-table, .layui-table-view {
+        margin:0;
+    }
+   
+    #memberTable-tab .layui-table-cell, .layui-table-tool-panel li {
+        overflow: unset;
+        height: auto;
+    }
+
+    .title {
+        width: 120px;
+        height: 40px;
+        border-radius: 25px;
+        color: black;
+        font-size: 18px;
+        line-height: 40px;
+        text-align: center;
+        margin-left: 20px;
+        position: fixed;
+        top: 175px;
+        z-index: 500;
+    }
+    .task {
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        width: 170px;
+        position: absolute;
+        overflow: hidden;
+        z-index: 100;
+    }
+    .memberName {
+        display: block;
+        margin-left: 30%;
+        cursor: pointer;
+
+    }
+    #taskTable-tab .layui-input, .layui-select, .layui-textarea {
+        height: 30px;
+        line-height: 1.3;
+        width: 150px;
+    }
+</style>
+<div class="layui-container" style="width:1280px;padding:0px;">
+    <div class="layui-col-lg12">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li id="kanbanView" class="layui-this" style="font-size:18px;font-weight: bold;">
+                    <img src="~/images/Home/kanban.png">
+                    &nbsp看板视图
+                </li>
+                <li id="taskView" style="font-size:18px;font-weight: bold;">
+                    <img src="~/images/Home/tasks.png">
+                    &nbsp任务视图
+                </li>
+                <li id="planView" style="font-size:18px;font-weight: bold;">
+                    <img src="~/images/Home/plan.png">
+                    &nbsp计划视图
+                </li>
+                <li id="memberView" style="font-size:18px;font-weight: bold;">
+                    <img src="~/images/Home/people.png">
+                    &nbsp成员视图
+                </li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 10px 0px;">
+                <div class="layui-tab-item layui-show">
+                    <div class="kanban-container"></div>
+                </div>
+                <div id="taskTable-tab" class="layui-tab-item">
+                    <table id="taskTable" lay-filter="taskTable"></table>
+                    <div id="member_search" style="position:absolute;top:72px;left:290px;z-index:1000;">
+                        <div class="layui-inline layui-form" style="margin-left:5px;margin-bottom:10px;">
+                           <select name="search" id="memberSelect" lay-filter="memberSelect">
+                                <option value="0">按参与人搜索</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="planTable-tab" class="layui-tab-item">
+                    <table id="planTable" lay-filter="planTable"></table>
+                </div>
+                <div id="memberTable-tab" class="layui-tab-item">
+                    <table id="memberTable" lay-filter="memberTable" ></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+<script type="text/html" id="taskTableToolbar">
+    <div id="taskTable-btn" class="layui-btn-container" style="display:inline-block;">
+        <button class="layui-btn layui-btn-sm" lay-event="allTask">所有任务</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="participateTask">我参与的任务</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm " lay-event="notClosedTask">未关闭任务</button>
+    </div>
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';}}
+    {{# if(viewUserIsAdmin === 'True'){ }}
+    <div style="display:inline-block;float:right">
+        <button class="layui-btn layui-btn-sm" lay-event="createTask">创建任务</button>
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="planTableToolbar">
+    <div id="planTable-btn" class="layui-btn-container" style="display:inline-block;">
+        <button class="layui-btn layui-btn-sm" lay-event="allPlans">所有计划</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="effectivePlans">有效计划</button>
+    </div>
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';}}
+    {{# if(viewUserIsAdmin === 'True'){ }}
+    <div style="display:inline-block;float:right">
+        <button class="layui-btn layui-btn-sm" lay-event="createPlan">创建计划</button>
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="planToolUnitTemplet">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolUnit">
+        {{# if(d.canDelete === true){ }}
+        <a lay-event="deletePlan" style="cursor:pointer;" title="删除">
+            <img src="~/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canClosed === true){ }}
+        <a lay-event="closePlan" style="cursor:pointer;" title="关闭">
+            <img src="~/images/PromptImg/Done.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canCreateTask === true){ }}
+        <a lay-event="addTask" style="cursor:pointer;" title="添加任务">
+            <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="tracksTemplet">
+    <div>
+        {{# for (var i = 0; i < d.tracks.length; i++) { }}
+        <p>{{ (d.tracks[i]===null)?'':d.tracks[i] }}</p>
+        {{# } }}
+    </div>
+</script>
+
+<script type="text/html" id="taskToolUnitTemplet">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolUnit">
+        {{# if(d.canDelete == true){ }}
+        <a lay-event="deleteTask" style="cursor:pointer;" title="删除">
+            <img src="~/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canReceive == true){ }}
+        <a lay-event="receiveTask" style="cursor:pointer;" title="领取">
+            <img src="/images/PromptImg/TaskGet.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canReview == true){ }}
+        <a lay-event="reviewTask" style="cursor:pointer;" title="点评">
+            <img src="~/images/PromptImg/messageCommunication.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canTrack == true){ }}
+        <a lay-event="addTrack" style="cursor:pointer;" title="添加跟进">
+            <img src="/images/PromptImg/TaskTracking.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+
+<script src="~/js/TaskScheduleBoard/Tasks/index.js"></script>

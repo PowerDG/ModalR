@@ -1,0 +1,52 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="medal-head">
+    <p>勋章</p>
+    @if (!Model.IsLeave && viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+    {
+        <div class="medal-add" style="margin-left:10px;text-align:left;float: left;width: 50px;margin-top:8px;" onclick="addMedal(@Model.Id)">
+            <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span style="font-size:14px;">授予</span>
+        </div>
+    }
+</div>
+<div id="medaldiv" lay-filter="medals"></div>
+<script id="medalList" type="text/html">
+    {{# layui.each(d, function(index, item){ }}
+    {{#
+        var rateColor;
+        if(item.grade=='一') {
+            rateColor='#473080;';
+        }
+        else if(item.grade=='二') {
+            rateColor='#dd6475;';
+        }
+        else if(item.grade=='三') {
+            rateColor='#fcaf17;';
+        }
+    }}
+    <div style="font-size:17px;text-align: center;font-weight: bold;">
+        <i class="layui-icon layui-icon-rate-solid" style="font-size: 20px; color: {{ rateColor }}">
+        </i>{{ item.grade }}级勋章
+    <i class="layui-icon layui-icon-rate-solid" style="font-size: 20px; color: {{ rateColor }}"></i>
+    </div>
+    {{# layui.each(item.memberMedals, function(index, item){ }}
+    <div class="memberinfo-medal-div">
+        @*<img class="memberinfo-medal-img" onmouseenter="MedalTipOver(this)" onerror="javascript: this.src='/images/public/NonePicture.png'"
+            data-desc="{{item.Medal.Description}}" onmouseleave="divTipOut()" src="{{ item.Medal.Icon }}" width="10" />*@
+        <img class="memberinfo-medal-img" onerror="javascript: this.src='/images/public/NonePicture.png'"
+             title="{{ item.Medal.Description }}" src="{{ item.Medal.Icon }}" width="10" />
+        <p class="memberinfo-medal-p" style="cursor:pointer;text-decoration: underline;color:blue;" title="点击查看授予记录"
+           onclick="showMedalGainLog({{ item.MedalId }},{{ item.MemberId }})">{{ item.Medal.Name }}</p>
+        <p class="memberinfo-medal-p">&nbsp;&nbsp;</p>
+        <p class="memberinfo-medal-p">
+            <img src="/images/PromptImg/MedalCount.png" style="width:16px;height:16px;" />
+        </p>
+        <p class="memberinfo-medal-p" style="font-size: 20px;margin-top:  10px;padding-left:  3px;color: #EE0000;font-style: italic;">{{ item.Count }}</p>
+    </div>
+    {{# }); }}
+    {{# }); }}
+    {{# if(d.length === 0){ }}
+    <p style="color: rgb(153, 153, 153);">无数据</p>
+    {{# } }}
+</script>

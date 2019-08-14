@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+@model ResearchHome.Areas.Introduction.Models.IntroductionsModel
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <link href="/css/introduction/Home/EditIntroduction.css" rel="stylesheet" />
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+<div class="layui-contentall" style="width: 100%;">
+    <form id="addTaskForm" class="layui-form layui-form-small" style="text-align:center;" asp-antiforgery="true" autocomplete="off">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-inline" style="width:500px;">
+                    <input type="text" name="Title" asp-for="Title" placeholder="请输入标题" class="layui-input">
+                    <div>
+                        <div class="valid-tips"><span class="valid-tips-span" asp-validation-for="Title"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-inline" style="width:500px;">
+                    <textarea id="Content" name="Content" asp-for="Content" placeholder="请输入内容" class="layui-textarea" style="height:350px;"></textarea>
+                    <div>
+                        <div class="valid-tips"><span class="valid-tips-span" asp-validation-for="Content"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-content-btn">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" data-ripple>确认</button>
+                <button type="button" onclick="parent.layer.closeAll();" class="layui-btn layui-btn-primary" data-ripple>取消</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+    </script>
+}

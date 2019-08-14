@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<style>
+    .laytable-cell-1-Photo {
+        height: 100%;
+        max-width: 100%;
+    }
+
+    #books .layui-table-cell {
+        height: 100%;
+    }
+    .layui-table-cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: unset;
+    }
+
+</style>
+<div class="layui-container" style="width:1280px;padding:0px;">
+    <div class="layui-col-lg12">
+        <div id="books" style="padding: 10px 0px;">
+            <table id="bookTable" lay-filter="bookTable"></table>
+            <div id="div_search" style="position:absolute;top:30px;left:170px;z-index:1000;">
+                <div class="layui-inline" style="margin-left:5px;margin-bottom:10px;">
+                    <input type="text" name="search" id="search" class="layui-input" placeholder="书名或作者" style="width:205px;height:30px; border-radius:15px;">
+                </div>
+                <button class="layui-btn layui-btn-sm" id="searchBtn" style="margin-left:5px;margin-bottom:10px;border-radius:15px;" data-type="reload">搜索</button>
+            </div>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+</div>
+
+<script type="text/html" id="bookTableToolbar">
+    <div id="bookTable-btn" class="layui-btn-container" style="display:inline-block;">
+        <button class="layui-btn layui-btn-sm" style="border-radius:10px;" lay-event="All">所有图书</button>
+        <button class="layui-btn layui-btn-primary layui-btn-sm" style="border-radius:10px;" lay-event="Borrow">可借图书</button>
+    </div>
+
+    {{# var viewUser = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';}}
+    {{# if(viewUser === 'True'){ }}
+    <div style="display:inline-block;float:right;margin-right: -120px;">
+        <button class="layui-btn layui-btn-sm" lay-event="addBook" style="border-radius:10px;">添加新书</button>
+    </div>
+    {{# } }}
+</script>
+
+
+<script type="text/html" id="bookToolUnitTemplet">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# var IsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolUnit">
+        <a lay-event="editbook" style="cursor:pointer;" title="详情">
+            <img src="~/images/PromptImg/DetailMessage.png" style="width:16px;height:16px;" />
+        </a>
+        {{# if(d.member.length != 0&& viewUserId==d.member[0].id) {}}
+        <a lay-event="reviewbook" style="cursor:pointer;" title="归还">
+            <img src="~/images/PromptImg/return.png" style="width:16px;height:16px;" />
+        </a>
+        {{# }else if(d.member.length == 0&&d.state==0&&d.isCanBorrow ){ }}
+        <a lay-event="borrowbook" style="cursor:pointer;" title="借阅">
+            <img src="~/images/PromptImg/borrow.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(IsAdmin==='True'){ }}
+
+        {{# if(d.state !==2){ }}
+        <a lay-event="lostbook" style="cursor:pointer;" title="丢失">
+            <img src="~/images/PromptImg/lost.png" style="width:18px;height:18px;" />
+        </a>
+        {{# } }}
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+<script type="text/html" id="bookImgTool">
+    <img id="bookImg{{ d.Id }}" title="点击查看高清图" onerror="javascript: this.src = '/images/public/NonePicture.png'"
+         style="width:90px;height:110px;max-width:90px;max-height: 110px;cursor: pointer;" onclick="previewPic('{{ d.photoHD }}', parent.layer)" src="{{ d.photo }}" />
+</script>
+<script src="~/js/Book/index.js"></script>
+

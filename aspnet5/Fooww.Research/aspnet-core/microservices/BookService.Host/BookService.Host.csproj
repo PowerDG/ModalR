@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+	 <UserSecretsId>Party-Server-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\GitHub\ResearchHome\Fooww.Research\aspnet-core\microservices\BookService.Host\BookService.Host.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Web\PermissionFilter\**" />
+    <Content Remove="Web\PermissionFilter\**" />
+    <EmbeddedResource Remove="Web\PermissionFilter\**" />
+    <None Remove="Web\PermissionFilter\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="AuthFilter.cs" />
+    <Compile Remove="BookApplication\BookApplicationService.cs" />
+    <Compile Remove="BookApplication\BookPhrasebookApplicationService.cs" />
+    <Compile Remove="BookApplication\BookReviewApplicationService.cs" />
+    <Compile Remove="BookApplication\BookTagApplicationService.cs" />
+    <Compile Remove="Controllers\AfficheInfoController.cs" />
+    <Compile Remove="Controllers\BillInfoController.cs" />
+    <Compile Remove="Controllers\TestController.cs" />
+    <Compile Remove="Helper\AuthAttributeFilter.cs" />
+    <Compile Remove="Helper\DecodeJWT.cs" />
+    <Compile Remove="Helper\PermissionFilter.cs" />
+    <Compile Remove="Helper\PermissionNames.cs" />
+    <Compile Remove="Services\Domain\FundManager.cs" />
+    <Compile Remove="Services\Domain\IFundManager.cs" />
+    <Compile Remove="Web\HmacSigningCredentials.cs" />
+    <Compile Remove="Web\JsonRpcProcessor.cs" />
+    <Compile Remove="Web\JWTHelper.cs" />
+    <Compile Remove="Web\UnprotectJWT.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp" Version="4.7.0" />
+    <PackageReference Include="Abp.AspNetCore" Version="4.7.0" />
+    <PackageReference Include="Abp.AutoMapper" Version="4.7.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="4.7.0" />
+    <PackageReference Include="Abp.EntityFrameworkCore" Version="4.7.0" />
+    <PackageReference Include="Consul" Version="0.7.2.6" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
+    <PackageReference Include="JWT" Version="5.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Panda.DynamicWebApi" Version="0.0.5" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BookService.Host.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

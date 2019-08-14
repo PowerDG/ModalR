@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "勋章授予记录";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@section Heads{
+    <style>
+    </style>
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+}
+
+<div id="table_medallogs" lay-filter="medallogs" style="max-height:300px; margin-top: -10px;"></div>
+
+<div class="layui-content-btn">
+    <div class="layui-input-block">
+        <button type="button" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">关闭</button>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="/js/global.js"></script>
+    @*<script src="/js/introduction/Member/memberRecord.js"></script>*@
+    <script>
+        function loadMedalGainLogsTable(_memberPageId, _medalId) {
+            layui.use(['table'], function () {
+                var table = layui.table;
+                var columns = [
+                    { type: 'numbers', title: '序号', width: 60 }
+                    , { field: 'GainDate', title: '授予时间', width: 170, templet: '<p>{{toDateString(d.GainDate,"YYYY-MM-DD")}}</p>' }
+                    , { field: 'Reason', title: '授予理由' }
+                ];
+                table.render({
+                    elem: '#table_medallogs'
+                    , url: '/introduction/Medals/GetMedalGainLogs?memberId=' + _memberPageId + "&medalId=" + _medalId
+                    , cols: [columns]
+                    , height: 472
+                    , page: true
+                });
+                $(".layui-table thead tr").css("background-color", "#ffffff");
+            });
+        }
+        $(document).ready(function () {
+            loadMedalGainLogsTable('@ViewBag.MemberId', '@ViewBag.MedalId');
+        });
+    </script>
+}

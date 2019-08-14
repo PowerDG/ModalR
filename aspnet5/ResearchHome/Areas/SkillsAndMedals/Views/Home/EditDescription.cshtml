@@ -1,0 +1,107 @@
+﻿@model ResearchHome.Areas.Introduction.Models.IntroductionsModel
+@{
+    ViewData["Title"] = "EditDescription";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <style>
+        .layui-inline {
+            width: 100%;
+        }
+
+        .layui-input, .layui-textarea {
+            width: 80%;
+        }
+        .layui-form-item .layui-inline {
+            height: 60px;
+            margin-bottom: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+    </style>
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+}
+
+<div class="layui-form" style="margin-top: 15px;">
+    <div class="layui-inline" style="margin-top: 10px;">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="path" value="@ViewBag.Id" />
+                <input type="text" id="txtTitle" required onchange="onchangeEvent(this)" lay-verify="required" asp-for="Title" placeholder="请输入标题" class="layui-input" />
+                <div id="error_title" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入标题</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea id="txtContent" required lay-verify="required" onchange="onchangeEvent(this)" rows="10" asp-for="Content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                <div id="error_content" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入内容</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-content-btn" style="margin-bottom: 12px;">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="save()">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="/js/global.js"></script>
+@section Scripts{
+    <script>
+        function save() {
+            var title = $("#txtTitle").val();
+            var content = $("#txtContent").val();
+            var id = $("#path").val();
+            if (checkDataVaild(title, content)) {
+                $.post("/skillsandmedals/home/savedescription", { title, content, id }, function (data) {
+                    parent.layer.msg(data.message, {
+                        icon: 6,
+                        shift: -1,
+                        time: 500,
+                        shade: 0.3
+                    }, function () {
+                        if (data.success) parent.layer.closeAll();
+                    });
+                });
+            }
+        }
+
+        function checkDataVaild(title, content) {
+            var errCount = 0;
+            if (title == "") {
+                $("#error_title").css("display", "block");
+                errCount += 1;
+            }
+            if (content == "") {
+                $("#error_content").css("display", "block");
+                errCount += 1;
+            }
+            if (errCount == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        function onchangeEvent(e) {
+            $(e).next().css("display", "none");
+        }
+    </script>
+}

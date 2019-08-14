@@ -1,0 +1,170 @@
+﻿@{
+    ViewData["Title"] = "梵讯研究院";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+@section Heads{
+    <link href="/css/Home/index.css" rel="stylesheet" />
+}
+<style>
+
+    #nagiveBar {
+        background: #000;
+        background: -webkit-linear-gradient(rgba(255,222,173,0.5),rgba(255,255,255,0));
+        background: -moz-linear-gradient(top,rgba(255,222,173,0.5) 0%,rgba(255,255,255,1) 100%);
+        background: -o-linear-gradient(top,rgba(255,222,173,0.5) 0%,rgba(255,255,255,1) 100%);
+        background: -ms-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1)); /*IE10及IE10+*/
+    }
+
+    .layui-nav span {
+        font-family: STXingkai;
+        font-size: 24px;
+    }
+
+        .layui-nav span:hover {
+            color: darkred;
+        }
+
+    .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {
+        background-color: darkred;
+    }
+
+    #index {
+        font-size: 60px;
+        position: absolute;
+        right: 80px;
+        top: 10px;
+    }
+
+    #left, #right {
+        position: fixed;
+        background-repeat: no-repeat;
+        width: 700px;
+        height: 100%;
+        top: 26%;
+    }
+
+    #left {
+        background-image: url('/images/Home/left.png');
+        left: -100px;
+        z-index: -1;
+    }
+
+    #right {
+        background-image: url('/images/Home/right.png') !important;
+        right: -20px;
+        z-index: -1;
+    }
+
+    #loginInfo {
+        font-family: STXingkai;
+        font-size: 18px;
+    }
+</style>
+<div id="TopMenu">
+    <div style="height:40px; position:relative;margin:auto;background-color: rgba(255,222,173,0.5);">
+        <div style="width:128px;height:40px;top:3px;float: left; ">
+            <img src="/images/Home/HomeLogoWithName.png" onclick="pageToUrl('nagiveBar_introduction', '/Introduction/Home', function () { LoadPage();});" style="width:100%;height:100%;cursor:pointer;" />
+        </div>
+        <div style="float: left; width:600px;">
+            <img src="/images/Home/HomeWord.png" style="width:240px;height:40px;" />
+        </div>
+        <div style="height: 20px;position:absolute;right: 1%;bottom: 8px;font-family: STXingkai;">
+            <a id="loginLink" style="display:none;font-size:18px;" class="userInfoMenu" onclick="loginPage();">
+                <img src="~/images/PromptImg/Login.png" style="width:16px;height:16px;padding-bottom:2px;" /><span>登录</span>
+            </a>
+            <div id="loginInfo" style="display:none;">
+                <span id="loginInfoSpan" class="userInfoMenu" style="cursor:default;padding-right:0px;">
+                </span>
+                <a id="changePassword" class="userInfoMenu" onclick="changePassword();">
+                    <img src="/images/PromptImg/ChangePassword.png" style="width:16px;height:16px;padding-bottom:2px;" /><span>修改密码</span>
+                </a>
+                <a class="userInfoMenu" onclick="logoutEvent();">
+                    <img src="/images/PromptImg/Logout.png" style="width:16px;height:16px;padding-bottom:2px;" /><span>注销</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <ul id="nagiveBar" class="layui-nav" style="text-align:center;margin:auto;color:black;" lay-filter="">
+        <li class="layui-nav-item" onclick="pageToUrl('nagiveBar_introduction', '/Introduction/Home', function () { LoadPage();});"><span>聚义厅</span></li>
+        <li id="nagiveBar_tasks" class="layui-nav-item" onclick="pageToUrl('nagiveBar_tasks','/TaskScheduleBoard/tasks');"><span>白虎堂</span></li>
+        <li id="nagiveBar_integral" class="layui-nav-item" onclick="pageToUrl('nagiveBar_integral','/Integral/Home',function () { LoadPage();});"><span>琅琊榜</span></li>
+        <li id="nagiveBar_introduction" class="layui-nav-item" onclick="pageToUrl('nagiveBar_introduction', '/Introduction/Home', function () { LoadPage();});" style="width:125px;"><span id="index">侠</span><img src="~/images/Home/xia.png" style="opacity:1;filter:alpha(opacity=40);"></li>
+        <li id="nagiveBar_parties" class="layui-nav-item" onclick="pageToUrl('nagiveBar_parties', '/PartyAndActivity/Parties');"><span>快活林</span></li>
+        <li id="nagiveBar_books" class="layui-nav-item" onclick="pageToUrl('nagiveBar_books','/Book/Books');"><span>撷英阁</span></li>
+        <li id="nagiveBar_skillMedal" class="layui-nav-item" onclick="pageToUrl('nagiveBar_skillMedal','/SkillsAndMedals/Home',function () { LoadPage();});"><span>玄机谱</span></li>
+    </ul>
+</div>
+<div>
+    <div id="left"></div>
+    <div id="ContentCenter"></div>
+    <div id="right"></div>
+</div>
+<div id="BotBar" style="width:100%;">
+    <div style="height:30px;text-align:center;">
+        <div style="font-size:14px;padding-top:5px;">
+            Copyright © 2017-<span id="copyRight"></span> 梵讯研究院版权所有
+        </div>
+    </div>
+</div>
+<script type="text/html" id="NoAuthorizationDiv">
+    <div id="NoAuthShowPart" style="text-align:center;">
+        <img src="/images/PromptImg/NoAuthMessage.png" />
+    </div>
+</script>
+
+@section Scripts{
+    <script src="/js/Home/index.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            $('#ContentCenter').css("min-height", ($(window).height() - 170) + "px");
+            if ($.cookie('nagiveBarItem') !== undefined) {
+                var eleId = $.cookie('nagiveBarItem');
+                $('#' + eleId).click();
+            } else {
+                $('#nagiveBar_introduction').click();
+            }
+            var userName = "@viewInjectHelper.CurrentUserInfo("Name")";
+            if (userName !== "") {
+                $('#loginLink').css("display", "none");
+                $('#loginInfoSpan').html(userName+",您好！");
+                $('#loginInfo').css("display", "inline-block");
+            } else {
+                $('#loginLink').css("display", "inline-block");
+                $('#loginInfo').css("display", "none");
+            }
+            setScrollPositon();
+            $('#copyRight').text(new Date().getFullYear());
+        }
+
+        function pageToUrl(eleId, url, callback) {
+            if (null !== eleId) {
+                $(document).off('click', '.layui-table>tbody>tr');
+                $(document).off('mouseenter', '.layui-table>tbody>tr');
+                $(document).off('mouseleave', '.layui-table>tbody>tr');
+                showClickStyle(eleId);
+                $.cookie('nagiveBarItem', eleId, { path: '/' });
+                if (url === '') {
+                    $('#ContentCenter').empty();
+                    return;
+                }
+                importPartContent(url, function (res) {
+                    if (eleId !== 'nagiveBar_introduction' && ('@viewInjectHelper.CurrentUserInfo("Id")' === '' || res === 'noAuthorization')) {
+                        $('#ContentCenter').empty().append($('#NoAuthorizationDiv').html());
+                        $('#NoAuthShowPart').css("padding-top", (($(window).height() - 170 - 310) / 2) + "px");
+                    }
+                    else {
+                        $('#ContentCenter').empty().append(res);
+                        //$('#ContentCenter').empty().html(res);
+                        if (callback !== undefined) {
+                            callback();
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="/js/Home/slider.js"></script>
+    <script src="~/js/Home/flower.js"></script>
+}

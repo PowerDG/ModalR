@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+<style>
+</style>
+<div id="taskPoolContent" style="width:100%;margin:auto;">
+    <table class="layui-table" id="taskPool" lay-data="{id:'taskPool'}" lay-filter="taskPoolFilter"></table>
+</div>
+<script type="text/html" id="taskPoolLastUpdateTime">
+    <div style="float:left;">{{toDateString(d.LastUpdateTime)}}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolPanl">
+        <a lay-event="showDetail" style="cursor:pointer;" title="详情">
+            <img src="/images/PromptImg/ShowDetail.png" style="width:16px;height:16px;" />
+        </a>
+        @*{{# if(parseInt(viewUserId) === parseInt(d.MemberId) || viewUserIsAdmin  === 'True'){ }}*@
+        <a lay-event="showTaskPartner" style="cursor:pointer;" title="查看参与者">
+            <img src="~/images/Task/showTaskPartner.png" style="width:16px;height:16px;" />
+        </a>
+        @*{{# } }}*@
+
+        {{# if(parseInt(viewUserId) === parseInt(d.MemberId) || d.MemberId === 0){ }}
+        <a lay-event="getTask" style="cursor:pointer;" title="领取">
+            <img src="/images/PromptImg/TaskGet.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+
+        {{# if(viewUserIsAdmin === 'True'){ }}
+        <a lay-event="changeTask" style="cursor:pointer;" title="修改">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="removeTask" style="cursor:pointer;" title="作废">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="addSubTask" style="cursor:pointer;" title="新建子任务">
+            <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+<script src="/js/TaskScheduleBoard/Shared/TaskPool.js"></script>
+<script>
+
+</script>

@@ -1,0 +1,345 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : ResearchHome
+Source Server Version : 80011
+Source Host           : 192.168.1.159:3306
+Source Database       : research_home
+
+Target Server Type    : MYSQL
+Target Server Version : 80011
+File Encoding         : 65001
+
+Date: 2018-08-29 15:17:47
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for annualintegrals
+-- ----------------------------
+DROP TABLE IF EXISTS `annualintegrals`;
+CREATE TABLE `annualintegrals` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MemberId` int(11) NOT NULL,
+  `Years` int(11) NOT NULL,
+  `AnnualIntegral` int(11) NOT NULL,
+  `UpdatedTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for appraisals
+-- ----------------------------
+DROP TABLE IF EXISTS `appraisals`;
+CREATE TABLE `appraisals` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Year` int(4) NOT NULL,
+  `Type` varchar(4) COLLATE utf8mb4_bin NOT NULL,
+  `ValueScore` int(11) NOT NULL,
+  `PerformanceScore` int(11) NOT NULL,
+  `Level` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '四个等级',
+  `MemberId` int(11) NOT NULL,
+  `CreatedMemberId` int(11) NOT NULL,
+  `CreatedTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for feedbacks
+-- ----------------------------
+DROP TABLE IF EXISTS `feedbacks`;
+CREATE TABLE `feedbacks` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `MemberId` int(11) DEFAULT NULL,
+  `ProviderId` int(11) DEFAULT NULL,
+  `CreatedTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+  `ProviderName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for gifts
+-- ----------------------------
+DROP TABLE IF EXISTS `gifts`;
+CREATE TABLE `gifts` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Price` decimal(10,2) DEFAULT NULL,
+  `Hyperlink` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `MemberId` int(11) NOT NULL,
+  `CreatedTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `CreatedMemberId` int(11) NOT NULL,
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for integrals
+-- ----------------------------
+DROP TABLE IF EXISTS `integrals`;
+CREATE TABLE `integrals` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MemberId` int(11) DEFAULT NULL,
+  `CreatedTime` datetime DEFAULT NULL,
+  `Integral` int(11) DEFAULT NULL,
+  `Description` text COLLATE utf8mb4_bin,
+  `SourceId` int(11) DEFAULT NULL,
+  `SourceType` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for introductions
+-- ----------------------------
+DROP TABLE IF EXISTS `introductions`;
+CREATE TABLE `introductions` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Type` int(11) DEFAULT NULL COMMENT '1.介绍',
+  `CreateUser` int(11) DEFAULT NULL,
+  `UpdateUser` int(11) DEFAULT NULL,
+  `CreateTime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `UpdateTime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`),
+  KEY `article_ibfk_1` (`CreateUser`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for medals
+-- ----------------------------
+DROP TABLE IF EXISTS `medals`;
+CREATE TABLE `medals` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Icon` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '1',
+  `Name` varchar(20) COLLATE utf8mb4_bin NOT NULL,
+  `Description` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+  `CreatedTime`  datetime NOT NULL,
+  `DiscardTime`  datetime NULL
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for membermedals
+-- ----------------------------
+DROP TABLE IF EXISTS `membermedals`;
+CREATE TABLE `membermedals` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MemberId` int(11) NOT NULL,
+  `MedalId` int(11) NOT NULL,
+  `Reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `GainDate` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for members
+-- ----------------------------
+DROP TABLE IF EXISTS `members`;
+CREATE TABLE `members` (
+  `Id` int(20) NOT NULL AUTO_INCREMENT,
+  `Account` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `Password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `PasswordKey` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Photo` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `PhotoHD` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Gender` bit(1) NOT NULL,
+  `Phone` varchar(22) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '0',
+  `QQ` varchar(22) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT '0',
+  `WeChat` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
+  `EntryTime` date NOT NULL,
+  `Email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `BirthDay` date DEFAULT NULL,
+  `Remarks` text COLLATE utf8mb4_bin,
+  `IsAdmin` bit(1) NOT NULL DEFAULT b'0',
+  `TotalIntegral` int(11) NOT NULL DEFAULT '0' COMMENT '总积分',
+  `LikeCount` int(11) NOT NULL DEFAULT '0' COMMENT '点赞',
+  `DislikeCount` int(11) NOT NULL DEFAULT '0' COMMENT '加油(鼓励)',
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for memberskills
+-- ----------------------------
+DROP TABLE IF EXISTS `memberskills`;
+CREATE TABLE `memberskills` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `SkillId` int(11) NOT NULL,
+  `MemberId` int(11) NOT NULL,
+  `GainDate` date NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for pictures
+-- ----------------------------
+DROP TABLE IF EXISTS `pictures`;
+CREATE TABLE `pictures` (
+  `Id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `Url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `PartialPictureUrl` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `IsDeleted` bit(1) DEFAULT b'0',
+  `MemberId` int(11) DEFAULT NULL,
+  `UpdatedTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for readbooks
+-- ----------------------------
+DROP TABLE IF EXISTS `readbooks`;
+CREATE TABLE `readbooks` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `PhotoHD` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `Author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `creat_time` date NOT NULL,
+  `MemberId` int(11) NOT NULL,
+  `Commentary` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for skills
+-- ----------------------------
+DROP TABLE IF EXISTS `skills`;
+CREATE TABLE `skills` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ParentId` int(11) NOT NULL,
+  `Name` varchar(50) COLLATE utf8mb4_bin NOT NULL,
+  `Level` int(11) NOT NULL,
+  `CreatedTime`  datetime NOT NULL
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for taskcommunicationreplys
+-- ----------------------------
+DROP TABLE IF EXISTS `taskcommunicationreplys`;
+CREATE TABLE `taskcommunicationreplys` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `CommunicationId` int(11) NOT NULL,
+  `MemberId` int(11) NOT NULL,
+  `Content` text COLLATE utf8mb4_bin,
+  `ReplyMemberId` int(11) DEFAULT NULL,
+  `CreatedTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for taskcommunications
+-- ----------------------------
+DROP TABLE IF EXISTS `taskcommunications`;
+CREATE TABLE `taskcommunications` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `TaskId` int(11) NOT NULL,
+  `Content` text COLLATE utf8mb4_bin,
+  `MemberId` int(11) DEFAULT NULL,
+  `CreatedTime` datetime DEFAULT NULL,
+  `Type` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for taskpartners
+-- ----------------------------
+DROP TABLE IF EXISTS `taskpartners`;
+CREATE TABLE `taskpartners` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MemberId` int(11) DEFAULT NULL,
+  `TaskId` int(11) DEFAULT NULL,
+  `Description` text COLLATE utf8mb4_bin,
+  `CreatedTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for tasks
+-- ----------------------------
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `Score` int(11) DEFAULT NULL,
+  `Status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `MemberId` int(11) DEFAULT NULL,
+  `StartTime` datetime DEFAULT NULL,
+  `EndTime` datetime DEFAULT NULL,
+  `Description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '说明',
+  `CreatedMemberId` int(11) DEFAULT NULL,
+  `CreatedTime` datetime DEFAULT NULL,
+  `ScoreApportioned` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for tasktrackings
+-- ----------------------------
+DROP TABLE IF EXISTS `tasktrackings`;
+CREATE TABLE `tasktrackings` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `FollowerId` int(11) NOT NULL,
+  `TaskId` int(11) DEFAULT NULL,
+  `FollowTime` datetime NOT NULL,
+  `FollowDescription` text COLLATE utf8mb4_bin NOT NULL,
+  `FollowType` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table structure for titlechanges
+-- ----------------------------
+DROP TABLE IF EXISTS `titlechanges`;
+CREATE TABLE `titlechanges` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MemberId` int(11) NOT NULL,
+  `OldTitle` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `NewTitle` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `ChangedTime` datetime NOT NULL,
+  `CreatedMemberId` int(11) NOT NULL,
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+-- Table Data Clear
+-- ----------------------------
+TRUNCATE annualintegrals;
+TRUNCATE appraisals;
+TRUNCATE feedbacks;
+TRUNCATE gifts;
+TRUNCATE integrals;
+TRUNCATE introductions;
+TRUNCATE medals;
+TRUNCATE membermedals;
+TRUNCATE members;
+TRUNCATE memberskills;
+TRUNCATE pictures;
+TRUNCATE readbooks;
+TRUNCATE skills;
+TRUNCATE taskcommunicationreplys;
+TRUNCATE taskcommunications;
+TRUNCATE taskpartners;
+TRUNCATE tasks;
+TRUNCATE tasktrackings;
+TRUNCATE titlechanges;
+
+-- ----------------------------
+-- DataBase
+-- ----------------------------
+INSERT INTO `research_home`.`members` (`Id`, `Account`, `Password`, `PasswordKey`, `Name`, `Photo`, `PhotoHD`, `Gender`, `Phone`, `QQ`, `WeChat`, `EntryTime`, `Email`, `Title`, `BirthDay`, `Remarks`, `IsAdmin`, `TotalIntegral`, `LikeCount`, `DislikeCount`, `LeaveTime`, `IsLeave`, `IsDeleted`) 
+VALUES ('1', 'admin', '74758D5242A47F43F8FE7B726219D27CC94A38AAD4E61FF332F8C11A16A3CCA8D9984E518C48EC768806E41219B34FE298BF44A7136C5D972DBD810E29DBC044', '12345881566595', '管理员', '/files/uploads/adb60a8bdf114d8ea803c81f8137b730.jpg', NULL, b'1', '0', '0', NULL, '2018-08-13', NULL, '研究院院长', '2018-08-13', '', b'1', '0', '0', '0', NULL, b'0', b'0');
+
+INSERT INTO `research_home`.`titlechanges` (`Id`, `MemberId`, `OldTitle`, `NewTitle`, `ChangedTime`, `CreatedMemberId`, `IsDeleted`) 
+VALUES ('1', '1', '入职', '研究院院长', '2018-09-04 11:09:48', '1', b'0');
+INSERT INTO `research_home`.`skills` (`Id`, `ParentId`, `Name`, `Level`,CreatedTime) VALUES ('1', '0', '技能', '1',now());

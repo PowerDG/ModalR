@@ -1,0 +1,31 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<style>
+    .tip {
+        position: absolute;
+        background-color: rgb(86, 180, 217);
+        font-size: 10px;
+        color: rgb(255, 255, 255);
+        padding: 3px;
+    }
+</style>
+
+<div class="div-table-record">
+    <div class="partItem">
+        <span>技能树(<i style="font-size:14px;color:red;" id="skillCount"></i>)</span>
+        @if (!Model.IsLeave && viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+        {
+            <div onclick="editSkill(@Model.Id)">
+                <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">授予技能</span>
+            </div>
+        }
+    </div>
+    <div id="notskill" style="display:none;text-align: center;color: #999;">
+        无数据
+    </div>
+    <div style="width: 960px;height:400px;overflow: hidden;" id="div_skill"></div>
+</div>
+
+

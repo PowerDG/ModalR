@@ -1,0 +1,14 @@
+ResearchHome/bin
+ResearchHome/obj
+ResearchHome/wwwroot/files/uploads
+### VS Code ###
+.vs/
+
+*Logs.txt*
+
+Fooww.Research/aspnet-core/src/Research.Web.Host/App_Data/Logs/Logs.txt
+Fooww.Research/aspnet-core/microservices/Member/Research.Member.Web/App_Data/Logs/Logs.txt
+Fooww.Research/aspnet-core/src/Research.Web.Host/App_Data/Logs/Logs.txt
+Fooww.Research/aspnet-core/microservices/BookService.Host/App_Data/Logs/Logs.txt
+Fooww.Research/aspnet-core/src/Research.Web.Host/App_Data/Logs/Logs.txt
+Fooww.Research/research_client/config/index.js

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+<style>
+</style>
+<div id="myTaskContent" style="width:100%;margin:auto;">
+    <table class="layui-table" id="myTaskTable" lay-data="{id:'myTaskTable'}" lay-filter="myTaskTableFilter"></table>
+</div>
+<script type="text/html" id="myTaskLastUpdateTime">
+    <div style="float:left;">{{toDateString(d.LastUpdateTime)}}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolPanl">
+        <a lay-event="showDetail" style="cursor:pointer;" title="详情">
+            <img src="/images/PromptImg/ShowDetail.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="showTaskPartner" style="cursor:pointer;" title="查看参与者">
+            <img src="~/images/Task/showTaskPartner.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="trackTask" style="cursor:pointer;" title="跟进">
+            <img src="/images/PromptImg/TaskTracking.png" style="width:16px;height:16px;" />
+        </a>
+        {{# if(parseInt(viewUserId) === parseInt(d.MemberId)){ }}
+        <a lay-event="finishTask" style="cursor:pointer;" title="完成">
+            <img src="/images/PromptImg/Done.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+<script src="/js/TaskScheduleBoard/Shared/MyTaskTable.js"></script>
+<script>
+
+</script>

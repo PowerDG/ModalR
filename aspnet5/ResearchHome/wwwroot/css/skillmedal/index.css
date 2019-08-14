@@ -1,0 +1,108 @@
+﻿.layui-minbutton {
+    float: right;
+    margin-top: 10px;
+}
+
+.div-table-record {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.tip {
+    position: absolute;
+    background-color: rgb(183, 184, 185);
+    font-size: 10px;
+    color: #393d49;
+    padding: 3px;
+    display: none;
+}
+
+.tip i{
+    font-size:30px;
+    cursor:pointer;
+}
+
+.get_info {
+    width: 600px;
+    margin-bottom: 8px;
+    position:relative;
+    top:10px;
+}
+
+    .medal-div:hover {
+        background-color: white;
+    }
+
+.medal-div-img-div {
+    width: 120px;
+    height: 120px;
+    display: grid;
+    float: left;
+}
+
+    .medal-div-img-div img {
+        max-width: 100px;
+        margin: auto;
+    }
+
+.medal-div-desc {
+    float: left;
+    height: 120px;
+    padding-left: 20px;
+    width: 500px;
+}
+
+    .medal-div-desc h3 {
+        margin-top: 15px;
+    }
+
+.medal-div-oper {
+    float: left;
+    width: 50px;
+    padding-top: 30px;
+    display: none;
+}
+
+    .medal-div-oper i {
+        font-size: 30px;
+        cursor: pointer;
+        color: #393d49;
+    }
+
+.medal-div-desc p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.tip img {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.tip {
+    display: block;
+    left: 426px;
+    top: 272px;
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+}
+
+    .tip div {
+        margin-top: 20px;
+        margin-left: 20px;
+        width: 50px;
+        background-color: #c7c6c6;
+        padding: 5px;
+    }
+#medaldiv {
+    position: relative;
+}
+
+.medal-div {
+    width: 640px;
+    float: left;
+    position: relative;
+    left: 0%;
+    top: 20px;
+    z-index:1000;
+}

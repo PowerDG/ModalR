@@ -1,0 +1,61 @@
+﻿.taskInfoLable {
+    float: left;
+    display: block;
+    padding-left: 10px;
+    padding-top: 2px;
+    width: auto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    cursor: text;
+}
+
+.taskLab {
+    font-weight: bolder;
+}
+
+.taskReplyBtn {
+    padding-left: 5px;
+    width: auto;
+    color: #56B4D9;
+    cursor: pointer;
+    display: none;
+}
+
+.taskCommunicationStyle {
+    font-size: 14px;
+}
+
+.taskReplyRow {
+    padding-left: 28px;
+}
+
+.taskReplyTimeRow {
+    padding-top: 0px;
+    color: gray;
+    height: 22px;
+}
+
+.layui-form-item {
+    clear: both;
+    margin-bottom: 0;
+}
+
+    .layui-form-item .layui-input-inline {
+        width: 350px;
+    }
+
+.layui-icon {
+    color: #000;
+}
+
+.communicationReplay ul li {
+    padding-top: 5px;
+}
+
+.divAutoHeight {
+    font: 0px/0px sans-serif;
+    clear: both;
+    display: block;
+}

@@ -1,0 +1,44 @@
+﻿body {
+}
+
+.title {
+    font-size: 24px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.layui-row-staff {
+    display: inline-block;
+    width: 100%;
+}
+
+.layui-col-staff {
+    position: relative;
+    width: 17%;
+    margin: 1% 1.4%;
+    height: 200px;
+    text-align: center;
+    float: left;
+    /*cursor: pointer;*/
+}
+    .layui-col-staff:hover {
+        background-color: #f2f2f2;
+    }
+
+.layui-row-research {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.addmember-div {
+    text-align: center;
+    vertical-align: middle;
+}
+    .addmember-div i {
+        display: inline-block;
+        height: 100%;
+        width: 0;
+        vertical-align: middle;
+    }

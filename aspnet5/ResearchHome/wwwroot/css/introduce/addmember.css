@@ -1,0 +1,23 @@
+﻿body {
+}
+
+.layui-row-member {
+    padding: 20px 40px 10px 0px;
+}
+.layui-row-headimg {
+    width: 180px;
+    height: 180px;
+    border: solid 0.1px;
+    padding: 2px;
+    margin: 10px auto;
+}
+.layui-col-addmenber {
+    width: 36%;
+    height: 376px;
+}
+.layui-upload-image {
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+}
+

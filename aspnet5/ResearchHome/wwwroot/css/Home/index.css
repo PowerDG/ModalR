@@ -1,0 +1,55 @@
+﻿.layui-nav .layui-nav-item {
+    cursor: pointer;
+    padding: 0 20px;
+}
+
+.userInfoMenu {
+    cursor: pointer;
+    padding-right: 3px;
+}
+
+.partMarginTopFrist {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 1280px;
+    margin: auto;
+}
+
+.partMarginTop {
+    width: 1280px;
+    margin: auto;
+    padding-bottom: 5px;
+}
+
+.partItem {
+    padding-top: 10px;
+    height: 40px;
+    text-align: left;
+    font-size: 20px;
+}
+
+    .partItem > span {
+        font-weight: bold;
+    }
+
+.partItemTool {
+    cursor: pointer;
+    padding-left: 10px;
+    width: 300px;
+}
+
+.partItemTool > span {
+    padding-left: 3px;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.partItem .contentToolMember {
+    right: 0;
+    padding-left: 15px;
+    position: absolute;
+    cursor: pointer;
+}
+
+

@@ -1,0 +1,45 @@
+﻿@model List<ResearchHome.Areas.Introduction.Models.Members>
+@{
+    Boolean.TryParse(viewInjectHelper.CurrentUserInfo("IsAdmin"), out bool IsAdmin);
+    int.TryParse(viewInjectHelper.CurrentUserInfo("Id"), out int userId);
+}
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@foreach (var member in Model)
+{
+    var photoUrl = string.IsNullOrEmpty(member.Photo) ? "/images/public/NonePicture.png" : member.Photo;
+
+<div class="layui-col-staff" onmouseover="$('#memberdiv_'+@member.Id).css('display', 'block');" onmouseout="$('#memberdiv_'+@member.Id).css('display', 'none');">
+    <div id="memberdiv_@member.Id" style="position:absolute;color:#D3D3D3;text-align:right;right:7px;top:7px;display:none;">
+        @if (IsAdmin || member.Id == userId)
+        {
+            <div>
+                <a style="cursor:pointer;" onclick="showEditMemberPage(@member.Id, '编辑英雄');" title="编辑英雄">
+                    <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+                </a>
+            </div>
+        }
+        @if (IsAdmin)
+        {
+            <div style="padding-top: 10px;">
+                <a style="cursor:pointer;" onclick="leaveMember(@member.Id, '@member.Title')" title="离职">
+                    <img src="/images/PromptImg/Leave.png" style="width:16px;height:16px;" />
+                </a>
+            </div>
+            <div style="padding-top: 10px;">
+                <a style="cursor:pointer;" onclick="deleteMember(@member.Id)" title="删除">
+                    <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+                </a>
+            </div>
+        }
+    </div>
+    <div data-id="@member.Id" >
+        <img width="150" name="headimg" style="margin-top: 2px;cursor: pointer;" onerror="javascript: this.src = '/images/public/NonePicture.png'" height="150" src="@photoUrl" 
+             onclick="pageToUrl('nagiveBar_introduction', '/introduction/member/memberrecord?id=' + '@member.Id')"/>
+        <div>
+            <p>姓名：@member.Name</p>
+            <p>职位：@member.Title</p>
+        </div>
+    </div>
+</div>
+}

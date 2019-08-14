@@ -1,0 +1,78 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+
+    var memberLabel = ViewBag.GrantType == 1 ? "成员" : "外援";
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<style>
+    .layui-row-staff {
+        display: block;
+        width: 570px;
+        height: 390px;
+        overflow-y: auto;
+        margin-left: 110px;
+    }
+
+    .layui-col-staff {
+        margin: 5px 5px;
+        float: left;
+    }
+
+    .medalImage {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-size: contain;
+        cursor: pointer;
+    }
+
+    .selectIcon {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+</style>
+
+<div class="layui-row" style="margin-top:20px;margin-right:20px;">
+    <div class="layui-col-xs12">
+        <form class="layui-form" method="post" asp-antiforgery="true" autocomplete="off">
+            <div id="grantType" data-granttype="@ViewBag.GrantType" style="display:none;"></div>
+            <div id="taskId" data-taskid="@ViewBag.TaskId" style="display:none;"></div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">@memberLabel：</label>
+                <div class="layui-input-block">
+                    <select id="memberId" name="memberId" lay-verify="required" lay-search="">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">勋章：</label>
+                <div id="medalsContent" class="layui-row-staff">
+                    @foreach (var medal in ViewBag.Medals)
+                    {
+                        <div class="layui-col-staff">
+                            <div class="medalImage" style="background-image:url('@medal.Icon')" data-medalId="@medal.Id" title="@medal.Description"></div>
+                            <div style="text-align:center;">@medal.Name</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">理由：</label>
+                <div class="layui-input-block">
+                    <textarea id="reason" name="reason" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom: 0px;">
+                <div class="layui-input-block">
+                    <button id="grantMedals" class="layui-btn" style="float:right;">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/TaskScheduleBoard/Tasks/grantMedal.js"></script>

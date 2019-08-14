@@ -1,0 +1,33 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="div-table-record">
+    <div class="partItem" style="padding-top: 0px;">
+        <span>职位变更记录</span>
+        @if (!Model.IsLeave && viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+        {
+        <div onclick="editTitle(@Model.Id, 0)">
+            <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">职位变更</span>
+        </div>
+        }
+    </div>
+    <div id="titlechangesContent" style="width:100%;">
+        <table id="table_titlechanges" style="width:720px" lay-filter="titlechanges"></table>
+    </div>
+</div>
+
+<script type="text/html" id="titleChangeTable">
+    <div style="float:left;margin-right: 5px;">{{ d.CreatedMemberName }}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId === 'True' && '@Model.IsLeave' != 'True'){ }}
+    <div class="toolPanl" style="float:right;">
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="editTitle('@Model.Id', {{ d.Id }} )" title="编辑">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="deleterecord({{ d.Id }})" title="删除">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+    </div>
+    {{# } }}
+</script>

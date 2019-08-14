@@ -1,0 +1,74 @@
+﻿@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@{ 
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+<div>
+    <div class="layui-form-item" style="margin-left:-15px;margin-top:20px;">
+        <label class="layui-form-label">评分</label>
+        <div id="score" style=""></div>
+    </div>
+    <div class="layui-form-item" style="margin-left:-15px;margin-top:20px;">
+        <label class="layui-form-label" style="margin-top:-10px;">评价</label>
+        <div class="layui-input-block" style="width:450px;width:300px;">
+            <textarea id="txtDescription" rows="8" maxlength="200" placeholder="请输入评价" class="layui-textarea" required lay-verify="required"></textarea>
+        </div>
+    </div>
+    <div class="layui-content-btn" style="float:right;margin-right:60px;">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit onclick="save()">保存</button>
+            <button  class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['jquery', 'element', 'rate', 'layer'], function () {
+        var $ = layui.$;
+        var rate = layui.rate;
+        var layer = layui.layer;
+        rate.render({
+            elem: '#score'
+            , value: 0
+            , text: true
+            , setText: function (value) {
+                var arrs = {
+                    '1': '不好看'
+                    , '2': '没营养'
+                    , '3': '还行吧'
+                    , '4': '不错哦'
+                    , '5': '推荐！'
+                };
+                this.span.text(arrs[value] || (value + "星"));
+                $('#score').val(value);
+            }
+        });
+    })
+
+    function save() {
+        var comment = $('#txtDescription').val();
+        var score = $('#score').val();
+        if (comment.length > 150) {
+            parent.layer.msg('评论简短点可好？！', { icon: 5, shift: -1, time: 1000, shade: 0.3 });
+        } else if (comment.length < 3 || score < 1) {
+            parent.layer.msg('请输入评分和评价！', { icon: 5, shift: -1, time: 1000, shade: 0.3 });
+
+        } else {
+
+            $.ajax({
+                
+                url: '/Book/Books/CommentBook?bookId=' + @ViewBag.bookId+ '&comment=' + comment + '&score=' + score
+                , type: 'post'
+                , success: function (d) {
+                    if (d.result) {
+                        parent.layer.msg('评论成功!', { icon: 6, shift: -1, time: 1000, shade: 0.3 }, close());
+                        parent.location.reload();
+                    }
+                else {
+                        parent.layer.msg(d.msg, { icon: 5, shift: -1, time: 1000, shade: 0.3 });
+                    }
+                }
+            });
+        }
+    }
+    
+</script>

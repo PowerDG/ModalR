@@ -1,0 +1,73 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+<style>
+    .laytable-cell-1-Photo {
+        height: 100%;
+        max-width: 100%;
+    }
+
+    #booksContent .layui-table-cell {
+        max-height: 110px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        white-space: normal;
+        box-sizing: border-box;
+        text-overflow: ellipsis;
+    }
+
+    #booksContent .bookDesc {
+        float: left;
+        margin-right: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+</style>
+
+<div class="div-table-record">
+    <div class="partItem">
+        <span>我读过的书</span>
+        @if ((viewInjectHelper.CurrentUserInfo("Account") == Model.Account || viewInjectHelper.CurrentUserInfo("IsAdmin") == "True") && !Model.IsLeave)
+        {
+            <div onclick="editBooks('@Model.Id', 0, '添加书籍')">
+                <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">添加书评</span>
+            </div>
+        }
+    </div>
+    <div id="booksContent" style="width:100%;">
+        <table id="table_books" lay-filter="books"></table>
+    </div>
+</div>
+
+<script type="text/html" id="booksTable">
+    <div  style="  width:260px;float:left  " ;>
+
+        <div class="bookDesc" title="{{ d.Commentary }}">{{ d.Commentary == null ? "" : d.Commentary }}</div>
+
+        {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+        {{# var viewAccount = '@viewInjectHelper.CurrentUserInfo("Account")' }}
+    </div>
+
+    <div class="toolPanl" style="margin-left:80px;">
+        {{# if((viewUserId === 'True' || (viewAccount == '@Model.Account' && viewAccount != "")) && '@Model.IsLeave' != "True" ){ }}
+        <div>
+
+            <a lay-event="changeTask" style="cursor:pointer;" onclick="editBooks('@Model.Id', {{ d.Id }}, '编辑书籍')" title="编辑">
+                <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+            </a>
+            <a lay-event="changeTask" style="cursor:pointer;" onclick="deleteBook({{ d.Id }})" title="删除">
+                <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+            </a>
+        </div>
+        {{# } }}
+    </div>
+</script>
+
+<script type="text/html" id="bookImgTool">
+    <img id="bookImg{{ d.Id }}" title="点击查看高清图" onerror="javascript: this.src = '/images/public/NonePicture.png'"
+         style="width:100px;height:100px;max-width:100px;max-height: 100px;cursor: pointer;" onclick="previewPic('{{ d.PhotoHD }}', parent.layer)" src="{{ d.Photo }}" />
+</script>

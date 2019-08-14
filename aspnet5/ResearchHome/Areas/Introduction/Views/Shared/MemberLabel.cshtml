@@ -1,0 +1,29 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<style>
+    .tip {
+        position: absolute;
+        background-color: rgb(86, 180, 217);
+        font-size: 10px;
+        color: rgb(255, 255, 255);
+        padding: 3px;
+    }
+</style>
+
+<div class="div-table-record">
+    <div class="partItem">
+        <span>个人标签(<i style="font-size:14px;color:red;" id="LabelCount"></i>)</span>
+        @if (!string.IsNullOrEmpty(viewInjectHelper.CurrentUserInfo("Id")))
+        {
+            <div onclick="AddMemberLabel(@Model.Id)">
+                <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">添加标签</span>
+            </div>
+        }
+    </div>
+    <div id="notLabel" style="display:none;text-align: center;color: #999;">
+        无标签
+    </div>
+    <div style="width: 960px;height:400px;overflow: hidden;" id="div_Label"></div>
+</div>

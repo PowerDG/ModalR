@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, ResearchHome
+<style>
+</style>
+<div id="finishTaskContent" style="width:100%;margin:auto;">
+    <table id="finishTaskTable" lay-data="{id:'finishTaskTable'}" lay-filter="finishTaskTableFilter"></table>
+</div>
+<script type="text/html" id="finishTaskStartTime">
+    <div>{{toDateString(d.CreatedTime)}}</div>
+</script>
+<script type="text/html" id="ScoreApportioned">
+    <div>{{d.ScoreApportioned?"是":"否"}}</div>
+</script>
+<script type="text/html" id="finishTaskEndTime">
+    <div style="float:left;">{{toDateString(d.EndTime)}}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolPanl">
+        <a lay-event="showDetail" style="cursor:pointer;" title="详情">
+            <img src="/images/PromptImg/ShowDetail.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="showTaskPartner" style="cursor:pointer;" title="查看参与者">
+            <img src="~/images/Task/showTaskPartner.png" style="width:16px;height:16px;" />
+        </a>
+        {{# if(viewUserIsAdmin === 'True' || ((d.HasJoined || parseInt(viewUserId) === d.MemberId ) && d.ScoreApportioned)){ }}
+        <a lay-event="TaskScoreApportione" style="cursor:pointer;" title="分值分配">
+            <img src="/images/Task/taskScoreCount.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        <a lay-event="communicationFinishTask" style="cursor:pointer;" title="评论">
+            <img src="/images/PromptImg/messageCommunication.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="fabulousTask" id="finishTaskFabulousHref" style="cursor:pointer;" title="点赞">
+            <img id="finishTaskFabulousImg_{{d.Id}}" src="{{d.HasFabuloued ? "/images/PromptImg/LikeChoosed.png" : "/images/PromptImg/Like.png"}}" style="width:16px;height:16px;" />
+            (<span id="finishTaskFabulousSpan_{{d.Id}}">{{ d.FabulousCount }}</span>)
+        </a>
+    </div>
+    {{# } }}
+</script>
+<script src="/js/TaskScheduleBoard/Shared/FinishTaskTable.js"></script>
+<script>
+
+</script>
+
+
+
+
+

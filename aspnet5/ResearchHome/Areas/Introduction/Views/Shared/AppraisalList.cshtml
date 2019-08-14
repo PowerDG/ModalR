@@ -1,0 +1,34 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="div-table-record">
+    <div class="partItem">
+        <span>考评记录</span>
+        @if (!Model.IsLeave && viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+        {
+            <div onclick="editAppraisal(@Model.Id, 0, '添加考评')">
+                <img src="/images/PromptImg/add.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">添加考评</span>
+            </div>
+        }
+
+    </div>
+    <div id="appraisalsContent" style="width:960px;">
+        <table id="table_appraisals" lay-filter="appraisals"></table>
+    </div>
+</div>
+
+<script type="text/html" id="appraisalTable">
+    <div style="float:left;margin-right: 5px;">{{ d.CreatedMemberName }}</div>
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# if(viewUserId === 'True'  && '@Model.IsLeave' != 'True'){ }}
+    <div class="toolPanl" style="float:right;">
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="editAppraisal('@Model.Id', {{ d.Id }}, '编辑考评' )" title="编辑">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="changeTask" style="cursor:pointer;" onclick="deleteAppraisal({{ d.Id }})" title="删除">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+    </div>
+    {{# } }}
+</script>

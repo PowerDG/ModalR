@@ -1,0 +1,108 @@
+﻿@model ResearchHome.Areas.Introduction.Models.Members
+
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+@{
+    var gender = Model.Gender ? "男" : "女";
+}
+<style>
+    .member-profile {
+        text-align: left;
+        width: auto;
+        max-width: 500px;
+    }
+</style>
+<div class="div-table-record">
+    <div class="partItem">
+        <span>个人资料</span>
+        @if (Model.Id.ToString() == viewInjectHelper.CurrentUserInfo("Id") || viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+        {
+            <div onclick="editMemberProfile(@Model.Id,'编辑资料')">
+                <img src="/images/PromptImg/Edit.png" style="width:14px;height:14px;float:left;margin-top: 3px;" /><span style="font-size:14px;">编辑</span>
+            </div>
+        }
+    </div>
+    <div id="memberProfileContent" style="width:100%;">
+        <div class="layui-row">
+            <div class="layui-col-md6">
+                <div class="layui-row">
+                    <label class="layui-form-label">姓名</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberName" class="layui-form-label member-profile">@Model.Name</label>
+                </div>
+                <div class="layui-row">
+                    <label class="layui-form-label">花名</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="aliasName" class="layui-form-label member-profile">@Model.AliasName</label>
+                </div>
+                <div class="layui-row">
+                    <label class="layui-form-label">性别</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberGender" class="layui-form-label member-profile">@gender</label>
+                </div>
+                <div class="layui-row">
+                    <label class="layui-form-label">职位</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberTitle" class="layui-form-label member-profile">@Model.Title</label>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-row">
+                    <label class="layui-form-label">手机号</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberPhone" class="layui-form-label member-profile">@Model.Phone</label>
+                </div>
+                <div class="layui-row">
+                    <label class="layui-form-label">QQ</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberQQ" class="layui-form-label member-profile">@Model.QQ</label>
+                </div>
+                <div class="layui-row">
+                    <label class="layui-form-label">微信</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberWeChat" class="layui-form-label member-profile">@Model.WeChat</label>
+                </div>
+                <div class="layui-row">
+                    <label class="layui-form-label">邮箱</label>
+                    <label class="layui-form-label" style="width:5px">-</label>
+                    <label id="memberEmail" class="layui-form-label member-profile">@Model.Email</label>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row">
+            <label class="layui-form-label">座右铭</label>
+            <label class="layui-form-label" style="width:5px">-</label>
+            <label id="memberMotto" class="layui-form-label member-profile">@Model.Motto</label>
+        </div>
+    </div>
+</div>
+
+<script>
+    function editMemberProfile(id, title) {
+        layer.open({
+            resize: true,
+            title: title,
+            type: 2,
+            scrollbar: false,
+            area: ['800px', '655px'],//宽高
+            content: "/introduction/member/editmember?id=" + id,
+            end: function () {
+                $.ajax({
+                    url: '/introduction/member/GetMemberProfile?id=' + id,
+                    success: function (data) {
+                        var gender = data.Gender === 1 ? '男' : '女';
+                        $('#memberName').text(data.Name);
+                        $('#memberGender').text(gender);
+                        $('#memberTitle').text(data.Title);
+                        $('#memberPhone').text(data.Phone);
+                        $('#memberQQ').text(data.QQ);
+                        $('#memberWeChat').text(data.WeChat);
+                        $('#memberEmail').text(data.Email);
+                        $('#memberMotto').text(data.Motto);
+                        $('#aliasName').text(data.AliasName);
+                    }
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,159 @@
+﻿@model ResearchHome.Areas.TaskScheduleBoard.Models.PlanModel
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@{
+    var isAdmin = viewInjectHelper.CurrentUserInfo("IsAdmin") == "True" ? 1 : 0;
+}
+<style>
+    .layui-form-label {
+        width: auto;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .layui-input-block {
+        margin-left: 42px;
+    }
+
+    .cardBox {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-sizing: border-box;
+        color: #333333;
+        margin-bottom: 10px;
+        padding: 20px;
+        padding-top: 15px;
+    }
+
+    .taskNameColumn {
+        font-size: 14px;
+        color: #000;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .layui-table-tool-temp {
+        padding-right: 0px;
+    }
+</style>
+<div class="layui-container">
+    <div class="layui-row" style="margin-top:5px;">
+        <div class="layui-col-md12">
+            <div class="layui-form cardBox" style="background-color: #ffcc99;" lay-filter="planFilter">
+                <input type="hidden" id="tempPlanStatus" value="@Model.Status">
+                <input type="hidden" name="planId" value="@Model.Id">
+                <div id="isAdmin" style="display: none;" data-isadmin="@isAdmin"></div>
+                <div class="layui-row layui-form-item">
+                    <div class="layui-col-md3">
+                        <label class="layui-form-label">编号：@Model.Id</label>
+                    </div>
+                    <div class="layui-col-md3">
+                        <label class="layui-form-label">创建人：@Model.CreateMemberName</label>
+                    </div>
+                    <div class="layui-col-md3">
+                        <label class="layui-form-label">创建时间：@Model.CreateTime</label>
+                    </div>
+                    <div class="layui-col-md3">
+                        <label id="closedTime" class="layui-form-label">关闭时间：@Model.ClosedTime</label>
+                    </div>
+                </div>
+                <div class="layui-row layui-form-item">
+                    <div class="layui-col-md9">
+                        <label class="layui-form-label">名称：</label>
+                        <div class="layui-input-block">
+                            @if (Model.Status == "关闭")
+                            {
+                                <input type="text" id="planName" name="planName" style="width:700px;" required lay-verify="required" placeholder="请输入计划名称" class="layui-input" value="@Model.Name" disabled>
+                            }
+                            else
+                            {
+                                <input type="text" id="planName" name="planName" style="width:700px;" required lay-verify="required" placeholder="请输入计划名称" class="layui-input" value="@Model.Name">
+                            }
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <label class="layui-form-label">状态：</label>
+                        <div class="layui-input-block">
+                            @if (Model.Status == "关闭")
+                            {
+                                <select name="planStatus" id="planStatus" lay-search disabled>
+                                    <option value=""> 请选择</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <select name="planStatus" id="planStatus" lay-search>
+                                    <option value=""> 请选择</option>
+                                </select>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-row layui-form-item">
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                        @if (Model.Status == "关闭")
+                        {
+                            <textarea id="remark" name="remark" placeholder="请输入备注" class="layui-textarea" style="min-height:40px;" disabled>@Model.Remark</textarea>
+                        }
+                        else
+                        {
+                            <textarea id="remark" name="remark" placeholder="请输入备注" class="layui-textarea" style="min-height:40px;">@Model.Remark</textarea>
+                        }
+                    </div>
+                </div>
+                <div class="layui-row">
+                    @if (Model.Status != "关闭")
+                    {
+                        <button id="savePlan" class="layui-btn layui-btn-sm" lay-submit lay-filter="savePlan" style="float:right;">保存</button>
+                    }
+                </div>
+            </div>
+
+            <div>
+                <table id="taskTable" lay-filter="taskTable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="taskTableToolbar">
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';}}
+    {{# if(viewUserIsAdmin === 'True'){ }}
+    <div style="display:inline-block;float:right">
+        <button class="layui-btn layui-btn-sm" lay-event="relateTask">关联任务</button>
+        <button class="layui-btn layui-btn-sm" lay-event="createTask">创建任务</button>
+    </div>
+    {{# } }}
+</script>
+
+<script type="text/html" id="taskToolUnitTemplet">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# if(viewUserId !== ''){ }}
+    <div class="toolUnit">
+        {{# if(d.canDelete == true){ }}
+        <a lay-event="deleteTask" style="cursor:pointer;" title="删除">
+            <img src="~/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+        </a>
+        <a lay-event="removeRelateTask" style="cursor:pointer;" title="解除关联">
+            <img src="~/images/PromptImg/Leave.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canReceive == true){ }}
+        <a lay-event="receiveTask" style="cursor:pointer;" title="领取">
+            <img src="/images/PromptImg/TaskGet.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canReview == true){ }}
+        <a lay-event="reviewTask" style="cursor:pointer;" title="点评">
+            <img src="~/images/PromptImg/messageCommunication.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+        {{# if(d.canTrack == true){ }}
+        <a lay-event="addTrack" style="cursor:pointer;" title="添加跟进">
+            <img src="/images/PromptImg/TaskTracking.png" style="width:16px;height:16px;" />
+        </a>
+        {{# } }}
+    </div>
+    {{# } }}
+</script>
+
+<script src="~/js/TaskScheduleBoard/Plan/getPlanDetail.js"></script>

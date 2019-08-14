@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <link href="/css/TaskScheduleBoard/TaskPartner/DealTaskPartner.css" rel="stylesheet" />
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+@model ResearchHome.Areas.TaskScheduleBoard.Models.TaskpartnersModel
+<div class="layui-contentall" style="width: 100%;">
+    <form id="addTaskParnerForm" class="layui-form layui-form-small" style="text-align:center;" asp-antiforgery="true" autocomplete="off">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">参与人</label>
+                <div class="layui-input-inline">
+                    <select name="partner" id="partner" lay-filter="partner" lay-search>
+                        <option value="0"> 请选择</option>
+                    </select>
+                    <input type="hidden" name="MemberId" asp-for="MemberId">
+                    <div id="partnerError" style="display:none;">
+                        <div class="valid-tips">
+                            <span class="valid-tips-span field-validation-error">
+                                <span>参与人不能为空</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="height:120px;">
+            <div class="layui-inline">
+                <label class="layui-form-label">说明</label>
+                <div class="layui-input-inline" style="width:350px;">
+                    <textarea id="Description" name="Description" asp-for="Description" placeholder="请输入内容(选填)" class="layui-textarea"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-content-btn">
+            <div class="layui-input-block">
+                <button type="button" onclick="btnSubmit();" class="layui-btn" data-ripple>确认</button>
+                <button type="button" onclick="parent.layer.closeAll();" class="layui-btn layui-btn-primary" data-ripple>关闭</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script src="/js/TaskScheduleBoard/TaskPartner/DealTaskPartner.js"></script>
+    <script type="text/javascript">
+         layui.use('form', function () {
+             var form = layui.form;
+             SelectBind("GetTaskParnerChooseMemberList", "partner", "Id", "Name", '@Html.Raw(Model.MemberId)', "120px", form, { taskId: GetQueryString("taskId") });
+             form.on('select(partner)', function (data) {
+                 if (data.value !== '0') {
+                     $('#partnerError').css("display", "none");
+                 }
+             });
+        });
+    </script>
+}

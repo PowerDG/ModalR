@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <link href="/css/Integral/Home/index.css" rel="stylesheet" />
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+
+<div id="integralTotalContent" style="width:100%;margin:auto;">
+    <table class="layui-table" id="integralTotalTable" lay-data="{id:'integralTotalTable'}" lay-filter="integralTotalTableFilter"></table>
+</div>
+<div class="layui-content-btn">
+    <div class="layui-input-block">
+        <button type="button" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">关闭</button>
+    </div>
+</div>
+<script type="text/html" id="createdTime">
+    <div>{{toDateString(d.CreatedTime)}}</div>
+</script>
+@section Scripts{
+    <script src="/js/Integral/Home/IntegralTotalTable.js"></script>
+}

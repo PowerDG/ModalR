@@ -1,0 +1,208 @@
+﻿@{
+    int.TryParse(viewInjectHelper.CurrentUserInfo("Id"), out int userId);
+}
+
+@addTagHelper *, ResearchHome
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+<style type="text/css">
+    #slider {
+        position: relative;
+        width: 1150px;
+        height: 300px;
+        left: 30px;
+        overflow: hidden;
+        background: #000;
+        border: 1px solid #fff;
+    }
+
+        #slider .slide {
+            position: absolute;
+            top: 0px;
+            height: 300px;
+            width: 730px;
+            background: #000;
+            overflow: hidden;
+            border-left: #000 solid 1px;
+            cursor: default;
+        }
+
+        #slider .title {
+            color: #F80;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 1.5em;
+            text-decoration: none;
+        }
+
+        #slider .backgroundText {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 100%;
+            background: #000;
+            filter: alpha(opacity=40);
+            opacity: 0.4;
+        }
+
+        #slider .text {
+            position: absolute;
+            color: #FFF;
+            font-family: verdana, arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+            text-align: justify;
+            width: 470px;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+
+        #slider .diapo {
+            position: absolute;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            visibility: hidden;
+        }
+
+        #slider img {
+            cursor: pointer;
+        }
+
+    #center {
+        margin-left: 30px;
+    }
+</style>
+<link href="/css/introduce/index.css" rel="stylesheet" />
+
+<div>
+    <div id="introductionPart" class="partMarginTopFrist"
+         onmouseover="'@viewInjectHelper.CurrentUserInfo("IsAdmin")' !== 'True'
+                    ? '': $('#introductionEdit').css('display', 'initial');"
+         onmouseout="$('#introductionEdit').css('display', 'none');">
+        <div class="title" style="font-size:20px;font-weight:bold; text-align:left;">
+            <span id="introductionTitle"></span>
+            @if (@viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+            {
+                <a id="introductionEdit" style="cursor:pointer;padding-left:10px;position:absolute;display:none;" title="编辑">
+                    <img src="/images/PromptImg/Edit.png" onclick="editIntroduction();" style="width:16px;height:16px;" />
+                </a>
+            }
+        </div>
+        <div style="font-size:14px;line-height:20px;padding:0 10px;width:1150px;margin-left:55px;">
+            <pre id="introductionContent">
+        </pre>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="heroesPart" class="partMarginTop" style="display:grid;">
+        <div class="partItem" style="position:relative;">
+            <span>英雄榜</span>
+            @if (userId > 0)
+            {
+                <span class="partItemTool" onclick="switchStyle();">
+                    <img src="~/images/PromptImg/switch.png" style="width:23px;height:16px;" />
+                    <span>切换风格</span>
+                </span>
+                <span id="uploadArtPhoto" class="partItemTool" onclick="uploadArtPhoto();">
+                    <img src="~/images/PromptImg/upload.png" style="width:16px;height:16px;" /><span>上传我的侠客照</span>
+                </span>
+            }
+            @if (viewInjectHelper.CurrentUserInfo("IsAdmin") == "True")
+            {
+                <span class="partItemTool" onclick="showEditMemberPage(0, '新增英雄');">
+                    <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>新增英雄</span>
+                </span>
+                <span class="partItemTool" onclick="showMoreMembers();">
+                    <img src="/images/PromptImg/DetailMessage.png" style="width:16px;height:16px;" /><span>远行英雄</span>
+                </span>
+            }
+        </div>
+        <div id="heroesPartContent" class="layui-row-staff">
+        </div>
+        <div id="center" class="layui-row-staff">
+            <div id="slider">
+            </div>
+        </div>
+        <input type="hidden" id="entryMemberPageId" />
+    </div>
+</div>
+<div>
+    <div id="heroicStylePart" class="partMarginTop">
+        <div class="partItem" style="position:relative;">
+            <span>英雄风采</span>
+            @if (!string.IsNullOrEmpty(viewInjectHelper.CurrentUserInfo("Id")))
+            {
+                <span class="partItemTool" onclick="addHeroicStyleData();">
+                    <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>新增风彩</span>
+                </span>
+            }
+            <span class="partItemTool" onclick="showMoreHeroicStyle();">
+                <img src="/images/PromptImg/DetailMessage.png" style="width:16px;height:16px;" /><span>更多</span>
+            </span>
+        </div>
+        <div id="heroicStylePartContent" class="layui-row-staff">
+        </div>
+    </div>
+</div>
+
+<script src="/js/introduction/Home/index.js"></script>
+
+<script>
+    var switchFlag = false;
+    //$('#center').hide();
+    switchStyle();
+    function switchStyle() {
+        if (switchFlag) {
+            $('#heroesPartContent').show();
+            $('#center').hide();
+            switchFlag = false;
+        } else {
+            $('#heroesPartContent').hide();
+            $('#center').show();
+            switchFlag = true;
+        }
+
+    }
+    function uploadArtPhoto() {
+        layer.open({
+            type: 2,
+            title: "上传我的侠客照",
+            resize: false,
+            area: ['500px', '500px'],
+            shadeClose: true,
+            content: '/Introduction/member/HeroicArtPhoto',
+            end: function () {
+                location.reload();
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    $.ajax({
+        url: '/introduction/member/GetMemberList'
+        , type: 'post'
+        , success: function (d) {
+            var members = $('<div></div>');
+            for (var index = 0; index < d.length; index++) {
+                var artPhoto = d[index].art_photo;
+                var motto = d[index].Motto;
+                if (artPhoto == null || artPhoto == "") {
+                    artPhoto = "/images/public/NoneArtPhoto.png";
+                }
+                if (motto == null || motto == "") {
+                    motto = "沉默是金";
+                }
+                var member = `<div class="slide">
+                                   <img class="diapo" src="${artPhoto}"  onclick="pageToUrl('nagiveBar_introduction', '/introduction/member/memberrecord?id=${d[index].Id}')">
+                                    <div class="text">
+                                        <span class="title">${d[index].Name}</span>
+                                            ${motto}
+                                    </div>
+                             </div>`;
+                members.append(member);
+            }
+            $('#slider').html(members);
+            slider.init();
+        }
+    });
+</script>

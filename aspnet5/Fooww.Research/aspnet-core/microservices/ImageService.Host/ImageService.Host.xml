@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ImageService.Host</name>
+    </assembly>
+    <members>
+        <member name="T:ImageService.Host.Controllers.ImageController">
+            <summary>
+            图片操作相关接口
+            </summary>
+        </member>
+        <member name="M:ImageService.Host.Controllers.ImageController.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            构造函数注入
+            </summary>
+        </member>
+        <member name="M:ImageService.Host.Controllers.ImageController.Upload(ImageService.Host.Dtos.FileDtos)">
+            <summary>
+            接口上传图片方法
+            </summary>
+            <param name="fileDtos">文件传输对象,传过来的json数据</param>
+            <returns>上传结果</returns>
+        </member>
+        <member name="M:ImageService.Host.Controllers.ImageController.Delete(System.String)">
+            <summary>
+            删除图片
+            </summary>
+            <returns>执行结果</returns>
+        </member>
+        <member name="T:ImageService.Host.Dtos.FileDtos">
+            <summary>
+            文件上传的信息
+            </summary>
+        </member>
+        <member name="P:ImageService.Host.Dtos.FileDtos.FileType">
+            <summary>
+            文件目录类型
+            </summary>
+        </member>
+        <member name="P:ImageService.Host.Dtos.FileDtos.NeedThumb">
+            <summary>
+            是否需要缩略图
+            </summary>
+        </member>
+        <member name="P:ImageService.Host.Dtos.FileDtos.Base64String">
+            <summary>
+            base64String
+            </summary>
+        </member>
+        <member name="T:ImageService.Host.Result.UploadResult">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:ImageService.Host.Result.UploadResult.Success">
+            <summary>
+            结果状态
+            </summary>
+        </member>
+        <member name="P:ImageService.Host.Result.UploadResult.OriginalUrl">
+            <summary>
+            原始图片地址
+            </summary>
+        </member>
+        <member name="P:ImageService.Host.Result.UploadResult.ThumbUrl">
+            <summary>
+            缩略图地址
+            </summary>
+        </member>
+    </members>
+</doc>

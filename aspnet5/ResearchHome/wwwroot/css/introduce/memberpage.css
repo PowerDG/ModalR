@@ -1,0 +1,138 @@
+﻿
+.layui-row-memberpage {
+    padding: 30px 0px;
+    width: 1280px;
+    margin: auto;
+}
+
+.layui-col-div-img {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+    .layui-col-div-img img {
+        width: 160px;
+        height: 180px;
+        border: 1px solid;
+        cursor: pointer;
+    }
+
+.layui-memberpage-icon {
+    margin-top: 10px;
+}
+
+    .layui-memberpage-icon i {
+        font-size: 32px;
+    }
+
+.layui-memberpage-medal {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .layui-memberpage-medal div {
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+        margin-top: 5px;
+    }
+
+.layui-memberpage-input {
+    width: 350px;
+    margin-left: 140px;
+}
+
+.layui-memberpage-lable {
+    width: 100px;
+}
+
+.layui-memberpage-tabletitle {
+    text-align: left;
+}
+
+.layui-input-wd2 {
+    width: 200px;
+    display: inline-block;
+}
+
+.layui-minbutton {
+    float: right;
+    margin-top: 10px;
+}
+
+.medal-head {
+    display: inline-block;
+}
+
+    .medal-head p {
+        float: left;
+        text-align: left;
+        font-size: 20px;
+        margin-left: 30px;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+
+    .medal-head button {
+        margin-right: 30px;
+        float: right;
+    }
+.memberinfo_table {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: initial;
+}
+    .memberinfo_table td:first-child {
+        float: right;
+    }
+    .memberinfo_table td {
+         padding: 2px 0px; 
+        line-height: 20px;
+    }
+
+.titlechange_button {
+    margin-left: auto;
+    margin-right: auto;
+    display: inherit;
+}
+
+.layui-table-view {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: -2px;
+}
+
+.div-table-record {
+    margin-bottom: 2px;
+
+}
+
+.partItem span{
+    float:left;
+}
+.partItem div {
+    cursor: pointer;
+    padding-top: 4px;
+    float: left;
+    margin-left: 10px;
+}
+
+.tableClick {
+    background-color: #56B4D9;
+}
+
+/*.layui-table-main .layui-table tbody tr:hover {
+    background-color: #56B4D9;
+}*/
+
+.medal-add {
+    cursor: pointer;
+    font-weight: bold;
+    width: 80px;
+    text-align: left;
+    margin-left: 10px;
+    margin-top: 8px;
+    float: left;
+}

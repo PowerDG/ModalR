@@ -1,0 +1,22 @@
+﻿/*提示信息*/
+.valid-tips {
+    float: left;
+    font-size:14px;
+}
+
+.field-validation-error {
+    background: url('/images/public/ExclamaMark.png') no-repeat;
+    color: red !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.valid-tips-span {
+    padding-left: 18px;
+}
+/*显示提示信息时不影响高度*/
+.layui-form-item .layui-inline {
+    height: 60px;
+    margin-bottom: 0;
+}

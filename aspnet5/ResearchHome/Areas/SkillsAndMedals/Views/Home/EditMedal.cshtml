@@ -1,0 +1,237 @@
+﻿@model ResearchHome.Areas.SkillsAndMedals.Models.Medals
+@{
+    ViewData["Title"] = "EditSkills";
+    Layout = "~/Views/Shared/_Master.cshtml";
+    string icon = Model != null ? Model.Icon : "";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <style>
+        .icon-div {
+            width: 22%;
+            float: left;
+            margin-top: 30px;
+            margin-left: 25px;
+        }
+
+            .icon-div img {
+                width: 120px;
+                cursor: pointer;
+            }
+
+        .medal-div {
+            margin-top: 30px;
+            width: 70%;
+            float: left;
+        }
+
+        .layui-form-label {
+            float: left;
+            display: block;
+            padding: 9px 15px 9px 0px;
+            width: 50px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: right;
+        }
+
+        .layui-input-block {
+            margin-left: 70px;
+            min-height: 36px;
+        }
+
+        .layui-row-icon {
+            width: 120px;
+            height: 120px;
+            border: solid 0.1px;
+            padding: 2px;
+        }
+
+        .layui-upload-image {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .btn_delete_img {
+            margin-left: 20%;
+            margin-top: -1%;
+            position: absolute;
+        }
+
+            .btn_delete_img i {
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+        .layui-form-item .layui-inline {
+            height: 60px;
+            margin-bottom: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+    </style>
+}
+<div class="icon-div">
+    <div class="btn_delete_img"><i class="layui-icon layui-icon-close-fill" hidden id="btnDeletePhoto"></i></div>
+    <div class="layui-upload" style="text-align: center;">
+        <div class="layui-row-icon">
+            <img class="layui-upload-img layui-upload-image" onerror="javascript: this.src = '/images/public/NonePicture.png'"
+                 src="@icon" id="medalIcon">
+            <input type="hidden" name="isupload" value="0" />
+            <input type="file" style="display:none;" id="ImgUpload" onchange="loadUploadImg()" />
+        </div>
+        <i style="font-size:9px;color:red">建议尺寸：128*128</i>
+        <button type="button" style="margin-top:10px;" class="layui-btn" onclick="$('#ImgUpload').click()">上传图片</button><br />
+        <div id="error_photo" style="display: none">
+            <div class="valid-tips"><span class="valid-tips-span field-validation-error">请上传勋章图片</span></div>
+        </div>
+    </div>
+
+</div>
+<div class="layui-form medal-div">
+    <div class="layui-inline" style="width: 90%;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名字</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="txtMedalId" asp-for="Id" />
+                <input type="text" id="txtName" onchange="onchangeEvent(this)" required lay-verify="required" asp-for="Name" autocomplete="off" class="layui-input" placeholder="请输入勋章名称" />
+                <div id="error_name" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入勋章名称</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">等级</label>
+            <div class="layui-input-block">
+                <input type="text" id="txtGrade" onchange="onchangeEvent(this)" required lay-verify="required" asp-for="Grade" autocomplete="off" class="layui-input" placeholder="请输入勋章等级" />
+                <div id="error_name" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入勋章等级</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <textarea id="txtDescription" onchange="onchangeEvent(this)" required lay-verify="required" rows="10" asp-for="Description" placeholder="请输入勋章描述" class="layui-textarea"></textarea>
+                <div id="error_desc" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入勋章描述</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-content-btn">
+    <div class="layui-input-block">
+        <button class="layui-btn" onclick="save()">保存</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+    </div>
+</div>
+
+<script src="~/js/global.js"></script>
+@section Scripts{
+    <script>
+        var medal;
+
+        layui.use(['layer', 'form'], function () {
+            var form = layui.form;
+            var layer = layui.layer;
+
+            medal = { icon: '@icon'};
+        });
+
+        function save() {
+            if ($("input[name='isupload']").val() == "0") {
+                medal.icon = "";
+            }
+            medal.id = $("#txtMedalId").val();
+            medal.name = $("#txtName").val();
+            medal.grade = $("#txtGrade").val();
+            medal.description = $("#txtDescription").val();
+            medal.currentPath = '@icon';
+            if (checkDataVaild(medal)) {
+                $.post("/skillsandmedals/home/editmedal", medal, function (data) {
+                    parent.layer.msg(data.message, {
+                        icon: 6,
+                        shift: -1,
+                        time: 500,
+                        shade: 0.3
+                    }, function () {
+                        if (data.success) parent.layer.closeAll();
+                    });
+                });
+            }
+        }
+
+        function checkDataVaild(medal) {
+            var errorCount = 0;
+            if (medal.id <= 0 && medal.icon == "") {
+                $("#error_photo").css("display", "block");
+                errorCount += 1;
+            }
+            if (medal.name == "") {
+                errorCount += 1;
+                $("#error_name").css("display", "block");
+            }
+            if (medal.description == "") {
+                errorCount += 1;
+                $("#error_desc").css("display", "block");
+            }
+            if (errorCount > 0) {
+                return false;
+            } else {
+                return true;
+            }
+            return true;
+        }
+
+        function onchangeEvent(e) {
+            $(e).next().css("display", "none");
+        }
+
+        function loadUploadImg() {
+            if (typeof FileReader == 'undefined') {
+                var photoSrc = getPath(document.all.fileid);
+                $("#medalIcon").attr("src", photoSrc);
+            } else {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#medalIcon").attr("src", this.result);
+                    medal.icon = this.result;
+                    $("input[name='isupload']").val("1");
+                }
+                reader.readAsDataURL(document.getElementById("ImgUpload").files[0]);
+            }
+            $("#error_photo").css("display", "none");
+        }
+
+        // 获取本地上传的照片路径
+        function getPath(obj) {
+            if (obj) {
+                //ie
+                if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
+                    obj.select();
+                    // IE下取得图片的本地路径
+                    return document.selection.createRange().text;
+                }
+                //firefox
+                else if (window.navigator.userAgent.indexOf("Firefox") >= 1) {
+                    if (obj.files) {
+                        // Firefox下取得的是图片的数据
+                        return obj.files.item(0).getAsDataURL();
+                    }
+                    return obj.value;
+                }
+                return obj.value;
+            }
+        }
+    </script>
+}

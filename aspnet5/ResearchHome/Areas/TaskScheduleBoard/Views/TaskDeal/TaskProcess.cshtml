@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, ResearchHome
+
+@section Heads{
+    <style>
+    </style>
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, ResearchHome
+<div style="padding-left:30px;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend id="taskToolMenu">
+
+        </legend>
+    </fieldset>
+    <ul id="taskProcess" class="layui-timeline"></ul>
+</div>
+<script id="taskToolMenuMaster" type="text/html">
+    任务进度
+    {{#if (d.TaskStatus === "执行中" && d.IstaskPrincipalPerson){ }}
+    <a onclick="trackTask();" style="cursor:pointer;" title="跟进">
+        <img src="/images/PromptImg/TaskTracking.png" style="width:16px;height:16px;" />
+    </a>
+    <a onclick="finishTask();" style="cursor:pointer;" title="完成">
+        <img src="/images/PromptImg/Done.png" style="width:16px;height:16px;" />
+    </a>
+    {{# } else if(d.TaskStatus === "执行中" && d.IsTaskPartner){ }}
+
+    <a onclick="trackTask();" style="cursor:pointer;" title="跟进">
+        <img src="/images/PromptImg/TaskTracking.png" style="width:16px;height:16px;" />
+    </a>
+    {{# } }}
+</script>
+<script id="taskProcessData" type="text/html">
+    {{# layui.each(d, function(index, item){   }}
+    <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+        <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">{{ toDateString(item.FollowTime) }}</h3>
+            <h3>
+                {{ item.Follower }}&nbsp;&nbsp;&nbsp;<span style="font-size:14px;">{{ item.FollowType }}</span>
+            </h3>
+            {{# if(item.FollowDescription !== null){ }}
+            @*<pre style="font-size:14px;padding-top:5px;">*@
+            <pre style="font-size:14px;padding-top:5px;">{{ item.FollowDescription }}</pre>
+            {{# } }}
+        </div>
+    </li>
+    {{#  }); }}
+</script>
+@section Scripts{
+    <script src="/js/TaskScheduleBoard/TaskDeal/TaskProcess.js"></script>
+    <script type="text/javascript">
+    </script>
+}

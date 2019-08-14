@@ -1,0 +1,69 @@
+﻿@using ResearchHome.Areas.Introduction.Models
+@model Gifts
+@{
+    ViewData["Title"] = "EditGift";
+    Layout = "/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <style>
+        .layui-form-item .layui-inline {
+            height: 60px;
+            margin-bottom: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+        .layui-input-item input {
+            width: 240px
+        }
+    </style>
+}
+
+<div class="layui-form" style="margin-top: 20px;">
+    <div class="layui-inline" style="margin-top: 10px;">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">物品名</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="txtGiftId" asp-for="Id" />
+                <input type="hidden" id="txtMemberId" value="@ViewBag.MemberId" />
+                <input type="text" id="txtName" required lay-verify="required" onchange="onchangeEvent(this)" asp-for="Name" placeholder="请输入礼物名称" autocomplete="off" class="layui-input" />
+                <div id="error_name" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入礼物名称</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">价格</label>
+            <div class="layui-input-block">
+                <input type="text" id="txtPrice" onkeyup="value=value.replace(/[^\d]/g,'')" required lay-verify="required" asp-for="Price" placeholder="请输入价格" autocomplete="off" class="layui-input" />
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">购买链接</label>
+            <div class="layui-input-block">
+                <textarea id="txtHyperlink" style="width: 240px" rows="2" placeholder="请输入购买链接" asp-for="Hyperlink" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-content-btn" style="margin-bottom: 13px;">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="save()">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script src="/js/global.js"></script>
+<script src="/js/introduction/MemberOperating/EditGift.js"></script>
+}

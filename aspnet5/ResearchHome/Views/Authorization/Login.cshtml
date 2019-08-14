@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@section Heads{
+    <link href="/css/form.css" rel="stylesheet"/>
+    <link href="/css/Authorization/login.css" rel="stylesheet" />
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ResearchHome.Models.Authorization.AccountLoginModel
+@addTagHelper *, ResearchHome
+<div class="layui-contentall" style="width: 100%;">
+    <div class="layui-content-title" style="background-color: #56B4D9;height:150px;">
+        <img src="/images/Login/loginMark.png" style="width:100%;height:100%;">
+    </div>
+    <form id="editHeroicStyle" style="text-align:center;" class="layui-form layui-form-small" asp-antiforgery="true" autocomplete="off">
+        <div class="layui-form-item" style="padding-top:40px;">
+            <div class="layui-inline">
+                <label class="layui-form-label">&nbsp;&nbsp;&nbsp;&nbsp;账户</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Account" id="Account" asp-for="Account" placeholder="请输入账户" class="layui-input">
+                    <div>
+                        <div class="valid-tips"><span class="valid-tips-span" asp-validation-for="Account"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">&nbsp;&nbsp;&nbsp;&nbsp;密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" id="Password" name="Password" asp-for="Password" placeholder="请输入当前密码" class="layui-input" />
+                    <div>
+                        <div class="valid-tips"><span class="valid-tips-span" asp-validation-for="Password"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" id="verificationInput" style="display: none;">
+            <div class="layui-inline">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline">
+                    <img id="codeImg" title="点击更换验证码" style="width: 80px;height: 38px;float: left;" />
+                    <div style="width: 50px;float: left;padding-left: 5px;">
+                        <input type="text" id="VerificationCode" name="VerificationCode"
+                               onblur="$('#error_code').css('display', $(this).val() === '' ? 'block' : 'none');"
+                               asp-for="VerificationCode" placeholder="结果" class="layui-input" />
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <a onclick="showImage()" style="cursor:pointer;color: blue;">换一道</a>
+                    </div>
+                    <div id="error_code" style="display:none;">
+                        <div class="valid-tips">
+                            <span class="valid-tips-span field-validation-error">
+                                <span>请输入计算结果</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="display:@Html.Raw(TempData["LoginErrorMessage"] == null ? "none" : "block")">
+            <div style="height: 40px;position: relative;">
+                <div class="valid-tips" style="position: absolute;bottom: 10px;left: 0;right: 0;">
+                    <span class="valid-tips-span field-validation-error" style="display: @Html.Raw(TempData["LoginErrorMessage"] == null ? "none" : "inline-block")">
+                        <span>@Html.Raw(TempData["LoginErrorMessage"] == null ? string.Empty : TempData["LoginErrorMessage"])</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div> 
+            <div  style="float:left;margin-left:230px;margin-bottom:15px;">
+                <input type="checkbox" name="IsCheckBox" id="IsCheckBox" asp-for="IsCheckBox" lay-skin="switch">
+                <label class="layui-form-label" style="float:right;">五天免登录</label>
+            </div>
+        </div>
+        <div class="layui-form-item layui-content-btn">
+            <div class="submitBtn">
+                <button type="button" onclick="layerSubmit()" style="width:100%;" id="btnSubmit" class="layui-btn" data-ripple>确认</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script src="/js/Authorization/login.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+           var password = '@Html.Raw(string.IsNullOrEmpty(Model.Password) ? "" : Model.Password.Replace("\"", "\\\""))';
+            if (password !== '') $('#Password').val(password.replace(/[^●]{1}/g, '●'));
+            if ('@Html.Raw(Model.IsCheck)'.toLowerCase() === 'true') {
+                showImage();
+                $("#verificationInput").css("display", "block");
+                $("#verifacationImg").css("display", "block");
+            }
+        };
+
+        function layerSubmit() {
+            if ('@Html.Raw(Model.IsCheck)'.toLowerCase() === 'true' && $("#VerificationCode").val() === "") {
+                $("#error_code").css("display", "block");
+                return false;
+            }
+            $('#editHeroicStyle').submit();
+        }
+    </script>
+}

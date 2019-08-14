@@ -1,0 +1,1064 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookService.Host</name>
+    </assembly>
+    <members>
+        <member name="T:BookService.Host.Authorization.AppLtmPermissions">
+            <summary>
+            52abp定义的默认权限变量名称
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookNameEditDto.Name">
+            <summary>
+            书名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReportLossDto.Reason">
+            <summary>
+            书名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookEditDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookEditDto.Name">
+            <summary>
+            书名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookEditDto.Author">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookEditDto.Photo">
+            <summary>
+            缩略图
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookEditDto.PhotoHd">
+            <summary>
+            高清图
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookEditDto.Resource">
+             <summary>
+             书籍来源
+             </summary>
+            
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.Name">
+            <summary>
+            书名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.Author">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.Photo">
+            <summary>
+            缩略图
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.PhotoHd">
+            <summary>
+            高清图
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.EntryTime">
+            <summary>
+            加入时间
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.AverageScore">
+            <summary>
+            平均分
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.Resource">
+            <summary>
+            书籍来源
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.MemberId">
+            <summary>
+            借阅成员
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.State">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.LastBookReview">
+            <summary>
+            最后评论
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.IsActive">
+            <summary>
+            激活状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.CreatorUserId">
+            <summary>
+            CreatorUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.CreationTime">
+            <summary>
+            CreationTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.LastModifierUserId">
+            <summary>
+            LastModifierUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookListDto.LastModificationTime">
+            <summary>
+            LastModificationTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.BookId">
+            <summary>
+            BookId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.TagId">
+            <summary>
+            TagId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.TagName">
+            <summary>
+            Tag名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.Phrase">
+            <summary>
+            常用语
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.Description">
+            <summary>
+            简介
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookEditDto.IsActive">
+            <summary>
+            激活状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.BookId">
+            <summary>
+            BookId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.TagId">
+            <summary>
+            TagId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.TagName">
+            <summary>
+            Tag名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.Phrase">
+            <summary>
+            常用语
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.Description">
+            <summary>
+            简介
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.IsActive">
+            <summary>
+            激活状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.CreatorUserId">
+            <summary>
+            CreatorUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.CreationTime">
+            <summary>
+            CreationTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.IsDeleted">
+            <summary>
+            IsDeleted
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.DeleterUserId">
+            <summary>
+            DeleterUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookPhrasebookListDto.DeletionTime">
+            <summary>
+            DeletionTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewEditDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewEditDto.BookId">
+             <summary>
+             书号
+             </summary>
+            
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewEditDto.Review">
+             <summary>
+             评论
+             </summary>
+            
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewEditDto.Score">
+             <summary>
+             评分
+             </summary>
+            
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.BookId">
+            <summary>
+            书号
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.Review">
+            <summary>
+            评论
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.Score">
+            <summary>
+            评分
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.IsActive">
+            <summary>
+            激活状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.CreatorUserId">
+            <summary>
+            CreatorUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.CreationTime">
+            <summary>
+            CreationTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.LastModifierUserId">
+            <summary>
+            LastModifierUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookReviewListDto.LastModificationTime">
+            <summary>
+            LastModificationTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.BookId">
+            <summary>
+            BookId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.TagId">
+            <summary>
+            TagId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.TagName">
+            <summary>
+            Tag名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.Description">
+            <summary>
+            简介
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.ReviewId">
+            <summary>
+            ReviewId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagEditDto.IsActive">
+            <summary>
+            激活状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.BookId">
+            <summary>
+            BookId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.TagId">
+            <summary>
+            TagId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.TagName">
+            <summary>
+            Tag名
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.Description">
+            <summary>
+            简介
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.ReviewId">
+            <summary>
+            ReviewId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.IsActive">
+            <summary>
+            激活状态
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.CreatorUserId">
+            <summary>
+            CreatorUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.CreationTime">
+            <summary>
+            CreationTime
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.IsDeleted">
+            <summary>
+            IsDeleted
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.DeleterUserId">
+            <summary>
+            DeleterUserId
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.BookTagListDto.DeletionTime">
+            <summary>
+            DeletionTime
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.Dtos.GetBookPhrasebooksInput.Normalize">
+            <summary>
+            正常化排序使用
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.Dtos.GetBookReviewsInput.Normalize">
+            <summary>
+            正常化排序使用
+            </summary>
+        </member>
+        <member name="P:BookService.Host.Domain.Dtos.GetBooksInput.QueryType">
+             <summary>
+             正常化排序使用
+             </summary>
+            
+        </member>
+        <member name="M:BookService.Host.Domain.Dtos.GetBookTagsInput.Normalize">
+            <summary>
+            正常化排序使用
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.IBookAppService">
+             <summary>
+             Book应用层服务的接口方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookAppService.GetPaged(BookService.Host.Domain.Dtos.GetBooksInput)">
+             <summary>
+             获取Book的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookAppService.GetById(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            通过指定id获取BookListDto信息
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookAppService.GetForEdit(Abp.Application.Services.Dto.NullableIdDto{System.UInt32})">
+            <summary>
+            返回实体的EditDto
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookAppService.CreateOrUpdate(BookService.Host.Domain.Dtos.CreateOrUpdateBookInput)">
+            <summary>
+            添加或者修改Book的公共方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookAppService.Delete(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            删除Book信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookAppService.BatchDelete(System.Collections.Generic.List{System.UInt32})">
+            <summary>
+            批量删除Book
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.IBookPhrasebookAppService">
+             <summary>
+             BookPhrasebook应用层服务的接口方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookPhrasebookAppService.GetPaged(BookService.Host.Domain.Dtos.GetBookPhrasebooksInput)">
+             <summary>
+             获取BookPhrasebook的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookPhrasebookAppService.GetById(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            通过指定id获取BookPhrasebookListDto信息
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookPhrasebookAppService.GetForEdit(Abp.Application.Services.Dto.NullableIdDto{System.UInt32})">
+            <summary>
+            返回实体的EditDto
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookPhrasebookAppService.CreateOrUpdate(BookService.Host.Domain.Dtos.CreateOrUpdateBookPhrasebookInput)">
+            <summary>
+            添加或者修改BookPhrasebook的公共方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookPhrasebookAppService.Delete(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            删除BookPhrasebook信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookPhrasebookAppService.BatchDelete(System.Collections.Generic.List{System.UInt32})">
+            <summary>
+            批量删除BookPhrasebook
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.IBookReviewAppService">
+             <summary>
+             BookReview应用层服务的接口方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookReviewAppService.GetPaged(BookService.Host.Domain.Dtos.GetBookReviewsInput)">
+             <summary>
+             获取BookReview的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookReviewAppService.GetById(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            通过指定id获取BookReviewListDto信息
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookReviewAppService.GetForEdit(Abp.Application.Services.Dto.NullableIdDto{System.UInt32})">
+            <summary>
+            返回实体的EditDto
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookReviewAppService.CreateOrUpdate(BookService.Host.Domain.Dtos.CreateOrUpdateBookReviewInput)">
+            <summary>
+            添加或者修改BookReview的公共方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookReviewAppService.Delete(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            删除BookReview信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookReviewAppService.BatchDelete(System.Collections.Generic.List{System.UInt32})">
+            <summary>
+            批量删除BookReview
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.IBookTagAppService">
+             <summary>
+             BookTag应用层服务的接口方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookTagAppService.GetPaged(BookService.Host.Domain.Dtos.GetBookTagsInput)">
+             <summary>
+             获取BookTag的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookTagAppService.GetById(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            通过指定id获取BookTagListDto信息
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookTagAppService.GetForEdit(Abp.Application.Services.Dto.NullableIdDto{System.UInt32})">
+            <summary>
+            返回实体的EditDto
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookTagAppService.CreateOrUpdate(BookService.Host.Domain.Dtos.CreateOrUpdateBookTagInput)">
+            <summary>
+            添加或者修改BookTag的公共方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookTagAppService.Delete(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            删除BookTag信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Domain.IBookTagAppService.BatchDelete(System.Collections.Generic.List{System.UInt32})">
+            <summary>
+            批量删除BookTag
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Mapper.BookMapper">
+            <summary>
+            配置Book的AutoMapper
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Mapper.BookPhrasebookMapper">
+            <summary>
+            配置BookPhrasebook的AutoMapper
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Mapper.BookReviewMapper">
+            <summary>
+            配置BookReview的AutoMapper
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Mapper.BookTagMapper">
+            <summary>
+            配置BookTag的AutoMapper
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookAuthorizationProvider">
+             <summary>
+             权限配置都在这里。
+             给权限默认设置服务
+             See <see cref="T:BookService.Host.Domain.Authorization.BookPermissions" /> for all permission names. Book
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookPermissions">
+             <summary>
+             定义系统的权限名称的字符串常量。
+             <see cref="T:BookService.Host.Domain.Authorization.BookAuthorizationProvider" />中对权限的定义.
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.Node">
+             <summary>
+             Book权限节点
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.Query">
+             <summary>
+             Book查询授权
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.Create">
+             <summary>
+             Book创建权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.Edit">
+             <summary>
+             Book修改权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.Delete">
+             <summary>
+             Book删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.BatchDelete">
+             <summary>
+             Book批量删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPermissions.ExportExcel">
+             <summary>
+             Book导出Excel
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookPhrasebookAuthorizationProvider">
+             <summary>
+             权限配置都在这里。
+             给权限默认设置服务
+             See <see cref="T:BookService.Host.Domain.Authorization.BookPhrasebookPermissions" /> for all permission names. BookPhrasebook
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookPhrasebookPermissions">
+             <summary>
+             定义系统的权限名称的字符串常量。
+             <see cref="T:BookService.Host.Domain.Authorization.BookPhrasebookAuthorizationProvider" />中对权限的定义.
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.Node">
+             <summary>
+             BookPhrasebook权限节点
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.Query">
+             <summary>
+             BookPhrasebook查询授权
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.Create">
+             <summary>
+             BookPhrasebook创建权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.Edit">
+             <summary>
+             BookPhrasebook修改权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.Delete">
+             <summary>
+             BookPhrasebook删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.BatchDelete">
+             <summary>
+             BookPhrasebook批量删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookPhrasebookPermissions.ExportExcel">
+             <summary>
+             BookPhrasebook导出Excel
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookReviewAuthorizationProvider">
+             <summary>
+             权限配置都在这里。
+             给权限默认设置服务
+             See <see cref="T:BookService.Host.Domain.Authorization.BookReviewPermissions" /> for all permission names. BookReview
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookReviewPermissions">
+             <summary>
+             定义系统的权限名称的字符串常量。
+             <see cref="T:BookService.Host.Domain.Authorization.BookReviewAuthorizationProvider" />中对权限的定义.
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.Node">
+             <summary>
+             BookReview权限节点
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.Query">
+             <summary>
+             BookReview查询授权
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.Create">
+             <summary>
+             BookReview创建权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.Edit">
+             <summary>
+             BookReview修改权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.Delete">
+             <summary>
+             BookReview删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.BatchDelete">
+             <summary>
+             BookReview批量删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookReviewPermissions.ExportExcel">
+             <summary>
+             BookReview导出Excel
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookTagAuthorizationProvider">
+             <summary>
+             权限配置都在这里。
+             给权限默认设置服务
+             See <see cref="T:BookService.Host.Domain.Authorization.BookTagPermissions" /> for all permission names. BookTag
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.Authorization.BookTagPermissions">
+             <summary>
+             定义系统的权限名称的字符串常量。
+             <see cref="T:BookService.Host.Domain.Authorization.BookTagAuthorizationProvider" />中对权限的定义.
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.Node">
+             <summary>
+             BookTag权限节点
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.Query">
+             <summary>
+             BookTag查询授权
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.Create">
+             <summary>
+             BookTag创建权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.Edit">
+             <summary>
+             BookTag修改权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.Delete">
+             <summary>
+             BookTag删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.BatchDelete">
+             <summary>
+             BookTag批量删除权限
+            </summary>
+        </member>
+        <member name="F:BookService.Host.Domain.Authorization.BookTagPermissions.ExportExcel">
+             <summary>
+             BookTag导出Excel
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.DomainService.BookManager">
+             <summary>
+             Book领域层的业务管理
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookManager.#ctor(Abp.Domain.Repositories.IRepository{BookService.Host.Domain.Book,System.UInt32})">
+             <summary>
+             Book的构造方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookManager.InitBook">
+             <summary>
+             初始化
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.DomainService.BookPhrasebookManager">
+             <summary>
+             BookPhrasebook领域层的业务管理
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookPhrasebookManager.#ctor(Abp.Domain.Repositories.IRepository{BookService.Host.Domain.BookPhrasebook,System.UInt32})">
+             <summary>
+             BookPhrasebook的构造方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookPhrasebookManager.InitBookPhrasebook">
+             <summary>
+             初始化
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.DomainService.BookReviewManager">
+             <summary>
+             BookReview领域层的业务管理
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookReviewManager.#ctor(Abp.Domain.Repositories.IRepository{BookService.Host.Domain.BookReview,System.UInt32},Abp.Domain.Repositories.IRepository{BookService.Host.Domain.Book,System.UInt32},BookService.Host.Domain.DomainService.BookManager)">
+             <summary>
+             BookReview的构造方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookReviewManager.InitBookReview">
+             <summary>
+             初始化
+            </summary>
+        </member>
+        <member name="T:BookService.Host.Domain.DomainService.BookTagManager">
+             <summary>
+             BookTag领域层的业务管理
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookTagManager.#ctor(Abp.Domain.Repositories.IRepository{BookService.Host.Domain.BookTag,System.UInt32})">
+             <summary>
+             BookTag的构造方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.BookTagManager.InitBookTag">
+             <summary>
+             初始化
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.IBookManager.InitBook">
+             <summary>
+             初始化方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.IBookPhrasebookManager.InitBookPhrasebook">
+             <summary>
+             初始化方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.IBookReviewManager.InitBookReview">
+             <summary>
+             初始化方法
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Domain.DomainService.IBookTagManager.InitBookTag">
+             <summary>
+             初始化方法
+            </summary>
+        </member>
+        <member name="T:BookService.Host.BookAppServiceBase">
+            <summary>
+            Derive your application services from this class.
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.#ctor(Abp.Domain.Uow.IUnitOfWorkManager,Abp.Domain.Repositories.IRepository{BookService.Host.Domain.Book,System.UInt32},Microsoft.AspNetCore.Http.IHttpContextAccessor,BookService.Host.Domain.DomainService.BookManager)">
+             <summary>
+             构造函数
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.GetPaged(BookService.Host.Domain.Dtos.GetBooksInput)">
+             <summary>
+             获取Book的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.GetById(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            通过指定id获取BookListDto信息
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.Delete(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            删除Book信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.Create(BookService.Host.Domain.Dtos.BookEditDto)">
+            <summary>
+            新增Book
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.BorrowBook(BookService.Host.Domain.Dtos.BookBriefEditDto)">
+            <summary>
+            借书
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.ReturnBook(System.UInt32)">
+            <summary>
+            图书归还【暂不用】
+            </summary>
+            <param name="bookId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.RemoveOfReportLoss(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            挂失取消【暂不用】
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.ReportLoss(BookService.Host.Domain.Dtos.BookReportLossDto)">
+            <summary>
+            图书挂失
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookController.GetResourceType">
+            <summary>
+            获取书籍来源-集合
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.GetPaged(BookService.Host.Domain.Dtos.GetBookReviewsInput)">
+             <summary>
+             获取BookReview的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.GetUserBriefOfReview(BookService.Host.Domain.Dtos.GetBookReviewsInput)">
+             <summary>
+             根据BookeID获取阅读人的列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.GetReviewPaged(BookService.Host.Domain.Dtos.GetBookReviewsInput)">
+             <summary>
+             根据BookeID获取BookReview的分页列表信息
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.GetById(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            通过指定id获取BookReviewListDto信息
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.Create(BookService.Host.Domain.Dtos.BookReviewEditDto)">
+            <summary>
+            新增BookReview
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.Update(BookService.Host.Domain.Dtos.BookReviewEditDto)">
+            <summary>
+            编辑BookReview
+            </summary>
+        </member>
+        <member name="M:BookService.Host.Controllers.BookReviewController.Delete(Abp.Application.Services.Dto.EntityDto{System.UInt32})">
+            <summary>
+            删除BookReview信息的方法
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.Snowflake.GetTimestamp">
+            <summary>
+            生成当前时间戳
+            </summary>
+            <returns>毫秒</returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.Snowflake.GetNextTimestamp(System.Int64)">
+            <summary>
+            获取下一微秒时间戳
+            </summary>
+            <param name="lastTimestamp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookService.Host.Controllers.Snowflake.GetId">
+            <summary>
+            获取长整形的ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.ResultGet(System.String,System.Object)">
+            <summary>
+            通过地址和参数取得返回OutPut数据
+            </summary>
+            <param name="url"></param>
+            <param name="input">请求参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.ResultPost(System.String,System.Object)">
+            <summary>
+            通过地址和参数取得返回OutPut数据
+            </summary>
+            <param name="url"></param>
+            <param name="input">请求参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.Get(System.String,System.Object)">
+             <summary>
+            通过地址和我反序列后的JSON取得返回GeneralOutPut数据
+             </summary>
+             <param name="url">请求地址</param>
+             <param name="input">请求参数</param>
+             <returns>请求返回的结果</returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.Post(System.String,System.Object)">
+             <summary>
+             指定Post地址使用Get 方式获取全部字符串
+             </summary>
+             <param name="url">请求后台地址</param>
+             <returns></returns>
+            
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.HttpRequest(System.Net.HttpWebRequest)">
+            <summary>
+            请求的主体部分（由此完成请求并返回请求结果）
+            </summary>
+            <param name="request">请求的对象</param>
+            <returns>请求返回结果</returns>
+        </member>
+        <member name="M:ResearchService.Host.Web.AjaxHelper.UrlCheck(System.String)">
+            <summary>
+            URL拼写完整性检查
+            </summary>
+            <param name="url">待检查的URL</param>
+        </member>
+        <member name="M:ResearchService.Host.Web.HttpHelper.Get(System.String,System.String)">
+            <summary>
+            http://192.168.1.136:5001/api/services/app/User/GetAllUserName
+            </summary>
+            <param name="serviceName"></param>
+            <param name="apiPath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ResearchService.Host.Web.WebContentDirectoryFinder">
+            <summary>
+            This class is used to find root path of the web project in;
+            unit tests (to find views) and entity framework core command line commands (to find conn string).
+            </summary>
+        </member>
+    </members>
+</doc>

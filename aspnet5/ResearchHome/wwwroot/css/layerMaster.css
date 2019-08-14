@@ -1,0 +1,71 @@
+﻿/*提示信息*/
+.valid-tips {
+    float: left;
+    font-size: 14px;
+}
+
+.field-validation-error {
+    background: url('/images/public/ExclamaMark.png') no-repeat;
+    color: red !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.valid-tips-span {
+    padding-left: 18px;
+}
+
+body, html, form {
+    overflow: hidden;
+    height: 100%;
+    z-index: 1;
+    color: #000;
+}
+
+/*显示提示信息时不影响高度*/
+.layui-form-item .layui-inline {
+    height: 60px;
+    margin-bottom: 0;
+}
+
+.layui-contentall {
+    height: 100%;
+    background-color: #fff;
+    width: 1000px;
+    margin: auto;
+    position: relative;
+}
+
+    .layui-contentall .layui-form {
+        overflow: auto;
+        padding-top: 20px;
+        height: 81%;
+    }
+
+.layui-content-title {
+    height: 40px;
+    border-bottom: 1px dashed #999;
+    text-align: center;
+    font-size: 16px;
+    line-height: 40px;
+    color: #666;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+
+.layui-content-btn {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    text-align: right;
+    background-color: #f8f8f8;
+    border-top: 1px solid #dedede;
+}
+
+    .layui-content-btn .layui-input-block{
+        right:20px;
+        top:5px;
+    }

@@ -1,0 +1,165 @@
+﻿@using ResearchHome.Areas.SkillsAndMedals.Models
+@model Skills
+@{
+    ViewData["Title"] = "EditSkills";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <style>
+        .layui-form-select .layui-input {
+            padding-right: 30px;
+            cursor: pointer;
+            padding-top: 10px;
+        }
+
+        .layui-form-item .layui-inline {
+            height: 60px;
+            margin-bottom: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+    </style>
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+}
+<div class="layui-form">
+    <div class="layui-inline" style="margin-top: 30px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级目录</label>
+            <div class="layui-input-inline">
+                <div class="layui-unselect layui-form-select downpanel" disabled>
+                    <div class="layui-select-title">
+                        <span class="layui-input layui-unselect" id="firstNode">请选择</span>
+                        <input type="hidden" name="selectID" asp-for="ParentId">
+                        <input type="hidden" name="selectLevel" asp-for="Parent.Level">
+                        <input type="hidden" name="selectName" asp-for="Parent.Name" />
+                        <i class="layui-edge"></i>
+                    </div>
+                    <dl class="layui-anim layui-anim-upbit" style="max-height:200px">
+                        <dd>
+                            <ul id="classtree"></ul>
+                        </dd>
+                    </dl>
+                </div>
+                <div id="error_parent" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error" id="error_parent_text">请选择技能种类</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:100px;padding: 9px 0px;">技能</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="txtSkillId" asp-for="Id" />
+                <input type="text" id="txtName" onchange="onchangeEvent(this)" required lay-verify="required" asp-for="Name" autocomplete="off" class="layui-input" placeholder="请输入技能名称" />
+                <div id="error_name" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入技能名称</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-content-btn">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="save()">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/global.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function () { 
+            loadSelectData();
+        });
+
+        $(document).keypress(function (event) {
+            if (event.which === 13) {
+                save();
+            }
+        })
+
+        function loadSelectData() {
+            layui.use(['tree'], function () { 
+                var tree = layui.tree;
+                $.get("/skillsandmedals/home/getskills", function (data) {
+                    tree({
+                        elem: "#classtree"
+                        , nodes: data
+                        , click: function (node) {
+                            var $select = $($(this)[0].elem).parents(".layui-form-select");
+                            $select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.name).end().find("input:hidden[name='selectID']").val(node.id);
+                            $("input[name='selectLevel']").val(node.level);
+                            $("#error_parent").css("display", "none");
+                        }
+                    }, 180, true);
+                });
+                var skillId = $("#txtSkillId").val();
+                if (skillId == 1) {
+                    $('#firstNode').css('background-color', '#e0dede');
+                    $('#firstNode').text('顶级节点');
+                } else {
+                    $(".downpanel").on("click", ".layui-select-title", function (e) {
+                        $(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
+                        $(this).parents(".downpanel").toggleClass("layui-form-selected");
+                        layui.stope(e);
+                    }).on("click", "dl i", function (e) {
+                        layui.stope(e);
+                    });
+                }
+                if (skillId > 1) $('#firstNode').text($('input[name="selectName"]').val());
+            });
+        }
+
+        function save() {
+            var id = $("#txtSkillId").val();
+            var parentId = $("input[name='selectID']").val();
+            var name = $("#txtName").val();
+            var parentLevel = $("input[name='selectLevel']").val();
+            if (parentLevel == "") parentLevel = 0;
+            var skill = {
+                id: id,
+                parentId: parentId,
+                name: name,
+                level: parseInt(parentLevel) + 1
+            };
+            if (checkDataVaild(skill)) {
+                $.post("/skillsandmedals/home/editskills", skill, function (data) {
+                    parent.layer.msg(data.message, {
+                        icon: 6,
+                        shift: -1,
+                        time: 500,
+                        shade: 0.3
+                    }, function () {
+                        if (data.success) parent.layer.closeAll();
+                    });
+                });
+            }
+        }
+
+        function checkDataVaild(skill) {
+            var errCount = 0;
+            if (skill.parentId == 0 && skill.id != 1) {
+                $("#error_parent").css("display", "block");
+                errCount += 1;
+            }
+            if (skill.name == "") {
+                $("#error_name").css("display", "block");
+                errCount += 1;
+            }
+            if (errCount == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        function onchangeEvent(e) {
+            $(e).next().css("display", "none");
+        }
+    </script>
+}

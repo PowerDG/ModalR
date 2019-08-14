@@ -1,0 +1,174 @@
+﻿@{
+    Boolean.TryParse(viewInjectHelper.CurrentUserInfo("IsAdmin"), out bool isAdmin);
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+<link href="~/css/skillmedal/index.css" rel="stylesheet" />
+
+<div>
+    <div id="heroesPart" class="partMarginTop">
+        <div class="partItem" style="position:relative;">
+            <span>技能树</span>
+            @if (isAdmin)
+            {
+                <span class="partItemTool" onclick="showEditSkill(0, '添加技能');">
+                    <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>添加技能</span>
+                </span>
+            }
+        </div>
+
+        <div style="width: 800px;height:400px;overflow: -webkit-paged-y;margin-left: auto;margin-right: auto;" id="div_skill"></div>
+
+        <div class="skill_get_info get_info">
+            <span style="font-size:20px;margin-right:10px;" id="skill_title"></span>
+            @if (isAdmin)
+            {
+                <a id="editSkillDesc" data-id="skilldescription" onclick="editDescription(this)" style="cursor:pointer;display:none;" title="编辑">
+                    <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+                </a>
+            }
+            <pre id="skill_content" style="margin-top: 10px;line-height: 22px;"></pre>
+        </div>
+    </div>
+</div>
+
+<div style="background-color:rgba(128,128,128,0.1);">
+    <div id="heroicStylePart" class="partMarginTop">
+        <div class="partItem" style="position:relative;">
+            <span>勋章</span>
+            @if (isAdmin)
+            {
+                <span class="partItemTool" onclick="addMedal();">
+                    <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>添加勋章</span>
+                </span>
+            }
+        </div>
+        <div id="medaldiv"> </div>
+        <script id="medalList" type="text/html">
+            {{# layui.each(d, function(index, item){ }}
+            <div class="medal-div" onmouseover="medalDivMouseEnter(this)" onmouseout="medalDivMouseLeave(this)">
+                <div style="width: 700px;margin-left: auto;margin-right: auto;">
+                    <div class="medal-div-img-div">
+                        <img src="{{ item.Icon }}" onerror="javascript: this.src = '/images/public/NonePicture.png'" />
+                    </div>
+                    <div class="medal-div-desc">
+                        <div style="width: 100%;height: 100%;">
+                            <h3>
+                                {{ item.Name }}
+                                <span style="color:#fcaf17;">&nbsp;{{ item.Grade }}级勋章</span>
+                                <a onclick="showMedaledPerson({{ item.Id }})" style="cursor:pointer;padding-left:10px;font-size:14px;text-decoration:underline;color:blue;">
+                                    已授予：{{item.Count}}
+                                </a>
+                                @if (isAdmin)
+                                {
+                                    <a onclick="editMedal({{ item.Id }})" style="cursor:pointer;display:none;padding-left:3px;" title="编辑">
+                                        <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+                                    </a>
+                                    <a onclick="discardMedal({{ item.Id }})" style="cursor:pointer;display:none;" title="弃用">
+                                        <img src="/images/PromptImg/discard.png" style="width:16px;height:16px;" />
+                                    </a>
+                                    <a onclick="deleteMedal({{ item.Id }})" style="cursor:pointer;display:none;" title="删除">
+                                        <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" />
+                                    </a>
+                                }
+                            </h3>
+                            <p>{{ toDateString(item.CreatedTime) }}</p>
+
+                            <p>{{ item.Description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{# }) }}
+        </script>
+
+        <div class="medal_get_info get_info">
+            <span style="font-size:20px;margin-right:10px;" id="medal_title"></span>
+            @if (isAdmin)
+            {
+                <a id="editMedalDesc" data-id="medaldescription" onclick="editDescription(this)" style="cursor:pointer;display:none;" title="编辑">
+                    <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" />
+                </a>
+            }
+            <pre id="medal_content" style="margin-top: 10px;line-height: 22px;"></pre>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div id="heroicStylePart" class="partMarginTop">
+        <div class="partItem" style="position:relative;">
+            <span>历史勋章</span>
+        </div>
+        <div id="discardMedaldiv"> </div>
+
+        <script id="discardMedalList" type="text/html">
+            {{# layui.each(d, function(index, item){ }}
+            <div class="medal-div" onmouseover="medalDivMouseEnter(this)" onmouseout="medalDivMouseLeave(this)">
+                <div style="width: 700px;margin-left: auto;margin-right: auto;">
+                    <div class="medal-div-img-div">
+                        <img src="{{ item.Icon }}" onerror="javascript: this.src = '/images/public/NonePicture.png'" />
+                    </div>
+                    <div class="medal-div-desc">
+                        <div>
+                            <h3>
+                                {{ item.Name }}
+                            </h3>
+                            <p>{{ toDateString(item.CreatedTime) }} &nbsp;~&nbsp; {{ toDateString(item.DiscardTime) }}</p>
+                            <p>{{ item.Description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{# }) }}
+            {{#  if(d.length === 0){ }}
+            <div style="width: 700px;margin-left: auto;margin-right: auto;">无数据</div>
+            {{#  } }}
+        </script>
+    </div>
+</div>
+
+<div class="tip" onmousemove="$(this).css('display', 'block');" onmouseout="$(this).css('display', 'none');" style="display: none">
+    <div>
+        <a id="addskill" onclick="addSkill()" style="cursor:pointer;display:inline" title="添加">
+            <img src="/images/PromptImg/add.png" style="width:16px;height:16px;" /><span>&nbsp;添加</span><br />
+        </a>
+        <a id="editskill" onclick="editSkill()" style="cursor:pointer" title="编辑">
+            <img src="/images/PromptImg/Edit.png" style="width:16px;height:16px;" /><span>&nbsp;编辑</span><br />
+        </a>
+        <a id="deleteskill" onclick="deleteSkill()" style="cursor:pointer" title="删除">
+            <img src="/images/PromptImg/Obsolete.png" style="width:16px;height:16px;" /><span>&nbsp;删除</span><br />
+        </a>
+        <input type="hidden" id="noteId" />
+        <input type="hidden" id="noteName" />
+    </div>
+</div>
+
+<script src="~/js/echarts.min.js"></script>
+<script src="~/js/skillmedal/index.js"></script>
+<script src="~/js/global.js"></script>
+<script>
+
+    function LoadPage() {
+        var myChart = echarts.init(document.getElementById('div_skill'));
+        layui.use(['layer', 'table', 'laytpl','element'], function () {
+            var layer = layui.layer;
+            var table = layui.table;
+            var laytpl = layui.laytpl;
+            var element = layui.element;
+
+            var isAdmin = '@isAdmin';
+            loadSkillDescription();
+            loadMedalDescription();
+            setChatr(myChart, laytpl, element);
+            if (isAdmin == "True") {
+                initChart(myChart);
+            }
+            loadChart();
+
+            loadMedals(laytpl, element);
+            loadDiscardMedals(laytpl, element);
+            initEvent(isAdmin);
+        });
+    }
+
+</script>

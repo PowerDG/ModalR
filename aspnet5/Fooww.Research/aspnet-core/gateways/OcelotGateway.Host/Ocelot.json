@@ -1,0 +1,82 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/EmailService/swagger.json",
+      "UpstreamHttpMethod": [ "Get", "Post", "DELETE", "PUT", "PATCH" ],
+      "ServiceName": "EmailService",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/EmailService/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "DELETE", "PUT", "PATCH" ],
+      "ServiceName": "EmailService",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/PartyService.Host/swagger.json",
+      "UpstreamHttpMethod": [ "Get", "Post", "DELETE", "PUT", "PATCH" ],
+      "ServiceName": "PartyService.Host",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/PartyService.Host/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ServiceName": "PartyService.Host",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true
+    },
+    //login
+    {
+      "DownstreamPathTemplate": "/api/LoginWithAuthenticate",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Login",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ServiceName": "Fooww.Research.Web.Host",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/web/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post", "DELETE", "PUT", "PATCH" ],
+      "ServiceName": "Fooww.Research.Web.Host",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UseServiceDiscovery": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "OcelotKey",
+        "AllowedScopes": []
+      }
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "192.168.1.102",
+      "Port": 8500
+    }
+  }
+}

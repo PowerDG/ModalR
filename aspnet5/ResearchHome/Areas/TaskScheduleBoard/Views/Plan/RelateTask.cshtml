@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+
+<div class="layui-row" style="margin:0px 10px;">
+    <div id="planId" data-planid="@ViewBag.PlanId" style="display:none;"></div>
+    <table id="taskTable" lay-filter="taskTable"></table>
+
+    <div style="float:right;">
+        <button id="saveRelateTask" class="layui-btn layui-btn-sm" data-type="getCheckData">保存</button>
+    </div>
+</div>
+
+<script src="~/js/TaskScheduleBoard/Plan/relateTask.js"></script>

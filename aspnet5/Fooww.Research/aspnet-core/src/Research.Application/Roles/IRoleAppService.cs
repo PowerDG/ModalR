@@ -1,0 +1,20 @@
+﻿using System.Threading.Tasks;
+using Abp.Application.Services;
+using Abp.Application.Services.Dto;
+using Research.Roles.Dto;
+
+namespace Research.Roles
+{
+    public interface IRoleAppService : IAsyncCrudAppService<RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>
+    {
+        //Task UpdateRolePermissions(UpdateRolePermissionsInput input);
+
+        Task<RoleDto> UpdateRolePermissions(UpdateRolePermissionsInput input);
+
+        Task<ListResultDto<PermissionDto>> GetAllPermissions();
+
+        Task<GetRoleForEditOutput> GetRoleForEdit(EntityDto input);
+
+        Task<ListResultDto<RoleListDto>> GetRolesAsync(GetRolesInput input);
+    }
+}

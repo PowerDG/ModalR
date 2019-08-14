@@ -1,0 +1,53 @@
+{
+  "result": {
+    "totalCount": 3,
+    "items": [
+      {
+        "name": "Admin",
+        "displayName": "Admin",
+        "normalizedName": "ADMIN",
+        "description": null,
+        "permissions": [
+          "Pages.Users",
+          "Pages.Roles",
+          "Pages.Tenants",
+          " Identifications.Staff.Init",
+          "Pages",
+          " Identifications.Staff.Members",
+          " Identifications.Staff.Guest",
+          " Identifications.Staff.Assistant",
+          "Identifications.Staff.Init",
+          "Identifications.Staff.Members",
+          "Identifications.Staff.Guest",
+          "Identifications.Staff.Assistant"
+        ],
+        "id": 1
+      },
+      {
+        "name": "Guest",
+        "displayName": "Guest",
+        "normalizedName": "GUEST",
+        "description": "string",
+        "permissions": [
+          "Identifications.Staff.Guest"
+        ],
+        "id": 4
+      },
+      {
+        "name": "Staff",
+        "displayName": "StaffMember",
+        "normalizedName": "STAFF",
+        "description": "string",
+        "permissions": [
+          "Identifications.Staff.Members"
+        ],
+        "id": 3
+      }
+    ]
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
+}

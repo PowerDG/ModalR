@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "AddSkills";
+    Layout = "/Views/Shared/_Master.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <style>
+        .layui-form-select .layui-input {
+            padding-right: 30px;
+            cursor: pointer;
+            padding-top: 10px;
+        }
+
+        #xtree1 {
+            width: 385px;
+            padding: 0px 5px 0px 5px;
+            /*border: 1px solid #969494;
+            margin: auto;*/
+        }
+    </style>
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+}
+
+<div class="layui-form" style="margin-top: 18px;">
+    <div class="layui-inline" style="width:100%;">
+        <div id="xtree1" style="max-height: 370px;height: 370px;overflow:auto;overflow-x:hidden"></div>
+    </div>
+
+    <div class="layui-form-item layui-content-btn">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnSave">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/layui-xtree/layui-xtree.js"></script>
+<script src="/js/global.js"></script>
+@section Scripts{
+<script>
+        $(document).ready(function () {
+            layui.use(['layer', 'form'], function () {
+                var form = layui.form;
+                var layer = layui.layer;
+                var tree = layui.tree;
+                var xtree1 = null;
+                $.get("/Introduction/skills/getskilltreedata?memberId=" + '@ViewBag.MemberId', function (data) {
+                    xtree1 = new layuiXtree({
+                        elem: 'xtree1'
+                        , form: form
+                        , data: data
+                    });
+                });
+
+                document.getElementById('btnSave').onclick = function () {
+                    var cks = xtree1.GetChecked();
+                    if (cks.length < 1) {
+                        layer.msg("请选择技能");
+                        return false;
+                    }
+                    var ids = new Array();
+                    $.each(cks, function (index, ck) {
+                        ids[index] = parseInt(ck.value);
+                    });
+                    $.post("/Introduction/Skills/SaveSkill", { ids: ids, memberId: '@ViewBag.MemberId' }, function (data) {
+                        parent.layer.msg(data.message, {
+                            icon: 6,
+                            shift: -1,
+                            time: 500,
+                            shade: 0.3
+                        }, function () {
+                            if (data.success) parent.layer.closeAll();
+                        });
+                    });
+                }
+            });
+        });
+</script>
+}

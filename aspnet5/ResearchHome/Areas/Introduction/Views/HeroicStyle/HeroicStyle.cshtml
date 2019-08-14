@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+
+@addTagHelper *, ResearchHome
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+<link href="/css/introduction/HeroicStyle/HeroicStyle.css" rel="stylesheet" />
+
+<div id="heroicStylePanel" class="layui-row-staff">
+
+</div>
+<script id="heroicStyleMaster" type="text/html">
+    {{# var viewUserId = '@viewInjectHelper.CurrentUserInfo("Id")';  }}
+    {{# var viewUserIsAdmin = '@viewInjectHelper.CurrentUserInfo("IsAdmin")';  }}
+    {{# layui.each(d, function(index, item){   }}
+    <div class="layui-col-staff" style="position:relative;" id="heroicStylePhotos"
+         onmouseover="$('#heroicStyleEiteDiv_'+'{{item.Id}}').css('display', 'block');"
+         onmouseout="$('#heroicStyleEiteDiv_'+'{{item.Id}}').css('display', 'none');">
+        <div id="heroicStyleEiteDiv_{{item.Id}}" class="pictureTool">
+            {{# if(parseInt(viewUserId) === parseInt(item.MemberId) || viewUserIsAdmin === 'True'){ }}
+            <div>
+                <a style="cursor:pointer;" onclick="editHeroicStyle('{{item.Id}}');" title="编辑">
+                    <img src="/images/PromptImg/Edit.png" />
+                </a>
+            </div>
+            <div style="padding-top:7px;">
+                <a style="cursor:pointer;" onclick="deleteHeroicStyle('{{item.Id}}');" title="删除">
+                    <img src="/images/PromptImg/Obsolete.png" />
+                </a>
+            </div>
+            {{# } }}
+            <div style="padding-top:{{parseInt(viewUserId) === parseInt(item.MemberId) || viewUserIsAdmin === 'True' ? "7px":"0"}};">
+                <a style="cursor:pointer;" onclick="fileDownLoad('Img_{{item.Id}}','{{ item.Url }}');" title="下载">
+                    <img src="/images/PromptImg/FileDownLoad.png" />
+                </a>
+            </div>
+        </div>
+        <img id="Img_{{item.Id}}" lay-src="{{ item.PartialPictureUrl }}" style="margin-top: 2px;width: 150px;height:150px;cursor:pointer;"
+             onerror="javascript: this.src = '/images/public/NonePicture.png';"
+             onclick="previewPic($('#Img_{{item.Id}}').attr('src') === '{{ item.PartialPictureUrl }}' ? '{{ item.Url }}': $('#Img_{{item.Id}}').attr('src')
+                        ,_showStyle === 'showAll' ? parent.layer : layer);" />
+        <div class="pictureDescription">
+            <span>{{ item.Description }}</span>
+        </div>
+    </div>
+    {{#  }); }}
+</script>
+@*<script id="carouselDisplayHeroicStylePic" type="text/html">    
+    <div class="layui-carousel" id="carouselHeroicStyle" style="margin:auto">
+        <div carousel-item="">
+            {{# layui.each(d, function(index, item){   }}
+            <div><img src="{{ item.Url }}"></div>
+            {{#  }); }}
+        </div>
+    </div>
+
+</script>*@
+
+<script src="/js/introduction/HeroicStyle/HeroicStyle.js"></script>

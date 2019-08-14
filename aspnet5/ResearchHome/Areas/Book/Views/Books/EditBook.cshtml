@@ -1,0 +1,254 @@
+﻿@model ResearchHome.Areas.Book.Models.BookModel
+@{
+    ViewData["Title"] = "EditBook";
+    Layout = "~/Views/Shared/_Master.cshtml";
+    string photo = "/images/public/NonePicture.png";
+    if (Model.Photo != null)
+    {
+        photo = Model.Photo;
+    }
+    string photoHD = Model.PhotoHD != null ? Model.PhotoHD : photo;
+}
+@inject ResearchHome.Helper.ViewInjectHelper viewInjectHelper
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Heads{
+    <link href="/css/layerMaster.css" rel="stylesheet" />
+    <style>
+        .layui-form-item .layui-inline {
+            height: 60px;
+            margin-bottom: 0;
+        }
+
+        .layui-form-item {
+            margin-bottom: 6px;
+            clear: both;
+            height: 54px;
+        }
+
+        .icon-div {
+            width: 22%;
+            float: left;
+            margin-top: 30px;
+            margin-left: 25px;
+        }
+
+            .icon-div img {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+        .medal-div {
+            margin-top: 30px;
+            width: 70%;
+            float: left;
+            margin-left: 15px;
+        }
+
+        .layui-form-label {
+            float: left;
+            display: block;
+            padding: 9px 15px 9px 0px;
+            width: 50px;
+            font-weight: 400;
+            line-height: 20px;
+            text-align: right;
+        }
+
+        .layui-input-block {
+            margin-left: 70px;
+            min-height: 36px;
+        }
+
+        .layui-row-icon {
+            width: 130px;
+            height: 130px;
+            border: solid 0.1px;
+            padding: 2px;
+        }
+
+        .layui-upload-image {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .layui-input, .layui-textarea {
+            display: block;
+            width: 275px;
+        }
+
+        .layui-table img {
+            max-width: 400px;
+        }
+
+        .layui-table-header {
+            display: none;
+        }
+        .layui-form {
+            border: none;
+        }
+
+        .layui-table-cell {
+            height:auto;
+            text-overflow: inherit;
+            overflow: hidden;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        .read {
+            width: 240px;
+            height: 36px;
+            overflow: hidden;
+        }
+
+        .comment {
+            margin-left: 40px;
+          
+            overflow: hidden;
+            
+        }
+    </style>
+}
+
+<div style="min-height:400px;">
+    <div class="layui-form medal-div">
+        <div class="layui-inline" style="width: 90%;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">书名</label>
+                <div class="layui-input-block">
+                    <input type="hidden" id="txtBookId" asp-for="Id" />
+                    <input type="text" id="txtName" required lay-verify="required" onchange="onchangeEvent(this)" asp-for="Name" autocomplete="off" class="layui-input" placeholder="请输入书名" />
+                    <div id="error_name" style="display: none">
+                        <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入书名</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">作者</label>
+                <div class="layui-input-block">
+                    <input type="text" id="txtAuthor" required lay-verify="required" onchange="onchangeEvent(this)" asp-for="Author" autocomplete="off" class="layui-input" placeholder="请输入作者" />
+                    <div id="error_author" style="display: none">
+                        <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入作者</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">来源</label>
+                <div class="layui-input-block">
+                    <input type="text" id="resource" required lay-verify="required" onchange="onchangeEvent(this)" asp-for="Resource" autocomplete="off" class="layui-input" placeholder="请输入来源" />
+                    <div id="error_resource" style="display: none">
+                        <div class="valid-tips"><span class="valid-tips-span field-validation-error">请输入来源</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="icon-div">
+        <div class="layui-upload" style="float:right; margin-right:40px;margin-top:10px;">
+          
+            <div class="layui-input-block">
+                <div class="layui-row-icon">
+                    <canvas id="myCanvas" style="display:none;"></canvas>
+                    <img class="layui-upload-img layui-upload-image" title="修改封面" onclick="$('#ImgUpload').click();"
+                         onerror="javascript: this.src = '/images/public/NonePicture.png'" src="@photo" id="bookPhoto">
+                    <input type="hidden" name="isupload" value="0" />
+                    <input type="file" style="display:none;" id="ImgUpload" onchange="loadUploadImg()" />
+                </div>
+                <div id="error_photo" style="display: none">
+                    <div class="valid-tips"><span class="valid-tips-span field-validation-error">请上传书籍封面</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-left:15px;">
+        <div class="layui-inline" style="width:100%;">
+            <div class="layui-form-item" style=" display:inline-block; float:left;margin-top:-4px;">
+                <label class="layui-form-label" style="margin-top:5px;">评分</label>
+                <div class="layui-input-block">
+                    <div id="score">@Model.AverageScore</div>
+                </div>
+            </div>
+            <div class="layui-form-item" style="display:inline-block;margin-left: 20px;">
+                <label class="layui-form-label" style="width:58px;">加入时间</label>
+                <div style="display:inline-block;margin-top:11px;margin-left:10px;">
+                    @Model.CreateTime.ToShortDateString().Replace('/', '-')
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="margin-left:15px;">
+                <label class="layui-form-label">阅读中</label>
+                <div class="layui-input-block" id="reading">
+
+                </div>
+            </div>
+            <div class="layui-form-item" style="display:inline-block;float:left;margin-top:-60px; margin-left: 275px;">
+                <label class="layui-form-label">阅读过</label>
+                <div class="layui-input-block read" id="read">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment" style="">
+        <b><span>评论（<span id="commentcount"></span>）</span></b>
+        <div id="comments">
+
+        </div>
+            <table id="bookTable" lay-filter="bookTable"></table>
+    </div>
+    @if (viewInjectHelper.CurrentUserInfo("IsAdmin")=="True")
+    {  <div class="layui-content-btn">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit onclick="save()">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" onclick="parent.layer.closeAll();">取消</button>
+            </div>
+        </div>
+    }
+</div>
+<script src="~/js/global.js"></script>
+<script src="~/js/Book/editBook.js"></script>
+<script>
+        var book;
+        $(document).ready(function () {
+            book = { photoHD: '@photoHD' };
+        });
+</script>
+<script>
+
+    if (@Model.MemberId> 0) {
+        $.ajax({
+            url: '/Book/Books/GetReadingBookMember?memberId=' + @Model.MemberId
+            , type: 'post'
+            , success: function (d) {
+                if (d.photo!='') {
+                    var img = $('<img  src="' + d.photo+'" style="width:36px;height:36px;" />');
+                    $('#reading').append(img);
+                }
+                else {
+                    parent.layer.msg('数据加载失败，请联系管理员!', { icon: 5, shift: -1, time: 2000, shade: 0.3 },
+                        function () { parent.layer.closeAll(); });
+                }
+            }
+        });
+    }
+   if (@Model.Id>0) {
+         $.ajax({
+            url: '/Book/Books/GetReadBookMembers?bookId=' + @Model.Id
+            , type: 'post'
+             , success: function (d) {
+
+                    for (var index = 0; index < d.photos.length; index++) {
+                        var img = $('<img  src="' + d.photos[index].Photo + '" style="width:36px;height:36px;" />');
+                        $('#read').append(img);
+                    }
+                 loadCommentTable(@Model.Id);
+            }
+        });
+
+    }
+</script>
+
+
